@@ -1,7 +1,7 @@
 ### Hi there 👋
-# --------------------------------------------------------------
-#       INSTALLATION WORKFLOWS
-# --------------------------------------------------------------
+#### --------------------------------------------------------------
+####       INSTALLATION WORKFLOWS
+#### --------------------------------------------------------------
 
 <!--
 **informatsy/informatsy** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
