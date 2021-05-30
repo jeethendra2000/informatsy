@@ -1,5 +1,5 @@
 ## Hi there 👋
-#### -----------------------------------------------------------------------------------------------------------------------------------------
+#### -------------------------------------------------------------------------------------------------------------------------------------
 ####       INSTALLATION WORKFLOW 💥:
 ##### ✔.Before Installing below packages you will have python and node.js installed on your desktop 🖥 having version greater than 3.8.0(python)
 ##### ✔.Install pip or pip3 (for python3)
@@ -9,7 +9,7 @@
 ##### ✔.npm i (install nodemodules which are used in project)[folder 📁:Go to path /informatsy/frontend]
 ##### ✔.python manage.py runserver (to run the django server)[folder 📁:/informatsy/]
 ##### ✔.npm run dev (to run the react application)[folder 📁:/informatsy/frontend ]
-#### ------------------------------------------------------------------------------------------------------------------------------------------
+#### --------------------------------------------------------------------------------------------------------------------------------------
 
 <!--
 **informatsy/informatsy** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
