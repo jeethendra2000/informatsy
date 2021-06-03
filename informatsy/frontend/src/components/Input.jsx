@@ -6,29 +6,31 @@ export class Input extends Component {
     super(props);
   }
   render() {
-    const style = {
-      color: "grey",
-      lineHeight: "55px",
-      padding: "0px 5px 0px 5px",
-    };
+    const name = this.props.name;
+    const type = this.props.type;
+    const img = this.props.component;
+    const classname = this.props.classname;
     return (
-      <div className="input_parent">
+      <div className={classname}>
         <fieldset className="input_main">
-          <PersonRoundedIcon style={style} className="icon" />
+          {img}
           <div
             className="input_lb"
             onClick={() => {
-              var ele = document.getElementById("lab");
-              var main = document.getElementsByClassName("input_main")[0];
-              var input = document.getElementsByClassName("input_cls")[0];
+              var ele = document.querySelector("." + classname + " .lab");
+              var main = document.querySelector(
+                "." + classname + " .input_main"
+              );
+              var input = document.querySelector(
+                "." + classname + " .input_cls"
+              );
               input.focus();
               main.style.transition = "0.2s ease-in-out";
               var pos = 25;
               var font = 14;
               var id = setInterval(() => {
-                if (pos <= -22) {
+                if (pos <= -21) {
                   clearInterval(id);
-                  ele.style.top = "-22%";
                 } else {
                   pos = pos - 5;
                   font = font - 0.2;
@@ -42,19 +44,22 @@ export class Input extends Component {
             }}
           >
             <input
-              type="text"
+              type={type}
               className="input_cls"
               onBlur={() => {
-                var ele = document.getElementById("lab");
-                var main = document.getElementsByClassName("input_main")[0];
-                var input = document.getElementsByClassName("input_cls")[0];
+                var ele = document.querySelector("." + classname + " .lab");
+                var main = document.querySelector(
+                  "." + classname + " .input_main"
+                );
+                var input = document.querySelector(
+                  "." + classname + " .input_cls"
+                );
                 if (input.value === "") {
                   var pos = -21;
                   var font = 12;
                   var id = setInterval(() => {
                     if (pos >= 20) {
                       clearInterval(id);
-                      ele.style.top = "20%";
                     } else {
                       pos = pos + 5;
                       font = font + 0.2;
@@ -68,9 +73,7 @@ export class Input extends Component {
               }}
             />
 
-            <legend className="lab" id="lab">
-              Username or Email
-            </legend>
+            <legend className="lab">{name}</legend>
           </div>
         </fieldset>
       </div>

@@ -51,13 +51,15 @@ export class Login extends Component {
               <Input
                 name="Username or Email"
                 classname="one"
+                type="text"
                 component={<PersonRoundedIcon style={style} />}
               />
             </div>
-            <div className="forms_content2">
+            <div className="forms_content1">
               <Input
                 name="Password"
                 classname="two"
+                type="password"
                 component={<LockOpenRoundedIcon style={style} />}
               />
             </div>

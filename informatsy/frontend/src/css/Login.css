@@ -1,5 +1,3 @@
-/*---------Custom buttons---------------*/
-/*------------input fields customisation-------------*/
 .login_main {
   margin: 0px;
   padding: 0px;
@@ -24,78 +22,5 @@
           align-items: center;
   -ms-flex-item-align: center;
       align-self: center;
-}
-
-.login_main .form_content1 .input_main:hover {
-  width: 17em;
-  -webkit-transition: 0.2s ease-in-out;
-  transition: 0.2s ease-in-out;
-}
-
-.login_main .form_content1 .input_main {
-  background-color: #f0f0f0;
-  position: relative;
-  font-family: "Poppins", sans-serif;
-  -webkit-transition: 0.1s ease-in-out;
-  transition: 0.1s ease-in-out;
-  width: 10em;
-  border: 2px solid inherit;
-  border-radius: 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.login_main .form_content1 .input_main .input_lb {
-  padding: 0px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 85%;
-      -ms-flex: 85%;
-          flex: 85%;
-}
-
-.login_main .form_content1 .input_main .input_lb input {
-  height: 1em;
-  -webkit-transition: 0.3s ease-in-outp;
-  transition: 0.3s ease-in-outp;
-  width: 15em;
-  background-color: inherit;
-  border: none;
-  outline: none;
-}
-
-.login_main .form_content1 .input_main .input_lb input[type="text"],
-.login_main .form_content1 .input_main .input_lb input[type="password"] {
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  color: #837979;
-}
-
-.login_main .form_content1 .input_main .input_lb .lab {
-  position: absolute;
-  left: 17%;
-  top: 20%;
-  translate: transform(-50%, -50%);
-  font-size: 14px;
-  font-weight: 600;
-  color: #f0f0f0;
-  padding: 0px 2px;
-  background-color: inherit;
-  z-index: 999;
-}
-
-.login_main .form_content1 .input_main .icon {
-  color: grey !important;
-  line-height: 55px !important;
-  padding: "2px 5px";
 }
 /*# sourceMappingURL=Login.css.map */
