@@ -1,0 +1,18 @@
+@import "./EssentialComponent";
+.login_main {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100vh;
+  .login_parent {
+    display: flex;
+    width: inherit;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+  }
+  .form_content1 {
+    @include Input(#f0f0f0, 10em, 1em, 50px, 17em);
+  }
+}

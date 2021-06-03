@@ -1,0 +1,88 @@
+/*---------Custom buttons---------------*/
+/*------------input fields customisation-------------*/
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .input_main:hover {
+  width: 17em;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+body .input_main {
+  background-color: #f0f0f0;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  -webkit-transition: 0.1s ease-in-out;
+  transition: 0.1s ease-in-out;
+  width: 15em;
+  border: 2px solid #f0f0f0;
+  border-radius: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .input_main .input_lb {
+  padding: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 85%;
+      -ms-flex: 85%;
+          flex: 85%;
+}
+
+body .input_main .input_lb input {
+  height: 1em;
+  -webkit-transition: 0.3s ease-in-outp;
+  transition: 0.3s ease-in-outp;
+  width: 15em;
+  background-color: inherit;
+  border: none;
+  outline: none;
+}
+
+body .input_main .input_lb input[type="text"],
+body .input_main .input_lb input[type="password"] {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #837979;
+}
+
+body .input_main .input_lb .lab {
+  position: absolute;
+  left: 17%;
+  top: 20%;
+  translate: transform(-50%, -50%);
+  font-size: 14px;
+  font-weight: 600;
+  color: grey;
+  padding: 0px 2px;
+  background-color: inherit;
+  z-index: 999;
+}
+
+body .input_main .icon {
+  color: grey !important;
+  line-height: 55px !important;
+  padding: "2px 5px";
+}
+/*# sourceMappingURL=Input.css.map */
