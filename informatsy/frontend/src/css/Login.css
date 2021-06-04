@@ -1,11 +1,8 @@
 .login_main {
   margin: 0px;
   padding: 0px;
-  width: 100%;
+  width: 1000px;
   height: 100vh;
-}
-
-.login_main .login_parent {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -22,5 +19,79 @@
           align-items: center;
   -ms-flex-item-align: center;
       align-self: center;
+  /* fallback for old browsers */
+  /* fallback for old browsers */
+  background-image: -webkit-gradient(linear, right bottom, left top, from(#7e4892), color-stop(#c25389), color-stop(#ef7174), color-stop(#ff9f61), to(#f8d364));
+  background-image: linear-gradient(to left top, #7e4892, #c25389, #ef7174, #ff9f61, #f8d364);
+}
+
+.login_main .login_parent {
+  position: relative;
+  overflow: hidden;
+  width: 900px;
+  height: 550px;
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.login_main .login_child {
+  text-align: center;
+}
+
+.login_main .login_side_bar .login_side_p1 {
+  width: 13em;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#985aaf), color-stop(#ec65a9), color-stop(#fd7881), color-stop(#ff944c), to(#f5c431));
+  background-image: linear-gradient(to top, #985aaf, #ec65a9, #fd7881, #ff944c, #f5c431);
+  height: 70vh;
+  border-radius: 1000px;
+  position: absolute;
+  top: -25%;
+  left: -8%;
+  -webkit-transform: rotate(320deg);
+          transform: rotate(320deg);
+  border: 20px solid #dbd8d8;
+}
+
+.login_main .login_side_bar .login_side_p2 {
+  position: absolute;
+  width: 5em;
+  height: 22vh;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#985aaf), color-stop(#ec65a9), color-stop(#fd7881), color-stop(#ff944c), to(#f5c431));
+  background-image: linear-gradient(to top, #985aaf, #ec65a9, #fd7881, #ff944c, #f5c431);
+  left: -4%;
+  top: 52%;
+  border-radius: 500px;
+  -webkit-transform: rotate(320deg);
+          transform: rotate(320deg);
+}
+
+.login_main .login_side_bar .login_side_p2 {
+  position: absolute;
+  width: 8em;
+}
+
+.login_main .form_main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 19em;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.login_main .form_main div {
+  margin: 5px;
 }
 /*# sourceMappingURL=Login.css.map */
