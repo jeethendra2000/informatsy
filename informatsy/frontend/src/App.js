@@ -8,7 +8,7 @@ import {
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import "./App.css";
-
+import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
@@ -26,7 +26,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     fontWeightLight: 400,
     fontWeightRegular: 600,
     fontWeightMedium: 700,
@@ -44,10 +44,14 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/login" component={Login} />
             <Route exact path="/popup" component={PopupAccount} />
-            <Redirect to="/"></Redirect>
+            <Navbar>
+              <Switch>
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/" component={HomePage} />
+                <Redirect to="/"></Redirect>
+              </Switch>
+            </Navbar>
           </Switch>
         </Router>
       </ThemeProvider>
