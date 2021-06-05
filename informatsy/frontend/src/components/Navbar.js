@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    paddingTop: "5px",
+    paddingTop: "3px",
     [theme.breakpoints.up("md")]: {
       marginRight: theme.spacing(40),
       marginLeft: theme.spacing(1),
@@ -71,6 +71,11 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: "60px",
     },
   },
+  mobileLogo: {
+    position: "absolute",
+    left: "50%",
+    marginLeft: "-24px",
+  },
 }));
 
 export default function Navbar({ children }) {
@@ -89,24 +94,15 @@ export default function Navbar({ children }) {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.navbar}>
         <Toolbar>
-          <Hidden mdUp>
-            <Sidebar menuItems={menuItems} />
-          </Hidden>
-          <div
-            button
-            onClick={() => {
-              alert("hi");
-            }}
-            style={{ display: "flex" }}
-          >
-            <Hidden smDown>
-              <Avatar
-                src={logo}
-                onClick={() => {
-                  history.push("/");
-                }}
-                className={classes.logo}
-              />
+          {/* -----------------------Brand Logo----------------------- */}
+          <Hidden smDown>
+            <div
+              onClick={() => {
+                history.push("/");
+              }}
+              style={{ display: "flex" }}
+            >
+              <Avatar src={logo} className={classes.logo} />
               <Typography
                 variant="h4"
                 align="center"
@@ -115,18 +111,9 @@ export default function Navbar({ children }) {
               >
                 Informatsy
               </Typography>
-            </Hidden>
-          </div>
+            </div>
 
-
-          <Hidden mdUp>
-            <Box>
-              <Avatar src={logo} />
-            </Box>
-          </Hidden>
-
-
-          <Hidden smDown>
+            {/* --------------Menu Bar-------------- */}
             <List className={classes.menuList}>
               {menuItems.map((menu) => (
                 <ListItem
@@ -141,7 +128,16 @@ export default function Navbar({ children }) {
                 </ListItem>
               ))}
             </List>
+          </Hidden>
 
+          {/*----------------Brand Logo on small screen---------------- */}
+          <Hidden mdUp>
+            <Sidebar menuItems={menuItems} />
+            <Avatar src={logo} className={classes.mobileLogo} />
+          </Hidden>
+
+          {/* ----------------Login And SignUp Button---------------- */}
+          <Hidden smDown>
             <Button
               color="primary"
               size="medium"

@@ -63,7 +63,7 @@ export default function Sidebar({ menuItems }) {
               setOpen(!open);
             }}
           >
-            <Box textAlign="center" className={classes.logoIcon} p={3}>
+            <Box textAlign="center" className={classes.logoIcon} p={2}>
               <Avatar src={logo} />
               <Typography
                 variant="h6"
