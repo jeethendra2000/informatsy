@@ -1,11 +1,11 @@
 /*---------Custom buttons---------------*/
 @mixin Button($width, $color, $borderRadius) {
-  border-radius: $borderRadius;
-  width: $width;
-  background-color: $color;
+  border-radius: $borderRadius !important;
+  width: $width !important;
+  background-color: $color !important;
   font-weight: 600;
-  font-size: 14px;
-  text-transform: capitalize;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
 }
 /*------------input fields customisation-------------*/
 @mixin Input($color, $width, $height, $borderRadius, $hoverwidth) {

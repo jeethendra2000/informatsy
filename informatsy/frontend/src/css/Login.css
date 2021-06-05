@@ -1,7 +1,10 @@
+/*---------Custom buttons---------------*/
+/*------------input fields customisation-------------*/
 .login_main {
+  font-family: "Poppins", sans-serif !important;
   margin: 0px;
   padding: 0px;
-  width: 1000px;
+  width: 100%;
   height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -14,6 +17,7 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  font-size: 16px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -28,8 +32,9 @@
 .login_main .login_parent {
   position: relative;
   overflow: hidden;
-  width: 900px;
-  height: 550px;
+  width: 850px;
+  height: 500px;
+  border-radius: 20px;
   background-color: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -39,10 +44,77 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-shadow: #666565 5px 5px 20px;
+          box-shadow: #666565 5px 5px 20px;
 }
 
 .login_main .login_child {
   text-align: center;
+  line-height: 1.3em;
+}
+
+.login_main .login_child .head_container {
+  position: relative;
+  left: 100%;
+  top: -20px;
+}
+
+.login_main .login_child .top_tag > p {
+  font-size: 15px;
+  font-weight: 500;
+  color: #726c6c;
+}
+
+.login_main .login_child .top_tag > h2 {
+  color: #6860d8;
+}
+
+.login_main .login_child .login_forgot_password {
+  font-size: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-right: 2em;
+}
+
+.login_main .login_child .button_main {
+  margin: 1em;
+}
+
+.login_main .login_child .button_main .login_btn {
+  border-radius: 5em !important;
+  width: 100% !important;
+  background-color: #2b63e6 !important;
+  font-weight: 600;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(#7e4892), color-stop(#c25389), color-stop(#ef7174), color-stop(#ff9f61), to(#f8d364));
+  background-image: linear-gradient(to left top, #7e4892, #c25389, #ef7174, #ff9f61, #f8d364);
+}
+
+.login_main .login_child .login_bottom_main {
+  font-size: 13px;
+  font-weight: 500;
+  color: #c25389;
+  top: 0;
+  width: 100%;
+}
+
+.login_main .login_child .login_bottom_main .social_acc {
+  margin-top: -1em;
+}
+
+.login_main .login_child .login_bottom_main .login_to_signup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-left: 2em;
 }
 
 .login_main .login_side_bar .login_side_p1 {
@@ -52,7 +124,7 @@
   height: 70vh;
   border-radius: 1000px;
   position: absolute;
-  top: -25%;
+  top: -26%;
   left: -8%;
   -webkit-transform: rotate(320deg);
           transform: rotate(320deg);
@@ -66,15 +138,37 @@
   background-image: -webkit-gradient(linear, left bottom, left top, from(#985aaf), color-stop(#ec65a9), color-stop(#fd7881), color-stop(#ff944c), to(#f5c431));
   background-image: linear-gradient(to top, #985aaf, #ec65a9, #fd7881, #ff944c, #f5c431);
   left: -4%;
-  top: 52%;
+  top: 58%;
   border-radius: 500px;
   -webkit-transform: rotate(320deg);
           transform: rotate(320deg);
 }
 
-.login_main .login_side_bar .login_side_p2 {
+.login_main .login_side_bar .login_side_p3 {
   position: absolute;
-  width: 8em;
+  width: 6em;
+  height: 25vh;
+  border-radius: 500px;
+  top: 85%;
+  left: 25%;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#f9cc64), color-stop(#ffa067), color-stop(#ff7882), color-stop(#e460a5), to(#a05fc1));
+  background-image: linear-gradient(to right bottom, #f9cc64, #ffa067, #ff7882, #e460a5, #a05fc1);
+  -webkit-transform: rotate(320deg);
+          transform: rotate(320deg);
+}
+
+.login_main .login_side_bar .login_side_p4 {
+  position: absolute;
+  width: 6em;
+  height: 22vh;
+  background-color: red;
+  -webkit-transform: rotate(320deg);
+          transform: rotate(320deg);
+  top: -15%;
+  left: 18%;
+  border-radius: 500px;
+  background-image: -webkit-gradient(linear, right bottom, left top, from(#f5be40), color-stop(#ff904c), color-stop(#ff5d79), color-stop(#ff3eb5), to(#bb55f0));
+  background-image: linear-gradient(to left top, #f5be40, #ff904c, #ff5d79, #ff3eb5, #bb55f0);
 }
 
 .login_main .form_main {
@@ -89,6 +183,9 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .login_main .form_main div {

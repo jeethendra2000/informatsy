@@ -42,6 +42,7 @@ export class Input extends Component {
 
                 ele.style.backgroundColor = "white";
                 main.style.border = "2px blue solid";
+                ele.style.color = "blue";
               }}
             >
               <input
@@ -70,6 +71,7 @@ export class Input extends Component {
                     }, 10);
                     ele.style.backgroundColor = "inherit";
                     main.style.border = "2px solid #f0f0f0";
+                    ele.style.color = "gray";
                   }
                 }}
               />

@@ -1,12 +1,16 @@
+@import "../css//EssentialComponent.scss";
+$rotation: rotate(320deg);
 .login_main {
+  font-family: "Poppins", sans-serif !important;
   margin: 0px;
   padding: 0px;
-  width: 1000px;
+  width: 100%;
   height: 100vh;
   display: flex;
   width: inherit;
   flex-direction: column;
   justify-content: center;
+  font-size: 16px;
   align-items: center;
   align-self: center;
   /* fallback for old browsers */
@@ -23,15 +27,67 @@
   .login_parent {
     position: relative;
     overflow: hidden;
-    width: 900px;
-    height: 550px;
+    width: 850px;
+    height: 500px;
+    border-radius: 20px;
     background-color: white;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    box-shadow: rgb(102, 101, 101) 5px 5px 20px;
   }
   .login_child {
     text-align: center;
+    line-height: 1.3em;
+    .head_container {
+      position: relative;
+      left: 100%;
+      top: -20px;
+    }
+    .top_tag > p {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgb(114, 108, 108);
+    }
+    .top_tag > h2 {
+      color: rgb(104, 96, 216);
+    }
+    // forgot password ui
+    .login_forgot_password {
+      font-size: 12px;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 2em;
+    }
+    .button_main {
+      margin: 1em;
+      .login_btn {
+        @include Button(100%, #2b63e6, 5em);
+        background-image: linear-gradient(
+          to left top,
+          #7e4892,
+          #c25389,
+          #ef7174,
+          #ff9f61,
+          #f8d364
+        );
+      }
+    }
+    .login_bottom_main {
+      font-size: 13px;
+      font-weight: 500;
+      color: #c25389;
+      top: 0;
+      width: 100%;
+      .social_acc {
+        margin-top: -1em;
+      }
+      .login_to_signup {
+        display: flex;
+        justify-content: center;
+        margin-left: 2em;
+      }
+    }
   }
   .login_side_bar {
     .login_side_p1 {
@@ -47,9 +103,9 @@
       height: 70vh;
       border-radius: 1000px;
       position: absolute;
-      top: -25%;
+      top: -26%;
       left: -8%;
-      transform: rotate(320deg);
+      transform: $rotation;
       border: 20px solid rgb(219, 216, 216);
     }
     .login_side_p2 {
@@ -65,13 +121,44 @@
         #f5c431
       );
       left: -4%;
-      top: 52%;
+      top: 58%;
       border-radius: 500px;
-      transform: rotate(320deg);
+      transform: $rotation;
     }
-    .login_side_p2 {
+    .login_side_p3 {
       position: absolute;
-      width: 8em;
+      width: 6em;
+      height: 25vh;
+      border-radius: 500px;
+      top: 85%;
+      left: 25%;
+      background-image: linear-gradient(
+        to right bottom,
+        #f9cc64,
+        #ffa067,
+        #ff7882,
+        #e460a5,
+        #a05fc1
+      );
+      transform: $rotation;
+    }
+    .login_side_p4 {
+      position: absolute;
+      width: 6em;
+      height: 22vh;
+      background-color: red;
+      transform: $rotation;
+      top: -15%;
+      left: 18%;
+      border-radius: 500px;
+      background-image: linear-gradient(
+        to left top,
+        #f5be40,
+        #ff904c,
+        #ff5d79,
+        #ff3eb5,
+        #bb55f0
+      );
     }
   }
   .form_main {
@@ -79,6 +166,7 @@
     width: 19em;
     justify-content: space-evenly;
     flex-direction: column;
+    align-items: center;
     div {
       margin: 5px;
     }

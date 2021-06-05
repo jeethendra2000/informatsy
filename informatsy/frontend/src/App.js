@@ -1,22 +1,62 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import "./App.css";
+import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import PopupAccount from "./components/PopupAccount";
-import Home from "./components/Home";
-import Input from "./components/Input";
-export default class App extends Component {
-  render() {
-    return (
-      <div className="App">
+import HomePage from "./components/HomePage";
+
+// Custom theme of Informatsy
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#6D78FE",
+      dark: "#1876d2",
+    },
+    // primary:purple,
+    secondary: {
+      main: "#ff7e79",
+    },
+  },
+  typography: {
+    fontFamily: "Montserrat",
+    fontWeightLight: 400,
+    fontWeightRegular: 600,
+    fontWeightMedium: 700,
+    fontWeightBold: 800,
+    button: {
+      textTransform: "capitalize",
+      textDecoration: "none",
+    },
+  },
+});
+
+function App() {
+  return (
+    <div className="App">
+      <ThemeProvider theme={theme}>
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/popup" component={PopupAccount} />
-            <Route path="/input" component={Input} />
+            <Route exact path="/popup" component={PopupAccount} />
+            <Route exact path="/login" component={Login} />
+
+            <Navbar>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Redirect to="/"></Redirect>
+              </Switch>
+            </Navbar>
           </Switch>
         </Router>
-      </div>
-    );
-  }
+      </ThemeProvider>
+    </div>
+  );
 }
+export default App;

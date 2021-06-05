@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import logo from "../Assets/title-72x72.png";
+import logo from "../Assets/logo.png";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import EmailIcon from "@material-ui/icons/Email";
-import FilledInput from "@material-ui/core/FilledInput";
-import DoneAllIcon from "@material-ui/icons/DoneAll";
+
 import Visibility from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -17,6 +14,7 @@ import Input from "../components/Input";
 import "../css/Login.css";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
+import { Typography } from "@material-ui/core";
 export class Login extends Component {
   constructor(props) {
     super(props);
@@ -72,10 +70,16 @@ export class Login extends Component {
                 />
               </div>
             </div>
+            <Typography
+              className="login_forgot_password"
+              component={Link}
+              to="/forgot"
+            >
+              Forgot password
+            </Typography>
             <div className="button_main">
               <Button
-                className="btn_1"
-                id="btn"
+                className="login_btn"
                 variant="contained"
                 color="primary"
                 component={Link}
@@ -85,7 +89,8 @@ export class Login extends Component {
                 Login
               </Button>
             </div>
-            <div className="Bottom_main">
+
+            <div className="login_bottom_main">
               <p>or via social media</p>
               <div className="social_acc">
                 <IconButton
@@ -127,6 +132,16 @@ export class Login extends Component {
                     height={img_size + 3}
                   />
                 </IconButton>
+              </div>
+              <div className="login_to_signup">
+                <span>Don't have an account ? </span>
+                <Typography
+                  className="login_forgot_password"
+                  component={Link}
+                  to="/forgot"
+                >
+                  Sign up
+                </Typography>
               </div>
             </div>
           </div>

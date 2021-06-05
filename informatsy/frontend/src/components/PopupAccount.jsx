@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import topImage from "../Assets/mobile login2.gif";
 import cloudImg from "../Assets/cloud image.png";
-import logo from "../Assets/title-72x72.png";
+import logo from "../Assets/logo.png";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import "../css/PopupAccount.css";
