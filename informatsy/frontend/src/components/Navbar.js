@@ -5,11 +5,14 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import logo from "../Assets/logo.png";
 
+import Sidebar from "../components/Sidebar";
+
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
   Avatar,
+  Box,
   Container,
   Hidden,
   List,
@@ -23,15 +26,10 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     marginLeft: theme.spacing(5),
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: theme.spacing(12),
-    },
   },
 
-  menuButton: {
-    marginRight: theme.spacing(1),
-  },
   title: {
+    paddingTop: "5px",
     [theme.breakpoints.up("md")]: {
       marginRight: theme.spacing(40),
       marginLeft: theme.spacing(1),
@@ -68,7 +66,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   toolbar: {
-    paddingBottom: "10px",
+    paddingBottom: "80px",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "60px",
+    },
   },
 }));
 
@@ -86,29 +87,44 @@ export default function Navbar({ children }) {
   ];
   return (
     <div className={classes.root}>
-      <AppBar position="sticky" className={classes.navbar}>
+      <AppBar position="fixed" className={classes.navbar}>
         <Toolbar>
           <Hidden mdUp>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="primary"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
+            <Sidebar menuItems={menuItems} />
           </Hidden>
-          <Avatar src={logo} className={classes.logo}/>
-          <Hidden smDown>
-            <Typography
-              variant="h4"
-              align="center"
-              className={classes.title}
-              color="primary"
-            >
-              Informatsy
-            </Typography>
+          <div
+            button
+            onClick={() => {
+              alert("hi");
+            }}
+            style={{ display: "flex" }}
+          >
+            <Hidden smDown>
+              <Avatar
+                src={logo}
+                onClick={() => {
+                  history.push("/");
+                }}
+                className={classes.logo}
+              />
+              <Typography
+                variant="h4"
+                align="center"
+                className={classes.title}
+                color="primary"
+              >
+                Informatsy
+              </Typography>
+            </Hidden>
+          </div>
+
+
+          <Hidden mdUp>
+            <Box>
+              <Avatar src={logo} />
+            </Box>
           </Hidden>
+
 
           <Hidden smDown>
             <List className={classes.menuList}>
