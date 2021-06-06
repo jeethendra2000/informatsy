@@ -8,7 +8,7 @@ import {
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layoutsComponent/Navbar";
 import Login from "./components/Login";
 import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
