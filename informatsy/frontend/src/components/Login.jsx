@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export class Login extends Component {
   render() {
     return (
-      <div style={{height:'85vh'}}>
+      <div style={{height:'90vh'}}>
         <Typography>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita,
           nam autem obcaecati vitae assumenda saepe maiores error iure illum

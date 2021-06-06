@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 
 import {
   Avatar,
-  Box,
   Container,
   Hidden,
   List,
@@ -98,8 +97,8 @@ export default function Navbar({ children }) {
         <Toolbar>
           {/* -----------------------Brand Logo----------------------- */}
           <Hidden smDown>
-            <Link to="/" style={{textDecoration:"none"}}>
-              <div style={{ display: "flex"}}>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <div style={{ display: "flex" }}>
                 <Avatar src={logo} className={classes.logo} />
                 <Typography
                   variant="h4"
