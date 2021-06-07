@@ -10,14 +10,15 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "95%",
     },
+    position:"relative",
   },
   wave: {
     position: "absolute",
     marginLeft: "-70px",
     paddingTop: "60px",
     [theme.breakpoints.down("md")]: {
-      marginLeft: "-60px",
-      paddingTop: "0px",
+      marginLeft: "-48px",
+      paddingTop: "20px",
     },
   },
 }));
@@ -38,7 +39,7 @@ export default function About() {
             />
           </Box>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item sm={6}  style={{position:"relative"}}>
           <Box pt={{ xs: 1, md: 15 }}>
             <Grid container>
               <Grid item xs={12}>

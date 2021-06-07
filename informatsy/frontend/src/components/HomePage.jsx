@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridContainer: {
     flexDirection: "row-reverse",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       flexDirection: "row",
     },
   },
