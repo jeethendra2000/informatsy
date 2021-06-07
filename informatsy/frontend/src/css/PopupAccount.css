@@ -128,17 +128,23 @@
   margin-top: 2rem;
 }
 
-#btn {
-  border-radius: 2em;
-  width: 35%;
-  background-color: #2b63e6;
+.btn_1 {
+  border-radius: 2em !important;
+  width: 35% !important;
+  background-color: #2b63e6 !important;
   font-weight: 600;
-  font-size: 14px;
-  text-transform: capitalize;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
+  border: 2px solid #2b63e6 !important;
 }
 
 .btn_2 {
+  border-radius: 2em !important;
+  width: 35% !important;
   background-color: transparent !important;
+  font-weight: 600;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
   color: black !important;
   border: 2px solid black !important;
 }

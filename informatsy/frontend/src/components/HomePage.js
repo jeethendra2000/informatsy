@@ -10,7 +10,6 @@ export default function HomePage() {
           Home Page
         </Typography>
       </React.Fragment>
-      <Input classname="ther" name="jeeth" type="password" />
     </div>
   );
 }
