@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Divider,
-  Icon,
   IconButton,
   List,
   ListItem,
@@ -26,6 +25,7 @@ import ImportantDevicesIcon from "@material-ui/icons/ImportantDevices";
 import CallIcon from "@material-ui/icons/Call";
 import EmailIcon from "@material-ui/icons/Email";
 
+// selecting icons to sidebar
 const selectIcon = (logoTitle) => {
   switch (logoTitle) {
     case "MenuBookIcon":
@@ -59,6 +59,7 @@ export default function Sidebar({ menuItems }) {
   const history = useHistory();
 
   const [open, setOpen] = useState(false);
+
   return (
     <div>
       <IconButton
@@ -112,7 +113,9 @@ export default function Sidebar({ menuItems }) {
                 }}
               >
                 <ListItemIcon>
-                  <Box color="#000000DE" ml={1}>{selectIcon(menu.logo)}</Box>
+                  <Box color="#000000DE" ml={1}>
+                    {selectIcon(menu.logo)}
+                  </Box>
                 </ListItemIcon>
                 <ListItemText primary={menu.title} />
               </ListItem>

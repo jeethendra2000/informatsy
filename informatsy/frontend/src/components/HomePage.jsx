@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import header from "../Assets/header.png";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import About from "./layoutsComponent/About";
+import Features from "./layoutsComponent/Features";
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
     width: "100%",
@@ -129,6 +130,9 @@ export default function HomePage() {
 
       {/* About Section */}
       <About />
+
+      {/* Features Section */}
+      <Features />
     </React.Fragment>
   );
 }

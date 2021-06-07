@@ -84,11 +84,11 @@ export default function Navbar({ children }) {
   const location = useLocation();
 
   const menuItems = [
-    { title: "Home", logo:"HomeIcon", path: "/" },
-    { title: "Resources", logo:"MenuBookIcon", path: "/login" },
-    { title: "About", logo:"InfoIcon", path: "/kj" },
-    { title: "Features", logo:"ImportantDevicesIcon", path: "/aa" },
-    { title: "Contact", logo:"CallIcon", path: "/popup" },
+    { title: "Home", logo: "HomeIcon", path: "/" },
+    { title: "Resources", logo: "MenuBookIcon", path: "/login" },
+    { title: "About", logo: "InfoIcon", path: "/kj" },
+    { title: "Features", logo: "ImportantDevicesIcon", path: "/aa" },
+    { title: "Contact", logo: "CallIcon", path: "/popup" },
   ];
 
   return (
