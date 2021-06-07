@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import about from "../../Assets/about_img.png";
+import wave from "../../Assets/wave.png";
 
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
@@ -10,16 +11,26 @@ const useStyles = makeStyles((theme) => ({
       width: "95%",
     },
   },
+  wave: {
+    position: "absolute",
+    marginLeft: "-70px",
+    paddingTop: "60px",
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "-60px",
+      paddingTop: "0px",
+    },
+  },
 }));
 
 export default function About() {
   const classes = useStyles();
 
   return (
-    <Box>
+    <Box id="about">
+      <img src={wave} alt={"wave"} className={classes.wave} />
       <Grid container>
         <Grid item sm={6}>
-          <Box p={{ md: 8}}>
+          <Box p={{ md: 8 }}>
             <img
               src={about}
               alt={"AboutImage"}
@@ -28,7 +39,7 @@ export default function About() {
           </Box>
         </Grid>
         <Grid item sm={6}>
-          <Box pt={{xs:1, md:15}}>
+          <Box pt={{ xs: 1, md: 15 }}>
             <Grid container>
               <Grid item xs={12}>
                 <Box pb={{ xs: 2, md: 2 }}>

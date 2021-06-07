@@ -86,10 +86,11 @@ export default function Navbar({ children }) {
   const menuItems = [
     { title: "Home", path: "/" },
     { title: "Resources", path: "/login" },
-    { title: "About", path: "/asd" },
+    { title: "About", path: "/kj" },
     { title: "Features", path: "/aa" },
     { title: "Contact", path: "/popup" },
   ];
+  
   return (
     <div className={classes.root}>
       {/* Header */}
