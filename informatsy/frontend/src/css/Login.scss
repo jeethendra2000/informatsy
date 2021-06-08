@@ -332,7 +332,7 @@ $rotation: rotate(320deg);
   display: flex;
   justify-content: center;
   margin-top: -3em;
-  z-index: 999;
+  z-index: 900;
   .mv-login-form-parent {
     display: flex;
     justify-content: space-around;
@@ -345,13 +345,19 @@ $rotation: rotate(320deg);
     }
     .mv-login-form-body {
       width: 18em;
-      position: relative;
 
       .my-login-form-input {
         display: flex;
-        width: 100%;
-        height: 20vh;
-        justify-content: space-around;
+        height: 10em;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+      }
+      .my-signup-form-input {
+        margin-top: -1em;
+        display: flex;
+        height: 13em;
+        justify-content: space-evenly;
         align-items: center;
         flex-direction: column;
       }
@@ -360,6 +366,7 @@ $rotation: rotate(320deg);
         justify-content: flex-end;
         font-size: 13px;
         margin-right: 1em;
+        margin-top: -1em;
       }
       .login_btn {
         width: 100%;

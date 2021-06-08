@@ -70,18 +70,22 @@ export class mobile extends Component {
               <h2 className="mv-login-heading">User login</h2>
               <div className="mv-login-form-body">
                 <div className="my-login-form-input">
-                  <Input
-                    name="Username or Email"
-                    classname="mv-login-form-text"
-                    type="text"
-                    component={<PersonRoundedIcon style={style} />}
-                  />
-                  <Input
-                    name="Password"
-                    classname="mv-login-form-pass"
-                    type="password"
-                    component={<PersonRoundedIcon style={style} />}
-                  />
+                  <div className="forms_content1">
+                    <Input
+                      name="Username or Email"
+                      classname="mv-login-form-text"
+                      type="text"
+                      component={<PersonRoundedIcon style={style} />}
+                    />
+                  </div>
+                  <div className="forms_content1">
+                    <Input
+                      name="Password"
+                      classname="mv-login-form-pass"
+                      type="password"
+                      component={<PersonRoundedIcon style={style} />}
+                    />
+                  </div>
                 </div>
                 <Typography
                   className="login_forgot_password"

@@ -62,7 +62,7 @@ export class Login extends Component {
                     component={<PersonRoundedIcon style={style} />}
                   />
                 </div>
-                <div className="forms_content1">
+                <div className="forms_content2">
                   <Input
                     name="Password"
                     classname="two"

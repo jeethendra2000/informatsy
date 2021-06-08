@@ -98,7 +98,7 @@ export default function Navbar({ children }) {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <Avatar src={logo} className={classes.logo}/>
+          <Avatar src={logo} className={classes.logo} />
           <Hidden smDown>
             <Typography
               variant="h4"
@@ -130,7 +130,7 @@ export default function Navbar({ children }) {
               color="primary"
               size="medium"
               variant="outlined"
-              onClick={() => history.push("/popup")}
+              onClick={() => history.push("/signup")}
               className={classes.signUpButton}
             >
               Signup
