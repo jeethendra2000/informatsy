@@ -139,6 +139,8 @@ export default function HomePage() {
 
       {/* Contact Section */}
       <Contact/>
+
+      
     </React.Fragment>
   );
 }

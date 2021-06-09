@@ -7,12 +7,24 @@ import file from "../../Assets/file.png";
 import support from "../../Assets/support.png";
 import security from "../../Assets/security.png";
 import datacenter from "../../Assets/DataCenter.png";
+import wave3 from "../../Assets/wave3.png";
 
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
     width: "70%",
     [theme.breakpoints.down("sm")]: {
       width: "65%",
+    },
+  },
+  wave3: {
+    position: "absolute",
+    left: "97%",
+
+    [theme.breakpoints.down("sm")]: {
+      left: "90%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      left: "85%",
     },
   },
 }));
@@ -57,7 +69,10 @@ export default function Features() {
 
   return (
     <div>
-      <Box ml={1}>
+      <Box ml={1} position="relative">
+        <Box className={classes.wave3}>
+          <img src={wave3} alt="waveDesign3" />
+        </Box>
         <Box style={{ marginRight: "30px" }} py={{ xs: 1, sm: 2, md: 3 }}>
           <Grid container>
             <Grid item xs={12}>

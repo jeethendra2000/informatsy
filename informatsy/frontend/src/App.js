@@ -49,7 +49,7 @@ function App() {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/" component={HomePage} />
-                <Redirect to="/"></Redirect>
+                <Redirect to="/"> </Redirect>
               </Switch>
             </Navbar>
           </Switch>

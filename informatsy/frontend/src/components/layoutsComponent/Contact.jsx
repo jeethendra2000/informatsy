@@ -1,12 +1,49 @@
-import { Box, Grid, Typography } from "@material-ui/core";
-import React from "react";
+import { Box, Button, Grid, InputBase, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import React, { useState } from "react";
+
+const useStyles = makeStyles((theme) => ({
+  inputField: {
+    border: "2px dashed #6d78fe",
+    borderRadius: "10px",
+    color: "#585858",
+    padding: theme.spacing(2),
+  },
+  error: {
+    border: "2px dashed red",
+    borderRadius: "10px",
+    color: "#585858",
+    padding: theme.spacing(2),
+  },
+}));
 
 export default function Contact() {
+  const classes = useStyles();
+
+  const [fullName, setFullName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [fullNameError, setFullNameError] = useState(false);
+  const [emailAddressError, setEmailAddressError] = useState(false);
+  const [messageError, setMessageError] = useState(false);
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    if (fullName && emailAddress && message) {
+      alert("Submitted Successfully");
+    }
+
+    setFullNameError(fullName === "" ? true : false);
+    setEmailAddressError(emailAddress === "" ? true : false);
+    setMessageError(message === "" ? true : false);
+  };
+
   return (
-    <Box py={5} mr={1}>
-      <Grid container spacing={5} alignItems="center">
+    <Box py={5} mr={1} my={{ md: 5 }}>
+      <Grid container spacing={5}>
         <Grid item md={6}>
-          <Box ml={{ md: 6 }}>
+          <Box ml={{ md: 6 }} pl={{ md: 3 }}>
             <Grid container alignItems="center">
               <Grid item xs={12}>
                 <Box pb={2}>
@@ -75,16 +112,59 @@ export default function Contact() {
         </Grid>
 
         <Grid item md={6}>
-          <Box>
-            <Grid container>
-              <Box>
-                <Grid item>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi
-                  aut vitae excepturi fugiat sequi, quibusdam corrupti quo
-                  voluptatum harum rerum enim iure doloribus veritatis a modi
-                  consectetur! Recusandae, perferendis expedita.
-                </Grid>
-              </Box>
+          <Box mr={{ xs: 1 }}>
+            <Grid
+              justify="center"
+              container
+              component="form"
+              noValidate
+              autoComplete="off"
+              onSubmit={handleContactSubmit}
+              spacing={3}
+            >
+              <Grid item xs={12} md={10}>
+                <InputBase
+                  placeholder="Full name"
+                  className={fullNameError ? classes.error : classes.inputField}
+                  variant="outlined"
+                  fullWidth
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={10}>
+                <InputBase
+                  placeholder="Email address"
+                  className={
+                    emailAddressError ? classes.error : classes.inputField
+                  }
+                  variant="outlined"
+                  fullWidth
+                  onChange={(e) => setEmailAddress(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={10}>
+                <InputBase
+                  placeholder="Type your message"
+                  className={messageError ? classes.error : classes.inputField}
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  rows={4}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={10}>
+                <Button
+                  size="small"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
+                  <Typography variant="h6">Submit Message</Typography>
+                </Button>
+              </Grid>
             </Grid>
           </Box>
         </Grid>
