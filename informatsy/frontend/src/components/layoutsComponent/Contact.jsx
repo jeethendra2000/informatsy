@@ -2,6 +2,8 @@ import { Box, Button, Grid, InputBase, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React, { useState } from "react";
 
+import axios from "axios";
+
 const useStyles = makeStyles((theme) => ({
   inputField: {
     border: "2px dashed #6d78fe",
@@ -31,7 +33,23 @@ export default function Contact() {
   const handleContactSubmit = (e) => {
     e.preventDefault();
     if (fullName && emailAddress && message) {
-      alert("Submitted Successfully");
+      let data = {
+        fullName: fullName,
+        emailAddress: emailAddress,
+        message: message,
+      };
+      axios
+        .post("http://127.0.0.1:8000/api/contactForm/", data)
+        .then((res) => {
+          setFullName("");
+          setEmailAddress("");
+          setMessage("");
+
+          alert("value reset done");
+        })
+        .catch((err) => {
+          alert("Error! Please check your Credentials");
+        });
     }
 
     setFullNameError(fullName === "" ? true : false);
