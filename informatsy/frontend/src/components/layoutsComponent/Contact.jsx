@@ -44,8 +44,8 @@ export default function Contact() {
           setFullName("");
           setEmailAddress("");
           setMessage("");
-
-          alert("value reset done");
+          console.log(res);
+          alert("value reset done" + res.status);
         })
         .catch((err) => {
           alert("Error! Please check your Credentials");

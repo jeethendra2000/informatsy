@@ -5,4 +5,9 @@ class ContactFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactForm
         fields = "__all__"
+
+class SyllabusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Syllabus
+        fields = "__all__"
         

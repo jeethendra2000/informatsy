@@ -12,6 +12,7 @@ import Navbar from "./components/layoutsComponent/Navbar";
 import Login from "./components/Login";
 import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
+import Syllabus from "./components/Syllabus";
 
 // Custom theme of Informatsy
 const theme = createMuiTheme({
@@ -49,6 +50,7 @@ function App() {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Redirect to="/"> </Redirect>
               </Switch>
             </Navbar>
