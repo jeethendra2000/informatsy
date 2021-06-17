@@ -3,6 +3,7 @@ import logo from "../Assets/logo.png";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import MobileView from "../components/mobile";
+import DoneAllIcon from "@material-ui/icons/DoneAll";
 import Visibility from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -16,20 +17,84 @@ import fb_icon from "../Assets/fb-img.png";
 import g_icon from "../Assets/google-img.png";
 import li_icon from "../Assets/linkedin_logo.webp";
 import Input from "../components/Input";
-
+import Loader from "../components/Loaders";
 import "../css/Login.css";
-import { FormHelperText } from "@material-ui/core";
+// import { Snackbar } from "@material-ui/core";
+// import MuiAlert from "@material-ui/lab/Alert";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import { Typography } from "@material-ui/core";
+import Alert from "../components/AlertBar";
 export class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showPassword: false,
       showConfirmPass: false,
+      Email: "",
+      isEmailTrue: false,
+      password: "",
+      isPassword: false,
+      confirmPassword: "",
+      ispassConfirm: false,
+      alert: false,
+      alertContent: "",
+      alertMsg: "",
     };
   }
+  //to get alert input and import from another component and pass as props to child
+  alert(data) {
+    console.log(data);
+  }
+  // to get loading functionality by passing some values through this
+  getLoadFunction(selector, property) {
+    document.getElementsByClassName(selector)[0].style.visibility = property;
+  }
+  // input loaders settings
+  setInputStateEmail = (childData) => {
+    this.setState({ Email: childData });
+    this.getLoadFunction("mv_sign_up_loader1", "visible");
+    var reg =
+      /^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud)+[.]+[a-z,A-Z,0-9]+$/;
+    if (reg.test(this.state.Email)) {
+      this.setState({ isEmailTrue: true });
+    } else {
+      this.setState({ isEmailTrue: false });
+    }
+  };
+  setInputStatePassword = (childData) => {
+    this.getLoadFunction("mv_sign_up_loader2", "visible");
+    // regex for password
+    // var passRegex =
+    //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/i;
+    if (
+      childData.match(/[a-z]/g) &&
+      childData.match(/[A-Z]/g) &&
+      childData.match(/[0-9]/g) &&
+      childData.match(/[^a-zA-Z\d]/g) &&
+      childData.length >= 6
+    ) {
+      this.setState({ isPassword: true });
+      this.setState({ password: childData });
+      this.setInputStateConfirmPass(childData);
+      console.log("true");
+    } else {
+      this.setState({ isPassword: false });
+      console.log("false");
+    }
+  };
+  setInputStateConfirmPass = (confirmData) => {
+    this.getLoadFunction("mv_sign_up_loader3", "visible");
+    this.setState({ confirmPassword: confirmData });
+    console.log();
+    // regex for password
+    if (this.state.password === confirmData) {
+      this.setState({ ispassConfirm: true });
+      this.setState({ confirmPassword: confirmData });
+    } else {
+      this.setState({ ispassConfirm: false });
+    }
+  };
   render() {
     const img_size = 30;
     const style = { color: "grey", lineHeight: "55px" };
@@ -39,8 +104,25 @@ export class Signup extends Component {
       position: "absolute",
       left: "76%",
     };
+    const mobileViewStyle = {
+      color: "grey",
+      position: "absolute",
+      left: "85%",
+      top: "50%",
+      transform: "translate(-50%,-50%)",
+    };
     return (
       <>
+        {/* two showing alert  we also specify height where we can be placed that alert*/}
+        <Alert
+          content={{
+            alert: this.state.alert,
+            msgStatus: "error",
+            msgContent:
+              "Password must include minimum six character, atleast one lowercase,uppercase,number,special character",
+            height: "130%",
+          }}
+        />
         <div className="login_main">
           <div className="login_parent">
             <div className="login_side_bar">
@@ -246,31 +328,49 @@ export class Signup extends Component {
               <div className="mv-login-form-parent">
                 <h2 className="mv-login-heading">Create Account</h2>
                 <div className="mv-login-form-body">
-                  <div
-                    className="my-signup-form-input"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div>
+                  <div className="my-signup-form-input">
+                    <div
+                      onBlur={() =>
+                        this.getLoadFunction("mv_sign_up_loader1", "hidden")
+                      }
+                    >
                       <Input
-                        name="Username or Email"
+                        name="Enter valid email"
                         classname="mv-login-form-text"
+                        type="text"
                         component={<PersonRoundedIcon style={style} />}
+                        returnValue={this.setInputStateEmail}
                       />
+                      <div className="mv_indicator">
+                        <div className="mv_loader mv_sign_up_loader1">
+                          {this.state.isEmailTrue ? (
+                            <DoneAllIcon className="mv_crct_icn" />
+                          ) : (
+                            <Loader />
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div>
+                    <div
+                      style={{ position: "relative" }}
+                      onClick={() => {
+                        this.setState({ alert: true });
+                      }}
+                      onBlur={() => {
+                        this.setState({ alert: false });
+                        this.getLoadFunction("mv_sign_up_loader2", "hidden");
+                      }}
+                    >
                       <Input
                         name="Password"
                         type={this.state.showPassword ? "text" : "password"}
                         classname="mv-login-form-pass"
-                        component={<PersonRoundedIcon style={style} />}
+                        component={<LockOpenRoundedIcon style={style} />}
+                        returnValue={this.setInputStatePassword}
                       />
                       <IconButton
                         aria-label="lock"
-                        style={extendedStyles}
+                        style={mobileViewStyle}
                         onClick={() => {
                           this.setState({
                             showPassword: !this.state.showPassword,
@@ -283,17 +383,33 @@ export class Signup extends Component {
                           <Visibility />
                         )}
                       </IconButton>
+                      <div className="mv_indicator">
+                        <div className="mv_loader mv_sign_up_loader2">
+                          {this.state.isPassword ? (
+                            <DoneAllIcon className="mv_crct_icn" />
+                          ) : (
+                            <Loader />
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div>
+
+                    <div
+                      style={{ position: "relative" }}
+                      onBlur={() =>
+                        this.getLoadFunction("mv_sign_up_loader2", "hidden")
+                      }
+                    >
                       <Input
                         name="Confirm password"
                         classname="mv-login-form-confirmPass"
                         type={this.state.showConfirmPass ? "text" : "password"}
-                        component={<PersonRoundedIcon style={style} />}
+                        component={<LockOpenRoundedIcon style={style} />}
+                        returnValue={this.setInputStateConfirmPass}
                       />
                       <IconButton
                         aria-label="lock"
-                        style={extendedStyles}
+                        style={mobileViewStyle}
                         onClick={() => {
                           this.setState({
                             showConfirmPass: !this.state.showConfirmPass,
@@ -306,9 +422,15 @@ export class Signup extends Component {
                           <Visibility />
                         )}
                       </IconButton>
-                      <FormHelperText>
-                        {this.state.confirmPassMsg}
-                      </FormHelperText>
+                      <div className="mv_indicator">
+                        <div className="mv_loader mv_sign_up_loader3">
+                          {this.state.ispassConfirm ? (
+                            <DoneAllIcon className="mv_crct_icn" />
+                          ) : (
+                            <Loader />
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div

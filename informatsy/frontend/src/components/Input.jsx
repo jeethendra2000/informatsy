@@ -5,6 +5,11 @@ export class Input extends Component {
   constructor(props) {
     super(props);
   }
+  returnValue = (e) => {
+    this.props.returnValue(e.target.value);
+  };
+  //to return values to the parent
+
   render() {
     const name = this.props.name;
     const type = this.props.type;
@@ -48,6 +53,7 @@ export class Input extends Component {
               <input
                 type={type}
                 className="input_cls"
+                onKeyUp={this.returnValue}
                 onBlur={() => {
                   var ele = document.querySelector("." + classname + " .lab");
                   var main = document.querySelector(

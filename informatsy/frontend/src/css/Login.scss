@@ -353,6 +353,7 @@ $rotation: rotate(320deg);
         align-items: center;
         flex-direction: column;
       }
+
       .my-signup-form-input {
         margin-top: -1em;
         display: flex;
@@ -360,6 +361,18 @@ $rotation: rotate(320deg);
         justify-content: space-evenly;
         align-items: center;
         flex-direction: column;
+        div {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .mv_indicator {
+          margin-right: -1em;
+          visibility: hidden;
+          .mv_crct_icn {
+            color: #2b63e6;
+          }
+        }
       }
       .login_forgot_password {
         display: flex;

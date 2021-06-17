@@ -455,6 +455,27 @@
           flex-direction: column;
 }
 
+.mv-login-form-main .mv-login-form-parent .mv-login-form-body .my-signup-form-input div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.mv-login-form-main .mv-login-form-parent .mv-login-form-body .my-signup-form-input .mv_indicator {
+  margin-right: -1em;
+  visibility: hidden;
+}
+
+.mv-login-form-main .mv-login-form-parent .mv-login-form-body .my-signup-form-input .mv_indicator .mv_crct_icn {
+  color: #2b63e6;
+}
+
 .mv-login-form-main .mv-login-form-parent .mv-login-form-body .login_forgot_password {
   display: -webkit-box;
   display: -ms-flexbox;
