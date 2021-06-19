@@ -25,7 +25,7 @@ import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import { Typography } from "@material-ui/core";
 import Alert from "../components/AlertBar";
-export class Signup extends Component {
+class FormMain extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,15 +42,11 @@ export class Signup extends Component {
       alertMsg: "",
     };
   }
-  //to get alert input and import from another component and pass as props to child
-  alert(data) {
-    console.log(data);
-  }
-  // to get loading functionality by passing some values through this
+  // ----to get loading functionality by passing some values through this--------
   getLoadFunction(selector, property) {
     document.getElementsByClassName(selector)[0].style.visibility = property;
   }
-  // input loaders settings
+  // -------------------input loaders settings--------------------------
   setInputStateEmail = (childData) => {
     this.setState({ Email: childData });
     this.getLoadFunction("mv_sign_up_loader1", "visible");
@@ -87,7 +83,7 @@ export class Signup extends Component {
     this.getLoadFunction("mv_sign_up_loader3", "visible");
     this.setState({ confirmPassword: confirmData });
     console.log();
-    // regex for password
+    //----------- regex for password---------------
     if (this.state.password === confirmData) {
       this.setState({ ispassConfirm: true });
       this.setState({ confirmPassword: confirmData });
@@ -95,6 +91,230 @@ export class Signup extends Component {
       this.setState({ ispassConfirm: false });
     }
   };
+
+  render() {
+    const img_size = 30;
+    const style = { color: "grey", lineHeight: "55px" };
+    const extendedStyles = {
+      color: "grey",
+      position: "absolute",
+      left: "75%",
+    };
+    const mobileViewStyle = {
+      color: "grey",
+      position: "absolute",
+      left: "70%",
+    };
+
+    return (
+      <>
+        <div className="form_main">
+          <div
+            className="forms_content1"
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+            }}
+            onBlur={() => this.getLoadFunction("mv_sign_up_loader1", "hidden")}
+          >
+            <Input
+              name="Username or Email"
+              classname="one"
+              type="text"
+              component={<PersonRoundedIcon style={style} />}
+              returnValue={this.setInputStateEmail}
+            />
+            <div className="mv_indicator">
+              <div className="mv_loader mv_sign_up_loader1">
+                {this.state.isEmailTrue ? (
+                  <DoneAllIcon className="mv_crct_icn" fontSize="small" />
+                ) : (
+                  <Loader />
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className="forms_content1"
+            onClick={() => {
+              this.setState({ alert: true });
+            }}
+            onBlur={() => {
+              this.setState({ alert: false });
+              this.getLoadFunction("mv_sign_up_loader2", "hidden");
+            }}
+          >
+            <Input
+              name="Password"
+              classname="two"
+              type={this.state.showPassword ? "text" : "password"}
+              component={<LockOpenRoundedIcon style={style} />}
+              returnValue={this.setInputStatePassword}
+            />
+            <IconButton
+              aria-label="lock"
+              style={extendedStyles}
+              onClick={() => {
+                this.setState({
+                  showPassword: !this.state.showPassword,
+                });
+              }}
+            >
+              {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+            <div className="mv_indicator">
+              <div className="mv_loader mv_sign_up_loader2">
+                {this.state.isPassword ? (
+                  <DoneAllIcon className="mv_crct_icn" />
+                ) : (
+                  <Loader />
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className="forms_content1"
+            onBlur={() => this.getLoadFunction("mv_sign_up_loader3", "hidden")}
+          >
+            <Input
+              name="Confirm password"
+              classname="three"
+              type={this.state.showConfirmPass ? "text" : "password"}
+              component={<LockOpenRoundedIcon style={style} />}
+              returnValue={this.setInputStateConfirmPass}
+            />
+            <IconButton
+              aria-label="lock"
+              style={extendedStyles}
+              onClick={() => {
+                this.setState({
+                  showConfirmPass: !this.state.showConfirmPass,
+                });
+              }}
+            >
+              {this.state.showConfirmPass ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+            <div className="mv_indicator">
+              <div className="mv_loader mv_sign_up_loader3">
+                {this.state.ispassConfirm ? (
+                  <DoneAllIcon className="mv_crct_icn" />
+                ) : (
+                  <Loader />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="termsandcondition">
+          <Checkbox
+            icon={<CircleUnchecked />}
+            checkedIcon={<CircleCheckedFilled />}
+            size="small"
+          />
+          <div className="login-main-via">
+            <span>I agree with &nbsp;</span>
+            <Typography
+              className="terms_condition_link"
+              variant="inherit"
+              component={Link}
+              to="/forgot"
+            >
+              Privacy policy
+            </Typography>
+          </div>
+        </div>
+
+        <div className="button_main">
+          <Button
+            className="login_btn"
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/login"
+            disableElevation
+          >
+            Create my account
+          </Button>
+        </div>
+
+        <div className="login_bottom_main">
+          <p>or via social media</p>
+          <div className="social_acc">
+            <IconButton
+              aria-label="facebook"
+              className="btn_sa"
+              component={Link}
+              to="/login"
+            >
+              <img
+                src={fb_icon}
+                alt="facebook"
+                width={img_size}
+                height={img_size}
+              />
+            </IconButton>
+            <IconButton
+              className="btn_sa"
+              aria-label="google"
+              component={Link}
+              to="/login"
+            >
+              <img
+                src={g_icon}
+                alt="google"
+                width={img_size}
+                height={img_size}
+              />
+            </IconButton>
+            <IconButton
+              aria-label="linkedIn"
+              className="btn_sa"
+              component={Link}
+              to="/login"
+            >
+              <img
+                src={li_icon}
+                alt="linkedIn"
+                width={img_size + 3}
+                height={img_size + 3}
+              />
+            </IconButton>
+          </div>
+          <div className="login_to_signup">
+            <span>Already have account ? </span>
+            <Typography variant="inherit" component={Link} to="/forgot">
+              Sign in
+            </Typography>
+          </div>
+        </div>
+      </>
+    );
+  }
+}
+export class Signup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: window.innerWidth,
+      alert: false,
+      alertContent: "",
+      alertMsg: "",
+    };
+  }
+  //----------------to update rezing the window--------------
+  updateWindowSize = () => {
+    this.setState({ width: window.innerWidth });
+  };
+  //------------browser loads all component------------------
+  componentDidMount() {
+    window.addEventListener("resize", this.updateWindowSize);
+  }
+  //----------to remove eventlistener-----------------------
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowSize);
+  }
+
   render() {
     const img_size = 30;
     const style = { color: "grey", lineHeight: "55px" };
@@ -136,150 +356,7 @@ export class Signup extends Component {
               <div className="top_tag">
                 <h2>Hola!</h2>
                 <p>Create a new account</p>
-              </div>
-              <div className="form_main">
-                <div className="forms_content1">
-                  <Input
-                    name="Username or Email"
-                    classname="one"
-                    type="text"
-                    component={<PersonRoundedIcon style={style} />}
-                  />
-                </div>
-                <div
-                  className="forms_content1"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Input
-                    name="Password"
-                    classname="two"
-                    type={this.state.showPassword ? "text" : "password"}
-                    component={<LockOpenRoundedIcon style={style} />}
-                  />
-                  <IconButton
-                    aria-label="lock"
-                    style={extendedStyles}
-                    onClick={() => {
-                      this.setState({
-                        showPassword: !this.state.showPassword,
-                      });
-                    }}
-                  >
-                    {this.state.showPassword ? (
-                      <VisibilityOff />
-                    ) : (
-                      <Visibility />
-                    )}
-                  </IconButton>
-                </div>
-                <div
-                  className="forms_content1"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Input
-                    name="Confirm password"
-                    classname="three"
-                    type={this.state.showConfirmPass ? "text" : "password"}
-                    component={<LockOpenRoundedIcon style={style} />}
-                  />
-                  <IconButton
-                    aria-label="lock"
-                    style={extendedStyles}
-                    onClick={() => {
-                      this.setState({
-                        showConfirmPass: !this.state.showConfirmPass,
-                      });
-                    }}
-                  >
-                    {this.state.showConfirmPass ? (
-                      <VisibilityOff />
-                    ) : (
-                      <Visibility />
-                    )}
-                  </IconButton>
-                </div>
-              </div>
-              <Typography
-                className="login_forgot_password"
-                component={Link}
-                to="/forgot"
-              >
-                Forgot password
-              </Typography>
-              <div className="button_main">
-                <Button
-                  className="login_btn"
-                  variant="contained"
-                  color="primary"
-                  component={Link}
-                  to="/login"
-                  disableElevation
-                >
-                  Login
-                </Button>
-              </div>
-
-              <div className="login_bottom_main">
-                <p>or via social media</p>
-                <div className="social_acc">
-                  <IconButton
-                    aria-label="facebook"
-                    className="btn_sa"
-                    component={Link}
-                    to="/login"
-                  >
-                    <img
-                      src={fb_icon}
-                      alt="facebook"
-                      width={img_size}
-                      height={img_size}
-                    />
-                  </IconButton>
-                  <IconButton
-                    className="btn_sa"
-                    aria-label="google"
-                    component={Link}
-                    to="/login"
-                  >
-                    <img
-                      src={g_icon}
-                      alt="google"
-                      width={img_size}
-                      height={img_size}
-                    />
-                  </IconButton>
-                  <IconButton
-                    aria-label="linkedIn"
-                    className="btn_sa"
-                    component={Link}
-                    to="/login"
-                  >
-                    <img
-                      src={li_icon}
-                      alt="linkedIn"
-                      width={img_size + 3}
-                      height={img_size + 3}
-                    />
-                  </IconButton>
-                </div>
-                <div className="login_to_signup">
-                  <span>Already have account ? </span>
-                  <Typography
-                    className="login_forgot_password"
-                    component={Link}
-                    to="/forgot"
-                  >
-                    Sign in
-                  </Typography>
-                </div>
+                {this.state.width >= 610 ? <FormMain /> : ""}
               </div>
             </div>
           </div>
@@ -327,202 +404,7 @@ export class Signup extends Component {
             <div className="mv-login-form-main">
               <div className="mv-login-form-parent">
                 <h2 className="mv-login-heading">Create Account</h2>
-                <div className="mv-login-form-body">
-                  <div className="my-signup-form-input">
-                    <div
-                      onBlur={() =>
-                        this.getLoadFunction("mv_sign_up_loader1", "hidden")
-                      }
-                    >
-                      <Input
-                        name="Enter valid email"
-                        classname="mv-login-form-text"
-                        type="text"
-                        component={<PersonRoundedIcon style={style} />}
-                        returnValue={this.setInputStateEmail}
-                      />
-                      <div className="mv_indicator">
-                        <div className="mv_loader mv_sign_up_loader1">
-                          {this.state.isEmailTrue ? (
-                            <DoneAllIcon className="mv_crct_icn" />
-                          ) : (
-                            <Loader />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{ position: "relative" }}
-                      onClick={() => {
-                        this.setState({ alert: true });
-                      }}
-                      onBlur={() => {
-                        this.setState({ alert: false });
-                        this.getLoadFunction("mv_sign_up_loader2", "hidden");
-                      }}
-                    >
-                      <Input
-                        name="Password"
-                        type={this.state.showPassword ? "text" : "password"}
-                        classname="mv-login-form-pass"
-                        component={<LockOpenRoundedIcon style={style} />}
-                        returnValue={this.setInputStatePassword}
-                      />
-                      <IconButton
-                        aria-label="lock"
-                        style={mobileViewStyle}
-                        onClick={() => {
-                          this.setState({
-                            showPassword: !this.state.showPassword,
-                          });
-                        }}
-                      >
-                        {this.state.showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                      <div className="mv_indicator">
-                        <div className="mv_loader mv_sign_up_loader2">
-                          {this.state.isPassword ? (
-                            <DoneAllIcon className="mv_crct_icn" />
-                          ) : (
-                            <Loader />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      style={{ position: "relative" }}
-                      onBlur={() =>
-                        this.getLoadFunction("mv_sign_up_loader2", "hidden")
-                      }
-                    >
-                      <Input
-                        name="Confirm password"
-                        classname="mv-login-form-confirmPass"
-                        type={this.state.showConfirmPass ? "text" : "password"}
-                        component={<LockOpenRoundedIcon style={style} />}
-                        returnValue={this.setInputStateConfirmPass}
-                      />
-                      <IconButton
-                        aria-label="lock"
-                        style={mobileViewStyle}
-                        onClick={() => {
-                          this.setState({
-                            showConfirmPass: !this.state.showConfirmPass,
-                          });
-                        }}
-                      >
-                        {this.state.showConfirmPass ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                      <div className="mv_indicator">
-                        <div className="mv_loader mv_sign_up_loader3">
-                          {this.state.ispassConfirm ? (
-                            <DoneAllIcon className="mv_crct_icn" />
-                          ) : (
-                            <Loader />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      margin: "-1em 0 0 1em",
-                    }}
-                  >
-                    <Checkbox
-                      icon={<CircleUnchecked />}
-                      checkedIcon={<CircleCheckedFilled />}
-                    />
-                    <div className="login-main-via">
-                      <span className="">I agree with &nbsp;</span>
-                      <Typography
-                        className="login-main-via"
-                        component={Link}
-                        to="/forgot"
-                      >
-                        Privacy policy
-                      </Typography>
-                    </div>
-                  </div>
-
-                  <div className="button_main">
-                    <Button
-                      className="login_btn"
-                      variant="contained"
-                      color="primary"
-                      component={Link}
-                      to="/login"
-                    >
-                      Create account
-                    </Button>
-                  </div>
-                  <div className="login_bottom_main">
-                    <p className="login-main-via">or via social media</p>
-                    <div className="social_acc">
-                      <IconButton
-                        aria-label="facebook"
-                        className="btn_sa"
-                        component={Link}
-                        to="/login"
-                      >
-                        <img
-                          src={fb_icon}
-                          alt="facebook"
-                          width={img_size}
-                          height={img_size}
-                        />
-                      </IconButton>
-                      <IconButton
-                        className="btn_sa"
-                        aria-label="google"
-                        component={Link}
-                        to="/login"
-                      >
-                        <img
-                          src={g_icon}
-                          alt="google"
-                          width={img_size}
-                          height={img_size}
-                        />
-                      </IconButton>
-                      <IconButton
-                        aria-label="linkedIn"
-                        className="btn_sa"
-                        component={Link}
-                        to="/login"
-                      >
-                        <img
-                          src={li_icon}
-                          alt="linkedIn"
-                          width={img_size + 3}
-                          height={img_size + 3}
-                        />
-                      </IconButton>
-                    </div>
-                    <div className="login-main-via">
-                      <span className="">Don't have an account ?</span>
-                      <Typography
-                        className="login-main-via"
-                        component={Link}
-                        to="/forgot"
-                      >
-                        Sign up
-                      </Typography>
-                    </div>
-                  </div>
-                </div>
+                {this.state.width < 610 ? <FormMain /> : ""}
               </div>
             </div>
           </div>

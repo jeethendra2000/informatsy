@@ -43,9 +43,10 @@ $rotation: rotate(320deg);
     .head_container {
       position: relative;
       left: 100%;
-      top: -20px;
+      top: 0px;
     }
     .top_tag > p {
+      top: -10px;
       font-size: 15px;
       font-weight: 500;
       color: rgb(114, 108, 108);
@@ -54,126 +55,81 @@ $rotation: rotate(320deg);
       color: rgb(104, 96, 216);
     }
     // forgot password ui
-    .login_forgot_password {
-      font-size: 12px;
-      display: flex;
-      justify-content: flex-end;
-      margin-right: 2em;
-    }
-    .button_main {
-      margin: 1em;
-      .login_btn {
-        @include Button(100%, #2b63e6, 5em);
-        background-image: linear-gradient(
-          to left top,
-          #7e4892,
-          #c25389,
-          #ef7174,
-          #ff9f61,
-          #f8d364
-        );
-      }
-    }
-    .login_bottom_main {
-      font-size: 13px;
-      font-weight: 500;
-      color: #c25389;
-      top: 0;
-      width: 100%;
-      .social_acc {
-        margin-top: -1em;
-      }
-      .login_to_signup {
-        display: flex;
-        justify-content: center;
-        margin-left: 2em;
-      }
-    }
-  }
-  .login_side_bar {
-    .login_side_p1 {
-      width: 13em;
-      background-image: linear-gradient(
-        to top,
-        #985aaf,
-        #ec65a9,
-        #fd7881,
-        #ff944c,
-        #f5c431
-      );
-      height: 70vh;
-      border-radius: 1000px;
-      position: absolute;
-      top: -26%;
-      left: -8%;
-      transform: $rotation;
-      border: 20px solid rgb(219, 216, 216);
-    }
-    .login_side_p2 {
-      position: absolute;
-      width: 5em;
-      height: 22vh;
-      background-image: linear-gradient(
-        to top,
-        #985aaf,
-        #ec65a9,
-        #fd7881,
-        #ff944c,
-        #f5c431
-      );
-      left: -4%;
-      top: 58%;
-      border-radius: 500px;
-      transform: $rotation;
-    }
-    .login_side_p3 {
-      position: absolute;
-      width: 6em;
-      height: 25vh;
-      border-radius: 500px;
-      top: 85%;
-      left: 25%;
-      background-image: linear-gradient(
-        to right bottom,
-        #f9cc64,
-        #ffa067,
-        #ff7882,
-        #e460a5,
-        #a05fc1
-      );
-      transform: $rotation;
-    }
-    .login_side_p4 {
-      position: absolute;
-      width: 6em;
-      height: 22vh;
-      background-color: red;
-      transform: $rotation;
-      top: -15%;
-      left: 18%;
-      border-radius: 500px;
-      background-image: linear-gradient(
-        to left top,
-        #f5be40,
-        #ff904c,
-        #ff5d79,
-        #ff3eb5,
-        #bb55f0
-      );
-    }
-  }
-  .form_main {
-    display: flex;
-
-    width: 19em;
-    justify-content: space-evenly;
-    flex-direction: column;
-    align-items: center;
-    div {
-      margin: 5px;
-    }
   }
 }
+.login_side_bar {
+  .login_side_p1 {
+    width: 13em;
+    background-image: linear-gradient(
+      to top,
+      #985aaf,
+      #ec65a9,
+      #fd7881,
+      #ff944c,
+      #f5c431
+    );
+    height: 70vh;
+    border-radius: 1000px;
+    position: absolute;
+    top: -26%;
+    left: -8%;
+    transform: $rotation;
+    border: 20px solid rgb(219, 216, 216);
+  }
+  .login_side_p2 {
+    position: absolute;
+    width: 5em;
+    height: 22vh;
+    background-image: linear-gradient(
+      to top,
+      #985aaf,
+      #ec65a9,
+      #fd7881,
+      #ff944c,
+      #f5c431
+    );
+    left: -4%;
+    top: 58%;
+    border-radius: 500px;
+    transform: $rotation;
+  }
+  .login_side_p3 {
+    position: absolute;
+    width: 6em;
+    height: 25vh;
+    border-radius: 500px;
+    top: 85%;
+    left: 25%;
+    background-image: linear-gradient(
+      to right bottom,
+      #f9cc64,
+      #ffa067,
+      #ff7882,
+      #e460a5,
+      #a05fc1
+    );
+    transform: $rotation;
+  }
+  .login_side_p4 {
+    position: absolute;
+    width: 6em;
+    height: 22vh;
+    background-color: red;
+    transform: $rotation;
+    top: -15%;
+    left: 18%;
+    border-radius: 500px;
+    background-image: linear-gradient(
+      to left top,
+      #f5be40,
+      #ff904c,
+      #ff5d79,
+      #ff3eb5,
+      #bb55f0
+    );
+  }
+}
+
 .mc_login_img-parent {
   position: relative;
   img {
@@ -343,60 +299,84 @@ $rotation: rotate(320deg);
     .mv-login-heading {
       color: rgb(90, 61, 223);
     }
-    .mv-login-form-body {
-      width: 18em;
-
-      .my-login-form-input {
-        display: flex;
-        height: 10em;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-direction: column;
-      }
-
-      .my-signup-form-input {
-        margin-top: -1em;
-        display: flex;
-        height: 13em;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-direction: column;
-        div {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .mv_indicator {
-          margin-right: -1em;
-          visibility: hidden;
-          .mv_crct_icn {
-            color: #2b63e6;
-          }
-        }
-      }
-      .login_forgot_password {
-        display: flex;
-        justify-content: flex-end;
-        font-size: 13px;
-        margin-right: 1em;
-        margin-top: -1em;
-      }
-      .login_btn {
-        width: 100%;
-        display: flex;
-        border-radius: 55px;
-        margin-top: -1em;
-        font-size: 15px;
-      }
-      .login-main-via {
-        display: flex;
-        font-size: 14px;
-        font-weight: 600;
-        justify-content: center;
-        color: gray;
-      }
-    }
   }
+}
+.mv_loader {
+  visibility: hidden;
+}
+
+.form_main {
+  display: flex;
+
+  width: 19em;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  div {
+    margin: 4px;
+  }
+}
+.termsandcondition {
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: gray;
+}
+.login-main-via {
+  color: gray;
+}
+.terms_condition_link {
+  color: rgb(56, 139, 233);
+  font-size: 14px;
+}
+.button_main {
+  width: 95%;
+  transform: translate(0%, -90%);
+  .login_btn {
+    @include Button(100%, #2b63e6, 5em);
+    background-image: linear-gradient(
+      to left top,
+      #7e4892,
+      #c25389,
+      #ef7174,
+      #ff9f61,
+      #f8d364
+    );
+  }
+}
+
+.login_bottom_main {
+  font-size: 13px;
+  margin-top: -1.5rem;
+  font-weight: 600;
+  color: #c25389;
+  top: 0;
+  width: 100%;
+  .social_acc {
+    margin-top: -1em;
+  }
+  .login_to_signup {
+    display: flex;
+    justify-content: center;
+    margin-left: 2em;
+  }
+}
+.forms_content1 {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.mv_indicator {
+  position: absolute;
+  left: 92%;
+  color: rgb(46, 46, 240);
+}
+.mv_crct_icn {
+  margin-left: 0.5rem;
 }
 @media only screen and (max-width: 335px) {
   .mv-login-form-main {
@@ -479,6 +459,9 @@ $rotation: rotate(320deg);
   }
 }
 @media only screen and (max-width: 610px) {
+  .termsandcondition {
+    transform: translate(-8%, -40%);
+  }
   .login_main {
     display: none;
   }
@@ -491,6 +474,9 @@ $rotation: rotate(320deg);
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .termsandcondition {
+    transform: translate(8%, -40%);
   }
   .mv_login_main {
     display: none;
