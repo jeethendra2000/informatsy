@@ -400,19 +400,17 @@
 
 .button_main {
   width: 95%;
-  -webkit-transform: translate(0%, -90%);
-          transform: translate(0%, -90%);
+  -webkit-transform: translate(3%, -90%);
+          transform: translate(3%, -90%);
 }
 
 .button_main .login_btn {
   border-radius: 5em !important;
   width: 100% !important;
-  background-color: #2b63e6 !important;
+  background-color: "primary" !important;
   font-weight: 600;
   font-size: 14px !important;
   text-transform: capitalize !important;
-  background-image: -webkit-gradient(linear, right bottom, left top, from(#7e4892), color-stop(#c25389), color-stop(#ef7174), color-stop(#ff9f61), to(#f8d364));
-  background-image: linear-gradient(to left top, #7e4892, #c25389, #ef7174, #ff9f61, #f8d364);
 }
 
 .login_bottom_main {
@@ -546,6 +544,11 @@
   .termsandcondition {
     -webkit-transform: translate(-8%, -40%);
             transform: translate(-8%, -40%);
+  }
+  .button_main {
+    -webkit-transform: translate(1%, -90%);
+            transform: translate(1%, -90%);
+    width: 93%;
   }
   .login_main {
     display: none;

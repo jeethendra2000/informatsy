@@ -40,8 +40,14 @@ class FormMain extends Component {
       alert: false,
       alertContent: "",
       alertMsg: "",
+      ischeck: false,
+      alert: false,
+      alertContent: "",
+      alertMsg: "",
     };
   }
+  //---------------to check whether all fields are filled-------------
+
   // ----to get loading functionality by passing some values through this--------
   getLoadFunction(selector, property) {
     document.getElementsByClassName(selector)[0].style.visibility = property;
@@ -93,6 +99,7 @@ class FormMain extends Component {
   };
 
   render() {
+    console.log(this.state.ischeck);
     const img_size = 30;
     const style = { color: "grey", lineHeight: "55px" };
     const extendedStyles = {
@@ -108,6 +115,15 @@ class FormMain extends Component {
 
     return (
       <>
+        {/* two showing alert  we also specify height where we can be placed that alert*/}
+        <Alert
+          content={{
+            alert: this.state.alert,
+            msgStatus: "info",
+            msgContent:
+              "Password must include minimum six character, atleast one lowercase,uppercase,number,special character",
+          }}
+        />
         <div className="form_main">
           <div
             className="forms_content1"
@@ -211,6 +227,10 @@ class FormMain extends Component {
             icon={<CircleUnchecked />}
             checkedIcon={<CircleCheckedFilled />}
             size="small"
+            checked={this.state.ischeck}
+            onClick={() => {
+              this.setState({ ischeck: !this.state.ischeck });
+            }}
           />
           <div className="login-main-via">
             <span>I agree with &nbsp;</span>
@@ -232,7 +252,14 @@ class FormMain extends Component {
             color="primary"
             component={Link}
             to="/login"
-            disableElevation
+            disabled={
+              !(
+                this.state.isEmailTrue &&
+                this.state.isPassword &&
+                this.state.ispassConfirm &&
+                this.state.ischeck
+              )
+            }
           >
             Create my account
           </Button>
@@ -317,32 +344,8 @@ export class Signup extends Component {
 
   render() {
     const img_size = 30;
-    const style = { color: "grey", lineHeight: "55px" };
-    const extendedStyles = {
-      color: "grey",
-
-      position: "absolute",
-      left: "76%",
-    };
-    const mobileViewStyle = {
-      color: "grey",
-      position: "absolute",
-      left: "85%",
-      top: "50%",
-      transform: "translate(-50%,-50%)",
-    };
     return (
       <>
-        {/* two showing alert  we also specify height where we can be placed that alert*/}
-        <Alert
-          content={{
-            alert: this.state.alert,
-            msgStatus: "error",
-            msgContent:
-              "Password must include minimum six character, atleast one lowercase,uppercase,number,special character",
-            height: "130%",
-          }}
-        />
         <div className="login_main">
           <div className="login_parent">
             <div className="login_side_bar">

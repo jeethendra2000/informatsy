@@ -54,7 +54,7 @@ export default function AlertBar({ content }) {
       open={open}
       autoHideDuration={6000}
       onClose={handleClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
       TransitionComponent={state.Transition}
       key={state.Transition.name}
       style={{ height: content.height }}

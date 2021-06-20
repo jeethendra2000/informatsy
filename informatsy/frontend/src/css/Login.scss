@@ -334,17 +334,9 @@ $rotation: rotate(320deg);
 }
 .button_main {
   width: 95%;
-  transform: translate(0%, -90%);
+  transform: translate(3%, -90%);
   .login_btn {
-    @include Button(100%, #2b63e6, 5em);
-    background-image: linear-gradient(
-      to left top,
-      #7e4892,
-      #c25389,
-      #ef7174,
-      #ff9f61,
-      #f8d364
-    );
+    @include Button(100%, "primary", 5em);
   }
 }
 
@@ -461,6 +453,10 @@ $rotation: rotate(320deg);
 @media only screen and (max-width: 610px) {
   .termsandcondition {
     transform: translate(-8%, -40%);
+  }
+  .button_main {
+    transform: translate(1%, -90%);
+    width: 93%;
   }
   .login_main {
     display: none;
