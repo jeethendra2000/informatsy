@@ -8,11 +8,12 @@ import {
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layoutsComponent/Navbar";
 import Login from "./components/Login";
 import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
-import Signup from "./components/Signup";
+import Syllabus from "./components/Syllabus";
+
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -45,12 +46,12 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/popup" component={PopupAccount} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
             <Navbar>
               <Switch>
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/" component={HomePage} />
-                <Redirect to="/"></Redirect>
+                <Route exact path="/resources/syllabus" component={Syllabus} />
+                <Redirect to="/"> </Redirect>
               </Switch>
             </Navbar>
           </Switch>

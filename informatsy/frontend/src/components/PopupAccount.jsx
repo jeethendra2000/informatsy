@@ -10,6 +10,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import fb_icon from "../Assets/fb-img.png";
 import g_icon from "../Assets/google-img.png";
 import li_icon from "../Assets/linkedin_logo.webp";
+
 export class PopupAccount extends Component {
   render() {
     const img_size = 30;
