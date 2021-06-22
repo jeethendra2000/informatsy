@@ -85,7 +85,7 @@ export default function Navbar({ children }) {
 
   const menuItems = [
     { title: "Home", logo: "HomeIcon", path: "/" },
-    { title: "Resources", logo: "MenuBookIcon", path: "/login" },
+    { title: "Resources", logo: "MenuBookIcon", path: "/resources" },
     { title: "About", logo: "InfoIcon", path: "/kj" },
     { title: "Features", logo: "ImportantDevicesIcon", path: "/aa" },
     { title: "Contact", logo: "CallIcon", path: "/popup" },
