@@ -44,7 +44,6 @@ export default function Contact() {
           setFullName("");
           setEmailAddress("");
           setMessage("");
-          console.log(res);
           alert("value reset done" + res.status);
         })
         .catch((err) => {

@@ -25,6 +25,7 @@ import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import { Typography } from "@material-ui/core";
 import Alert from "../components/AlertBar";
+import axios from "axios";
 class FormMain extends Component {
   constructor(props) {
     super(props);
@@ -54,11 +55,11 @@ class FormMain extends Component {
   }
   // -------------------input loaders settings--------------------------
   setInputStateEmail = (childData) => {
-    this.setState({ Email: childData });
     this.getLoadFunction("mv_sign_up_loader1", "visible");
     var reg =
       /^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud)+[.]+[a-z,A-Z,0-9]+$/;
-    if (reg.test(this.state.Email)) {
+    if (reg.test(childData)) {
+      this.setState({ Email: childData });
       this.setState({ isEmailTrue: true });
     } else {
       this.setState({ isEmailTrue: false });
@@ -97,6 +98,45 @@ class FormMain extends Component {
       this.setState({ ispassConfirm: false });
     }
   };
+  //--------------this will perform data post to server-----------
+  handleSubmitSignup() {
+    if (
+      this.state.isEmailTrue &&
+      this.state.isPassword &&
+      this.state.ispassConfirm
+    ) {
+      const data = {
+        userEmail: this.state.Email,
+        password: this.state.password,
+      };
+      axios
+        .post("http://127.0.0.1:8000/api/signup/", data)
+        .then((res) => {
+          this.setState({
+            alert: true,
+            alertContent: res.statusText,
+            alertMsg: "success",
+          });
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          this.setState({
+            showPassword: false,
+            showConfirmPass: false,
+            Email: "",
+            isEmailTrue: false,
+            password: "",
+            isPassword: false,
+            confirmPassword: "",
+            ispassConfirm: false,
+            alert: true,
+            alertContent: error.response.data,
+            alertMsg: "error",
+          });
+        });
+    }
+  }
 
   render() {
     console.log(this.state.ischeck);
@@ -119,9 +159,8 @@ class FormMain extends Component {
         <Alert
           content={{
             alert: this.state.alert,
-            msgStatus: "info",
-            msgContent:
-              "Password must include minimum six character, atleast one lowercase,uppercase,number,special character",
+            msgStatus: this.state.alertMsg,
+            msgContent: this.state.alertContent,
           }}
         />
         <div className="form_main">
@@ -250,8 +289,7 @@ class FormMain extends Component {
             className="login_btn"
             variant="contained"
             color="primary"
-            component={Link}
-            to="/login"
+            onClick={this.handleSubmitSignup.bind(this)}
             disabled={
               !(
                 this.state.isEmailTrue &&
@@ -324,9 +362,6 @@ export class Signup extends Component {
     super(props);
     this.state = {
       width: window.innerWidth,
-      alert: false,
-      alertContent: "",
-      alertMsg: "",
     };
   }
   //----------------to update rezing the window--------------

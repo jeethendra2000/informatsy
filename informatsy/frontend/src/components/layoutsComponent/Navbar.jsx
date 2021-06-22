@@ -140,7 +140,7 @@ export default function Navbar({ children }) {
               color="primary"
               size="medium"
               variant="outlined"
-              onClick={() => history.push("/popup")}
+              onClick={() => history.push("/signup")}
               className={classes.signUpButton}
             >
               Signup

@@ -8,7 +8,6 @@ import About from "./layoutsComponent/About";
 import Features from "./layoutsComponent/Features";
 import Contact from "./layoutsComponent/Contact";
 
-
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
     width: "100%",
@@ -138,9 +137,7 @@ export default function HomePage() {
       <Features />
 
       {/* Contact Section */}
-      <Contact/>
-
-      
+      <Contact />
     </React.Fragment>
   );
 }
