@@ -28,3 +28,28 @@ class Syllabus(models.Model):
 
     def __str__(self):
         return self.branchName
+
+# -----------model for signup forms -------------------
+
+
+class Accounts(models.Model):
+    branchChoice = (
+        ('Civil', 'Civil'),
+        ('Mechanical', 'Mechanical'),
+        ('Electricals', 'Electricals'),
+        ('Computer Science', 'Computer Science')
+    )
+    userEmail = models.CharField(max_length=100)
+    password = models.CharField(max_length=500)
+    uniqueId = models.CharField(max_length=100)
+    token = models.CharField(max_length=500)
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
+    profileImg = models.CharField(max_length=500)
+    proffesion = models.CharField(max_length=100)
+    Branch = models.CharField(max_length=50, choices=branchChoice)
+    currentSem = models.CharField(max_length=50)
+    isActivated = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.userEmail

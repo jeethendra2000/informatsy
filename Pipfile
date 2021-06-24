@@ -9,6 +9,8 @@ djangorestframework = "*"
 django-cors-headers = "*"
 pipfile = "*"
 pillow = "*"
+django-rest-auth = "*"
+django-allauth = "*"
 
 [dev-packages]
 
