@@ -8,6 +8,9 @@ export class Input extends Component {
   returnValue = (e) => {
     this.props.returnValue(e.target.value);
   };
+  // clear() {
+  //   this.main.value = "";
+  // }
   //to return values to the parent
 
   render() {
@@ -52,6 +55,7 @@ export class Input extends Component {
             >
               <input
                 type={type}
+                ref={(ref) => (this.main = ref)}
                 className="input_cls"
                 onKeyUp={this.returnValue}
                 onBlur={() => {

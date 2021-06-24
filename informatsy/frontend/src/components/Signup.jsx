@@ -45,6 +45,7 @@ class FormMain extends Component {
       alert: false,
       alertContent: "",
       alertMsg: "",
+      isSubmit: 1,
     };
   }
   //---------------to check whether all fields are filled-------------
@@ -120,19 +121,13 @@ class FormMain extends Component {
           console.log(res);
         })
         .catch((error) => {
-          console.log(error.response.data);
           this.setState({
-            showPassword: false,
-            showConfirmPass: false,
-            Email: "",
-            isEmailTrue: false,
-            password: "",
-            isPassword: false,
-            confirmPassword: "",
-            ispassConfirm: false,
             alert: true,
             alertContent: error.response.data,
             alertMsg: "error",
+            isSubmit: this.state.isSubmit + 1,
+            isEmailTrue: false,
+            isPassword: false,
           });
         });
     }
@@ -163,7 +158,7 @@ class FormMain extends Component {
             msgContent: this.state.alertContent,
           }}
         />
-        <div className="form_main">
+        <div className="form_main" key={this.state.isSubmit}>
           <div
             className="forms_content1"
             style={{
@@ -171,7 +166,6 @@ class FormMain extends Component {
               justifyContent: "space-around",
               alignItems: "center",
             }}
-            onBlur={() => this.getLoadFunction("mv_sign_up_loader1", "hidden")}
           >
             <Input
               name="Username or Email"
@@ -179,6 +173,7 @@ class FormMain extends Component {
               type="text"
               component={<PersonRoundedIcon style={style} />}
               returnValue={this.setInputStateEmail}
+              // ref={(instance) => (this.child = instance)}
             />
             <div className="mv_indicator">
               <div className="mv_loader mv_sign_up_loader1">
@@ -193,11 +188,15 @@ class FormMain extends Component {
           <div
             className="forms_content1"
             onClick={() => {
-              this.setState({ alert: true });
+              this.setState({
+                alert: true,
+                alertContent:
+                  "password should min six length and one Uppercase,lowercase,special character and number",
+                alertMsg: "info",
+              });
             }}
             onBlur={() => {
               this.setState({ alert: false });
-              this.getLoadFunction("mv_sign_up_loader2", "hidden");
             }}
           >
             <Input
@@ -206,6 +205,7 @@ class FormMain extends Component {
               type={this.state.showPassword ? "text" : "password"}
               component={<LockOpenRoundedIcon style={style} />}
               returnValue={this.setInputStatePassword}
+              // ref={(instance) => (this.child = instance)}
             />
             <IconButton
               aria-label="lock"
@@ -221,23 +221,21 @@ class FormMain extends Component {
             <div className="mv_indicator">
               <div className="mv_loader mv_sign_up_loader2">
                 {this.state.isPassword ? (
-                  <DoneAllIcon className="mv_crct_icn" />
+                  <DoneAllIcon className="mv_crct_icn" fontSize="small" />
                 ) : (
                   <Loader />
                 )}
               </div>
             </div>
           </div>
-          <div
-            className="forms_content1"
-            onBlur={() => this.getLoadFunction("mv_sign_up_loader3", "hidden")}
-          >
+          <div className="forms_content1">
             <Input
               name="Confirm password"
               classname="three"
               type={this.state.showConfirmPass ? "text" : "password"}
               component={<LockOpenRoundedIcon style={style} />}
               returnValue={this.setInputStateConfirmPass}
+              // ref={(instance) => (this.child = instance)}
             />
             <IconButton
               aria-label="lock"
@@ -253,7 +251,7 @@ class FormMain extends Component {
             <div className="mv_indicator">
               <div className="mv_loader mv_sign_up_loader3">
                 {this.state.ispassConfirm ? (
-                  <DoneAllIcon className="mv_crct_icn" />
+                  <DoneAllIcon className="mv_crct_icn" fontSize="small" />
                 ) : (
                   <Loader />
                 )}
