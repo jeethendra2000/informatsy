@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Box, Paper, Grid, Typography } from "@material-ui/core";
+
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,7 @@ export default function Syllabus() {
       const data = res.data;
       setData(data);
     });
+
   }, []);
 
   return (
@@ -44,10 +46,12 @@ export default function Syllabus() {
         {data.map((item) => (
           <Grid item xs={12} sm={6} key={item.branchName}>
             <Box textAlign="center" px={{xs: 2, sm:4, md:4}}>
-              <Paper className={classes.card} elevation={5} onClick={() => alert(item.documentURL)}>
+              <Paper className={classes.card} elevation={5} onClick={()=> window.location.assign(item.documentURL)}>
                 <img className={classes.root} src={item.branchImage} alt={item.branchName} />
                 <Typography variant="h6" component="h5" gutterBottom style={{paddingBottom:"10px", paddingTop:"5px"}}>
                   {item.branchName}
+                  <br />
+                  {item.scheme}
                 </Typography>
               </Paper>
             </Box>

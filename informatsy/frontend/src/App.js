@@ -57,7 +57,7 @@ function App() {
                 <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Route exact path="/resources/notes" component={Notes} />
                 <Route exact path="/resources/questionPapers" component={QuestionPapers} />
-                <Redirect to="/"> </Redirect>
+                <Redirect to='/'> </Redirect>
               </Switch>
             </Navbar>
           </Switch>
