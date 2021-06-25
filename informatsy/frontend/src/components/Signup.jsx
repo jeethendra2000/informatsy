@@ -25,6 +25,9 @@ import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import { Typography } from "@material-ui/core";
 import Alert from "../components/AlertBar";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { LinkedIn } from "react-linkedin-login-oauth2";
 import axios from "axios";
 class FormMain extends Component {
   constructor(props) {
@@ -132,6 +135,7 @@ class FormMain extends Component {
         });
     }
   }
+  googleResponse(response) {}
 
   render() {
     console.log(this.state.ischeck);
@@ -304,30 +308,48 @@ class FormMain extends Component {
         <div className="login_bottom_main">
           <p>or via social media</p>
           <div className="social_acc">
-            <IconButton
-              aria-label="facebook"
-              className="btn_sa"
-              component={Link}
-              to="/login"
-            >
-              <img
-                src={fb_icon}
-                alt="facebook"
-                width={img_size}
-                height={img_size}
+            <IconButton aria-label="facebook" className="btn_sa">
+              <FacebookLogin
+                appId="527430968405690"
+                fields="name,email,picture"
+                onClick={(res) => console.log(res)}
+                callback={(res) => console.log(res)}
+                render={(renderProps) => (
+                  <img
+                    src={fb_icon}
+                    alt="facebook"
+                    width={img_size}
+                    height={img_size}
+                    onClick={renderProps.onClick}
+                  />
+                )}
               />
             </IconButton>
-            <IconButton
-              className="btn_sa"
-              aria-label="google"
-              component={Link}
-              to="/login"
-            >
-              <img
-                src={g_icon}
-                alt="google"
-                width={img_size}
-                height={img_size}
+            <IconButton className="btn_sa" aria-label="google">
+              {/* <GoogleLogin
+                clientId="688835578616-ck9sorb0vsutu23g1ghc6mmu6g6d8cdd.apps.googleusercontent.com"
+                buttonText="LOGIN WITH GOOGLE"
+                onSuccess={this.responseGoogle}
+                onFailure={this.responseGoogle}
+              /> */}
+              <GoogleLogin
+                clientId="688835578616-ck9sorb0vsutu23g1ghc6mmu6g6d8cdd.apps.googleusercontent.com"
+                render={(renderProps) => (
+                  <img
+                    src={g_icon}
+                    alt="google"
+                    width={img_size}
+                    height={img_size}
+                    onClick={renderProps.onClick}
+                  />
+                )}
+                onSuccess={(response) => {
+                  console.log(response);
+                }}
+                onFailure={(response) => {
+                  console.log(response);
+                }}
+                cookiePolicy={"single_host_origin"}
               />
             </IconButton>
             <IconButton
@@ -336,11 +358,21 @@ class FormMain extends Component {
               component={Link}
               to="/login"
             >
-              <img
-                src={li_icon}
-                alt="linkedIn"
-                width={img_size + 3}
-                height={img_size + 3}
+              <LinkedIn
+                clientId="86xee9zpkumiiy"
+                onFailure={(res) => console.log(res)}
+                onSuccess={(res) => console.log(res)}
+                redirectUri="http://localhost:3000/linkedin"
+                renderElement={({ onClick, disabled }) => (
+                  <img
+                    src={li_icon}
+                    alt="linkedIn"
+                    width={img_size + 3}
+                    height={img_size + 3}
+                    onClick={onClick}
+                    disabled={disabled}
+                  />
+                )}
               />
             </IconButton>
           </div>

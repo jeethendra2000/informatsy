@@ -140,7 +140,8 @@ export default function Navbar({ children }) {
               color="primary"
               size="medium"
               variant="outlined"
-              onClick={() => history.push("/signup")}
+              component={Link}
+              to="/signup"
               className={classes.signUpButton}
             >
               Signup
@@ -149,7 +150,8 @@ export default function Navbar({ children }) {
               color="primary"
               size="medium"
               variant="contained"
-              onClick={() => history.push("/login")}
+              component={Link}
+              to="/login"
               className={classes.loginButton}
             >
               Login
