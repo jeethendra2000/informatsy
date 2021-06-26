@@ -1,6 +1,7 @@
 from django.db import models
-
+from django.core.exceptions import ValidationError
 # Create your models here.
+from django.core.validators import RegexValidator
 
 
 class ContactForm(models.Model):
@@ -33,16 +34,26 @@ class Syllabus(models.Model):
 
 
 class Accounts(models.Model):
+    # validation during store value to db
+    validate_userEmail = RegexValidator(
+        r'^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud|gov|nic)+[.]+(com|org|net|gov|mil|biz|info|mobi|in|name|aero|jobs|museum|co)+$', "Enter valid emil", "Email should be valid and top level domain")
+    validate_password = RegexValidator(
+        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$", "Password should reach required pattern", "")
+
     branchChoice = (
         ('Civil', 'Civil'),
         ('Mechanical', 'Mechanical'),
         ('Electricals', 'Electricals'),
         ('Computer Science', 'Computer Science')
     )
-    userEmail = models.CharField(max_length=100)
-    password = models.CharField(max_length=500)
-    uniqueId = models.CharField(max_length=100)
+    userEmail = models.CharField(
+        max_length=100,   validators=[validate_userEmail], unique=True,)
+    password = models.CharField(
+        max_length=500,  validators=[validate_password])
+    uniqueId = models.CharField(max_length=100,  unique=True)
+    userHandle = models.CharField(max_length=50, unique=True)
     token = models.CharField(max_length=500)
+    userHandle = models.CharField(max_length=50, default="null")
     firstName = models.CharField(max_length=50)
     lastName = models.CharField(max_length=50)
     profileImg = models.CharField(max_length=500)

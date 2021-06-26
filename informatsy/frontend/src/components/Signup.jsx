@@ -61,7 +61,7 @@ class FormMain extends Component {
   setInputStateEmail = (childData) => {
     this.getLoadFunction("mv_sign_up_loader1", "visible");
     var reg =
-      /^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud)+[.]+[a-z,A-Z,0-9]+$/;
+      /^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud|gov|nic)+[.]+(com|org|net|gov|mil|biz|info|mobi|in|name|aero|jobs|museum|co)+$/;
     if (reg.test(childData)) {
       this.setState({ Email: childData });
       this.setState({ isEmailTrue: true });
@@ -74,11 +74,13 @@ class FormMain extends Component {
     // regex for password
     // var passRegex =
     //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/i;
+
     if (
       childData.match(/[a-z]/g) &&
       childData.match(/[A-Z]/g) &&
       childData.match(/[0-9]/g) &&
       childData.match(/[^a-zA-Z\d]/g) &&
+      !childData.match(/\s/g) &&
       childData.length >= 6
     ) {
       this.setState({ isPassword: true });

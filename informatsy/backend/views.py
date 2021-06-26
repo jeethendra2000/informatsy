@@ -68,12 +68,11 @@ class SignupView(APIView):
             else:
                 data = request.data
                 data["uniqueId"] = uniqueIdGenerator()
-                data["password"] = make_password(data["password"])
+
                 serializersWithUniqueid = SignupSerializer(data=data)
                 if serializersWithUniqueid.is_valid():
-                    serializersWithUniqueid.save()
+                    serializersWithUniqueid.save(
+                        password=make_password(data["password"]))
                     return Response(SignupSerializer(dataObjects.objects.all(), many=True).data)
 
-                else:
-                    print("something went wrong")
-                    return Response("Something went wrong", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+                return Response("That email/username and password combination didn't work. Try again.", status=status.HTTP_405_METHOD_NOT_ALLOWED)
