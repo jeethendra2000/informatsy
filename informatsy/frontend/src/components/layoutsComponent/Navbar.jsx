@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   page: {
-    background: "#f9f9f9",
+    background: "#f1f1f9",
     width: "100%",
     padding: theme.spacing(1),
   },

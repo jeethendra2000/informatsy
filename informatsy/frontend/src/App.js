@@ -28,6 +28,7 @@ const theme = createMuiTheme({
     secondary: {
       main: "#ff7e79",
     },
+    divider:"rgba(0,0,0,0.3)",
   },
   typography: {
     fontFamily: "Montserrat",

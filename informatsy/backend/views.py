@@ -26,3 +26,29 @@ class SyllabusView(APIView):
         query = Syllabus.objects.all()
         serializer = SyllabusSerializer(query, many=True)
         return Response(serializer.data)
+
+class CourseView(APIView):
+    serializer_class = CourseSerializer
+
+    def get(self, request):
+        query = Course.objects.all()
+        serializer = CourseSerializer(query, many=True)
+        return Response(serializer.data)
+
+
+class YearOrSemView(APIView):
+    serializer_class = YearOrSemSerializer
+    
+    def get(self, request):
+        query = YearOrSem.objects.all()
+        serializer = YearOrSemSerializer(query, many=True)
+        return Response(serializer.data)
+
+
+class NotesView(APIView):
+    serializer_class = NotesSerializer
+    
+    def get(self, request):
+        query = Notes.objects.all();
+        serializer = NotesSerializer(query, many=True)
+        return Response(serializer.data)
