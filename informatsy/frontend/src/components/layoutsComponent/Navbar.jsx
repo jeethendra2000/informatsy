@@ -21,6 +21,10 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    [theme.breakpoints.up("md")]: {
+      position: "absolute",
+      width: "100%",
+    },
   },
   logo: {
     marginLeft: theme.spacing(5),
@@ -161,7 +165,7 @@ export default function Navbar({ children }) {
       {/* main content */}
       <div className={classes.page}>
         <div className={classes.toolbar}> </div>
-        <Container> {children} </Container>
+        <Container>{children}</Container>
       </div>
 
       {/* Footer */}
