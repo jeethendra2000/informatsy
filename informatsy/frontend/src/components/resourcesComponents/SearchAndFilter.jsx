@@ -106,7 +106,7 @@ export default function SearchAndFilter() {
             role="presentation"
             onKeyDown={toggle}
           >
-            <FilterMenu />
+            <FilterMenu toggle={toggle} />
           </div>
         </SwipeableDrawer>
       </Paper>

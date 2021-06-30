@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function ResourceCard() {
+export default function ResourceCard({subjectName, subjectCode, yearOrSem, course, documentURL}) {
   const classes = useStyles();
   return (
     <div>
@@ -69,7 +69,7 @@ export default function ResourceCard() {
           >
             <Grid item xs={10}>
               <Typography variant="h6" component="h2">
-                Lorem
+                {subjectName}
               </Typography>
               <Typography
                 variant="body2"
@@ -77,7 +77,7 @@ export default function ResourceCard() {
                 component="p"
                 gutterBottom
               >
-                Lizards are a widespread
+                {subjectCode}
               </Typography>
               <Divider />
               <Grid container style={{ paddingTop: "5px" }} alignItems="center">
@@ -86,7 +86,7 @@ export default function ResourceCard() {
                 </Grid>
                 <Grid item xs={5}>
                   <Typography variant="body2" component="p">
-                    Be cse
+                    {yearOrSem}
                   </Typography>
                 </Grid>
                 <Grid item className={classes.chips}>
@@ -94,7 +94,7 @@ export default function ResourceCard() {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography variant="body2" component="p">
-                    1st Sem
+                    {course}
                   </Typography>
                 </Grid>
               </Grid>
@@ -102,7 +102,7 @@ export default function ResourceCard() {
             <Grid item xs={2}>
               <Paper
                 elevation={4}
-                onClick={() => alert("download link")}
+                onClick={()=> window.location.assign(documentURL)}
                 className={classes.download}
               >
                 <GetAppIcon className={classes.icon} />

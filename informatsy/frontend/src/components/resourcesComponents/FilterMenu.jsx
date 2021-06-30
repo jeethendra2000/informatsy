@@ -5,6 +5,7 @@ import { Container, Grid, Typography, Box, Button } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
+import axios from "axios";
 
 const useStyles = makeStyles(() => ({
   chip: {
@@ -44,17 +45,32 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function FilterMenu() {
+export default function FilterMenu({ toggle }) {
   const classes = useStyles();
-  const [selectedCourse, setSelectedCourse] = useState("");
-  const [selectedYearOrSem, setSelectedYearOrSem] = useState("");
-  const [ct, setCt] = useState(0);
+  const [selectedCourse, setSelectedCourse] = useState();
+  const [selectedYearOrSem, setSelectedYearOrSem] = useState();
+  const [courses, setCourses] = useState([]);
+  const [yearOrSems, setYearOrSems] = useState([]);
 
   const clear = () => {
     setSelectedCourse("");
     setSelectedYearOrSem("");
   };
+  const handleApply = () => {
+    toggle();
+    alert(selectedCourse + " " + selectedYearOrSem);
+  };
 
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/course/").then((res) => {
+      const data = res.data;
+      setCourses(data);
+    });
+    axios.get("http://127.0.0.1:8000/api/yearOrSem/").then((res) => {
+      const data = res.data;
+      setYearOrSems(data);
+    });
+  }, []);
   return (
     <div>
       <Box bgcolor="#F8F8F8">
@@ -68,31 +84,23 @@ export default function FilterMenu() {
         <Box py={2}>
           <Container>
             <Grid container spacing={2}>
-              <Grid item>
-              <Typography component="h6" onClick={()=> setSelectedCourse("Mec")}>
-                  <Chip label={"Mec"} className={selectedCourse === "Mec" ? classes.chipSelected : classes.chip} />
-                </Typography>
-              </Grid>
-              <Grid item>
-              <Typography component="h6" onClick={()=> setSelectedCourse("CV")}>
-                  <Chip label={"CV"} className={selectedCourse === "CV" ? classes.chipSelected : classes.chip} />
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography component="h6" onClick={()=> setSelectedCourse("EC")}>
-                  <Chip label={"EC"} className={selectedCourse === "EC" ? classes.chipSelected : classes.chip} />
-                </Typography>
-              </Grid>
-              <Grid item>
-              <Typography component="h6" onClick={()=> setSelectedCourse("CS")}>
-                  <Chip label={"CS"} className={selectedCourse === "CS" ? classes.chipSelected : classes.chip} />
-                </Typography>
-              </Grid>
-              <Grid item>
-              <Typography component="h6" onClick={()=> setSelectedCourse("information science")}>
-                  <Chip label={"information science"} className={selectedCourse === "information science" ? classes.chipSelected : classes.chip} />
-                </Typography>
-              </Grid>
+              {courses.map((course) => (
+                <Grid item key={course.courseName}>
+                  <Typography
+                    component="h6"
+                    onClick={() => setSelectedCourse(course.courseName)}
+                  >
+                    <Chip
+                      label={course.courseName}
+                      className={
+                        selectedCourse === course.courseName
+                          ? classes.chipSelected
+                          : classes.chip
+                      }
+                    />
+                  </Typography>
+                </Grid>
+              ))}
             </Grid>
           </Container>
         </Box>
@@ -107,20 +115,52 @@ export default function FilterMenu() {
           <Container>
             <Grid container spacing={2}>
               <Grid item>
-                <Typography component="h6" onClick={()=> setSelectedYearOrSem("1st Sem")}>
-                  <Chip label={"1st Sem"} className={selectedYearOrSem === "1st Sem" ? classes.chipSelected : classes.chip} />
+                <Typography
+                  component="h6"
+                  onClick={() => setSelectedYearOrSem("1st Sem")}
+                >
+                  <Chip
+                    label={"1st Sem"}
+                    className={
+                      selectedYearOrSem === "1st Sem"
+                        ? classes.chipSelected
+                        : classes.chip
+                    }
+                  />
                 </Typography>
               </Grid>
               <Grid item>
-              <Typography component="h6" onClick={()=> setSelectedYearOrSem("2nd Sem")}>
-                  <Chip label={"2nd Sem"} className={selectedYearOrSem === "2nd Sem" ? classes.chipSelected : classes.chip} />
+                <Typography
+                  component="h6"
+                  onClick={() => setSelectedYearOrSem("2nd Sem")}
+                >
+                  <Chip
+                    label={"2nd Sem"}
+                    className={
+                      selectedYearOrSem === "2nd Sem"
+                        ? classes.chipSelected
+                        : classes.chip
+                    }
+                  />
                 </Typography>
               </Grid>
-              <Grid item>
-              <Typography component="h6" onClick={()=> setSelectedYearOrSem("3rd Sem")}>
-                  <Chip label={"3rd Sem"} className={selectedYearOrSem === "3rd Sem" ? classes.chipSelected : classes.chip} />
+              {yearOrSems.map((yearOrSem) =>(
+                <Grid item key={yearOrSem.yearOrSemName}>
+                <Typography
+                  component="h6"
+                  onClick={() => setSelectedYearOrSem(yearOrSem.yearOrSemName)}
+                >
+                  <Chip
+                    label={yearOrSem.yearOrSemName}
+                    className={
+                      selectedYearOrSem === yearOrSem.yearOrSemName
+                        ? classes.chipSelected
+                        : classes.chip
+                    }
+                  />
                 </Typography>
               </Grid>
+              ))}
             </Grid>
           </Container>
         </Box>
@@ -129,7 +169,7 @@ export default function FilterMenu() {
             <Grid container alignItems="center" justify="space-around">
               <Grid item>
                 <Button
-                onClick={()=> clear()}
+                  onClick={() => clear()}
                   variant="contained"
                   size="large"
                   endIcon={<CloseIcon />}
@@ -142,7 +182,7 @@ export default function FilterMenu() {
               </Grid>
               <Grid item>
                 <Button
-                onClick={() => setCt(ct+1)}
+                  onClick={() => handleApply()}
                   variant="contained"
                   size="large"
                   endIcon={<CheckIcon />}

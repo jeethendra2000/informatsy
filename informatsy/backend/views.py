@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+from rest_framework import viewsets
+
 from . models import *
 from . serializers import *
 
@@ -45,10 +47,6 @@ class YearOrSemView(APIView):
         return Response(serializer.data)
 
 
-class NotesView(APIView):
+class NotesView(viewsets.ReadOnlyModelViewSet):
+    queryset = Notes.objects.all()
     serializer_class = NotesSerializer
-    
-    def get(self, request):
-        query = Notes.objects.all();
-        serializer = NotesSerializer(query, many=True)
-        return Response(serializer.data)

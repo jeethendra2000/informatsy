@@ -25,11 +25,9 @@ class YearOrSemSerializer(serializers.ModelSerializer):
         model = YearOrSem
         fields = "__all__"
 
-
-class NotesSerializer(serializers.Serializer):
-    course = serializers.StringRelatedField(many=True, read_only=True)
-    yearOfSem = serializers.StringRelatedField(many=True, read_only=True)
+class NotesSerializer(serializers.ModelSerializer):
+    # notes = serializers.SlugRelatedField(many=True, read_only=True, slug_field='notes')
     class Meta:
         model = Notes
-        fields = ['subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
+        fields = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
 
