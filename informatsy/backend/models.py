@@ -38,7 +38,7 @@ class YearOrSem(models.Model):
 
 class Notes(models.Model):
     subjectName = models.CharField(max_length=100)
-    subjectCode = models.CharField(max_length=20, blank=True, null=True)
+    subjectCode = models.CharField(max_length=100, blank=True, null=True)
     yearOrSem = models.ForeignKey(YearOrSem, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     documentURL = models.URLField(max_length=512, null=True)
@@ -46,3 +46,13 @@ class Notes(models.Model):
     def __str__(self):
         return self.subjectName
 
+
+class QuestionPapers(models.Model):
+    subjectName = models.CharField(max_length=100)
+    subjectCode = models.CharField(max_length=100, blank=True, null=True)
+    yearOrSem = models.ForeignKey(YearOrSem, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    documentURL = models.URLField(max_length=512, null=True)
+
+    def __str__(self):
+        return self.subjectName

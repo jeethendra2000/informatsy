@@ -23,3 +23,8 @@ class YearOrSemAdmin(admin.ModelAdmin):
 @admin.register(Notes)
 class NotesAdmin(admin.ModelAdmin):
     list_display = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
+
+
+@admin.register(QuestionPapers)
+class QuestionPapersAdmin(admin.ModelAdmin):
+    list_display = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']

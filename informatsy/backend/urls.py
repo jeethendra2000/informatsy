@@ -8,6 +8,7 @@ router = DefaultRouter()
 
 # registering model Notes
 router.register('notes', NotesView, basename='notes')
+router.register('questionPapers', QuestionPapersView, basename='questionPapers')
 
 urlpatterns = [
     path('contactForm/', ContactFormView.as_view(), name='contactForm'),

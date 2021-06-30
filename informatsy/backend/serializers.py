@@ -26,8 +26,11 @@ class YearOrSemSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class NotesSerializer(serializers.ModelSerializer):
-    # notes = serializers.SlugRelatedField(many=True, read_only=True, slug_field='notes')
     class Meta:
         model = Notes
         fields = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
 
+class QuestionPapersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionPapers
+        fields = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']

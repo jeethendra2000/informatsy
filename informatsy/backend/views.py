@@ -50,3 +50,8 @@ class YearOrSemView(APIView):
 class NotesView(viewsets.ReadOnlyModelViewSet):
     queryset = Notes.objects.all()
     serializer_class = NotesSerializer
+
+
+class QuestionPapersView(viewsets.ReadOnlyModelViewSet):
+    queryset = QuestionPapers.objects.all()
+    serializer_class = QuestionPapersSerializer
