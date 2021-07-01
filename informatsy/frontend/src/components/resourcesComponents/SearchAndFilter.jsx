@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAndFilter() {
+export default function SearchAndFilter({onSearch, onFilter}) {
   const classes = useStyles();
   const [searchData, setSearchData] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -54,8 +54,7 @@ export default function SearchAndFilter() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    alert(searchData);
-
+    onSearch(searchData);
     setSearchData("");
   };
 
@@ -106,7 +105,7 @@ export default function SearchAndFilter() {
             role="presentation"
             onKeyDown={toggle}
           >
-            <FilterMenu toggle={toggle} />
+            <FilterMenu toggle={toggle} onFilter={onFilter} />
           </div>
         </SwipeableDrawer>
       </Paper>

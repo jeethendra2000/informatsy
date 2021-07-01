@@ -9,6 +9,18 @@ import { useEffect } from "react";
 
 export default function QuestionPapers() {
   const [data, setData] = useState([]);
+  const [defaultSearchData, setDefaultSearchData] = useState("");
+  const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("");
+  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("");
+
+  const onSearch = (searchData) => {
+    setDefaultSearchData(searchData);
+  };
+
+  const onFilter = (selectedCourse, selectedYearOrSem) => {
+    setDefaultSelectedCourse(selectedCourse);
+    setDefaultSelectedYearOrSem(selectedYearOrSem);
+  };
 
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/questionPapers/").then((res) => {
@@ -20,7 +32,7 @@ export default function QuestionPapers() {
   return (
     <div>
       <Box mr={4} py={3}>
-        <SearchAndFilter />
+        <SearchAndFilter onSearch={onSearch} onFilter={onFilter} />
       </Box>
       <Box mr={3} ml={1} py={2}>
         <Grid container spacing={2} alignItems="center">

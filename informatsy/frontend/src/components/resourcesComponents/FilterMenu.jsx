@@ -45,10 +45,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function FilterMenu({ toggle }) {
+export default function FilterMenu({ toggle, onFilter }) {
   const classes = useStyles();
-  const [selectedCourse, setSelectedCourse] = useState();
-  const [selectedYearOrSem, setSelectedYearOrSem] = useState();
+  const [selectedCourse, setSelectedCourse] = useState("CSE (BE)");
+  const [selectedYearOrSem, setSelectedYearOrSem] = useState("6th Sem");
   const [courses, setCourses] = useState([]);
   const [yearOrSems, setYearOrSems] = useState([]);
 
@@ -58,7 +58,7 @@ export default function FilterMenu({ toggle }) {
   };
   const handleApply = () => {
     toggle();
-    alert(selectedCourse + " " + selectedYearOrSem);
+    onFilter(selectedCourse, selectedYearOrSem);
   };
 
   useEffect(() => {
@@ -144,22 +144,24 @@ export default function FilterMenu({ toggle }) {
                   />
                 </Typography>
               </Grid>
-              {yearOrSems.map((yearOrSem) =>(
+              {yearOrSems.map((yearOrSem) => (
                 <Grid item key={yearOrSem.yearOrSemName}>
-                <Typography
-                  component="h6"
-                  onClick={() => setSelectedYearOrSem(yearOrSem.yearOrSemName)}
-                >
-                  <Chip
-                    label={yearOrSem.yearOrSemName}
-                    className={
-                      selectedYearOrSem === yearOrSem.yearOrSemName
-                        ? classes.chipSelected
-                        : classes.chip
+                  <Typography
+                    component="h6"
+                    onClick={() =>
+                      setSelectedYearOrSem(yearOrSem.yearOrSemName)
                     }
-                  />
-                </Typography>
-              </Grid>
+                  >
+                    <Chip
+                      label={yearOrSem.yearOrSemName}
+                      className={
+                        selectedYearOrSem === yearOrSem.yearOrSemName
+                          ? classes.chipSelected
+                          : classes.chip
+                      }
+                    />
+                  </Typography>
+                </Grid>
               ))}
             </Grid>
           </Container>

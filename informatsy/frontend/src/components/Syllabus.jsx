@@ -30,7 +30,7 @@ export default function Syllabus() {
     axios.get("http://127.0.0.1:8000/api/syllabus/").then((res) => {
       const data = res.data;
       setData(data);
-    });
+    }).catch((err) => (console.log(err)));
 
   }, []);
 
