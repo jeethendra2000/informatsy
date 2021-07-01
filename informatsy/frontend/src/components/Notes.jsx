@@ -17,12 +17,12 @@ export default function Notes() {
 
   const [allData, setAllData] = useState([]);
   const [data, setData] = useState([]);
-  const [defaultSearchData, setDefaultSearchData] = useState("");
-  const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("CSE (BE)");
-  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("6th Sem");
+  const [defaultSelectedCourse, setDefaultSelectedCourse] =
+    useState("CSE (BE)");
+  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] =
+    useState("6th Sem");
 
   const onSearch = (searchData) => {
-    setDefaultSearchData(searchData);
     setData(
       allData.filter(
         (d) =>
@@ -50,22 +50,18 @@ export default function Notes() {
       .then((res) => {
         const data = res.data;
         setAllData(data);
-        // setData(
-        //   data.filter(
-        //     (dt) =>
-        //       dt.course === defaultSelectedCourse &&
-        //       dt.yearOrSem === defaultSelectedYearOrSem
-        //   )
-        // );
+        setData(
+          data.filter(
+            (dt) =>
+              dt.course === defaultSelectedCourse &&
+              dt.yearOrSem === defaultSelectedYearOrSem
+          )
+        );
       })
       .catch((err) => console.log(err));
-    console.log("use effect 1");
-  }, [
-    data,
-    defaultSearchData,
-    defaultSelectedCourse,
-    defaultSelectedYearOrSem,
-  ]);
+  }, []);
+
+  useEffect(() => {}, [data, defaultSelectedCourse, defaultSelectedYearOrSem]);
 
   const noResource = () => (
     <Grid item xs={12}>
@@ -80,15 +76,6 @@ export default function Notes() {
       </Box>
     </Grid>
   );
-
-  const defaultFilter = () => {
-    console.log(
-      defaultSearchData,
-      defaultSelectedCourse,
-      defaultSelectedYearOrSem
-    );
-  };
-  window.onload = defaultFilter();
 
   return (
     <div>
