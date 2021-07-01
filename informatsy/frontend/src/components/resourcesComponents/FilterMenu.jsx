@@ -45,10 +45,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function FilterMenu({ toggle, onFilter }) {
+export default function FilterMenu({
+  toggle,
+  onFilter,
+  defaultSelectedCourse,
+  defaultSelectedYearOrSem,
+}) {
   const classes = useStyles();
-  const [selectedCourse, setSelectedCourse] = useState("CSE (BE)");
-  const [selectedYearOrSem, setSelectedYearOrSem] = useState("6th Sem");
+  const [selectedCourse, setSelectedCourse] = useState(defaultSelectedCourse);
+  const [selectedYearOrSem, setSelectedYearOrSem] = useState(defaultSelectedYearOrSem);
   const [courses, setCourses] = useState([]);
   const [yearOrSems, setYearOrSems] = useState([]);
 

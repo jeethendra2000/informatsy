@@ -18,12 +18,13 @@ export default function Notes() {
   const [allData, setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [defaultSearchData, setDefaultSearchData] = useState("");
-  const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("");
-  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("");
+  const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("CSE (BE)");
+  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("6th Sem");
 
   const onSearch = (searchData) => {
+    setDefaultSearchData(searchData);
     setData(
-      data.filter(
+      allData.filter(
         (d) =>
           (d.subjectName.toLowerCase().includes(searchData.toLowerCase()) ||
             d.subjectCode.toLowerCase().includes(searchData.toLowerCase())) &&
@@ -47,11 +48,24 @@ export default function Notes() {
     axios
       .get("http://127.0.0.1:8000/api/notes/")
       .then((res) => {
-        setAllData(res.data);
+        const data = res.data;
+        setAllData(data);
+        // setData(
+        //   data.filter(
+        //     (dt) =>
+        //       dt.course === defaultSelectedCourse &&
+        //       dt.yearOrSem === defaultSelectedYearOrSem
+        //   )
+        // );
       })
       .catch((err) => console.log(err));
     console.log("use effect 1");
-  }, [data]);
+  }, [
+    data,
+    defaultSearchData,
+    defaultSelectedCourse,
+    defaultSelectedYearOrSem,
+  ]);
 
   const noResource = () => (
     <Grid item xs={12}>
@@ -67,10 +81,24 @@ export default function Notes() {
     </Grid>
   );
 
+  const defaultFilter = () => {
+    console.log(
+      defaultSearchData,
+      defaultSelectedCourse,
+      defaultSelectedYearOrSem
+    );
+  };
+  window.onload = defaultFilter();
+
   return (
     <div>
       <Box mr={4} py={3}>
-        <SearchAndFilter onSearch={onSearch} onFilter={onFilter} />
+        <SearchAndFilter
+          onSearch={onSearch}
+          onFilter={onFilter}
+          defaultSelectedCourse={defaultSelectedCourse}
+          defaultSelectedYearOrSem={defaultSelectedYearOrSem}
+        />
       </Box>
       <Box mr={3} ml={1} py={2}>
         <Grid container spacing={2} alignItems="center">
