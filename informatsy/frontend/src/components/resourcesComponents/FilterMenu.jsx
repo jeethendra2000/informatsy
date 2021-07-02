@@ -121,36 +121,6 @@ export default function FilterMenu({
         <Box py={2}>
           <Container>
             <Grid container spacing={2}>
-              <Grid item>
-                <Typography
-                  component="h6"
-                  onClick={() => setSelectedYearOrSem("1st Sem")}
-                >
-                  <Chip
-                    label={"1st Sem"}
-                    className={
-                      selectedYearOrSem === "1st Sem"
-                        ? classes.chipSelected
-                        : classes.chip
-                    }
-                  />
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  component="h6"
-                  onClick={() => setSelectedYearOrSem("2nd Sem")}
-                >
-                  <Chip
-                    label={"2nd Sem"}
-                    className={
-                      selectedYearOrSem === "2nd Sem"
-                        ? classes.chipSelected
-                        : classes.chip
-                    }
-                  />
-                </Typography>
-              </Grid>
               {yearOrSems.map((yearOrSem) => (
                 <Grid item key={yearOrSem.yearOrSemName}>
                   <Typography

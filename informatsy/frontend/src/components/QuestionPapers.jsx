@@ -29,12 +29,6 @@ export default function QuestionPapers() {
   const onFilter = (selectedCourse, selectedYearOrSem) => {
     setDefaultSelectedCourse(selectedCourse);
     setDefaultSelectedYearOrSem(selectedYearOrSem);
-    setData(
-      allData.filter(
-        (data) =>
-          data.course === selectedCourse && data.yearOrSem === selectedYearOrSem
-      )
-    );
   };
 
   useEffect(() => {
@@ -52,9 +46,7 @@ export default function QuestionPapers() {
         );
       })
       .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {}, [data, defaultSelectedCourse, defaultSelectedYearOrSem]);
+  }, [defaultSelectedCourse, defaultSelectedYearOrSem]);
 
   return (
     <div>
