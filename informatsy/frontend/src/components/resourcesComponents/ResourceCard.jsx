@@ -54,7 +54,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function ResourceCard({subjectName, subjectCode, yearOrSem, course, documentURL}) {
+export default function ResourceCard({
+  subjectName,
+  subjectCode,
+  yearOrSem,
+  course,
+  documentURL,
+}) {
   const classes = useStyles();
   return (
     <div>
@@ -102,7 +108,7 @@ export default function ResourceCard({subjectName, subjectCode, yearOrSem, cours
             <Grid item xs={2}>
               <Paper
                 elevation={4}
-                onClick={()=> window.location.assign(documentURL)}
+                onClick={() => window.location.assign(documentURL)}
                 className={classes.download}
               >
                 <GetAppIcon className={classes.icon} />

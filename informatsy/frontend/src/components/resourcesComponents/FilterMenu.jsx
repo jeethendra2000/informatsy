@@ -53,7 +53,9 @@ export default function FilterMenu({
 }) {
   const classes = useStyles();
   const [selectedCourse, setSelectedCourse] = useState(defaultSelectedCourse);
-  const [selectedYearOrSem, setSelectedYearOrSem] = useState(defaultSelectedYearOrSem);
+  const [selectedYearOrSem, setSelectedYearOrSem] = useState(
+    defaultSelectedYearOrSem
+  );
   const [courses, setCourses] = useState([]);
   const [yearOrSems, setYearOrSems] = useState([]);
 
