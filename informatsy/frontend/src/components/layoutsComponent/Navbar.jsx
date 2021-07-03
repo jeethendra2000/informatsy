@@ -32,18 +32,19 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     paddingTop: "3px",
-    [theme.breakpoints.up("md")]: {
-      marginRight: theme.spacing(40),
-      marginLeft: theme.spacing(1),
-    },
   },
+
   navbar: {
     backgroundColor: "#fcfefe",
   },
+
   menuList: {
     display: "flex",
     color: "#6d78fe",
+    float: "right",
+    marginLeft: "auto",
   },
+
   active: {
     backgroundColor: "#e4ebeb",
   },
@@ -115,7 +116,6 @@ export default function Navbar({ children }) {
                 </Typography>
               </div>
             </Link>
-            {/* --------------Menu Bar-------------- */}
             <List className={classes.menuList}>
               {menuItems.map((menu) => (
                 <ListItem
@@ -130,6 +130,8 @@ export default function Navbar({ children }) {
                 </ListItem>
               ))}
             </List>
+
+            {/* --------------Menu Bar-------------- */}
           </Hidden>
           {/*----------------Brand Logo on small screen---------------- */}
           <Hidden mdUp>

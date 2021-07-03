@@ -9,9 +9,16 @@ class ContactFormSerializer(serializers.ModelSerializer):
 
 
 class SyllabusSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Syllabus
         fields = "__all__"
+    
+    # to get absolute url of image
+    def get_photo_url(self, obj):
+        request = self.context.get('request')
+        photo_url = obj.fingerprint.url
+        return request.build_absolute_uri(photo_url)
 
 
 class CourseSerializer(serializers.ModelSerializer):

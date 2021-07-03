@@ -24,9 +24,9 @@ class ContactFormView(APIView):
 class SyllabusView(APIView):
     serializer_class = SyllabusSerializer
     
-    def get(self, request):
+    def get(self, request, format=None):
         query = Syllabus.objects.all()
-        serializer = SyllabusSerializer(query, many=True)
+        serializer = SyllabusSerializer(query, context={"request": request}, many=True)
         return Response(serializer.data)
 
 class CourseView(APIView):
