@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
   download: {
     // backgroundColor: "#4979ff",
-    // backgroundColor: "#4979ff",
     backgroundColor: "#ff1414",
     borderRadius: "50%",
     maxHeight: "80px",

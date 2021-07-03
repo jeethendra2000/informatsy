@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import logo from "../../Assets/logo.png";
 import Footer from "./Footer";
 import Button from "@material-ui/core/Button";
+import Account from "./Account";
 
 import {
   Avatar,
@@ -18,6 +19,7 @@ import {
 import { useHistory, useLocation } from "react-router";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -87,13 +89,18 @@ export default function Navbar({ children }) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
+  const [user, setUser] = useState({
+    status: true,
+    name: "SRS",
+    profileImage: "http://127.0.0.1:8000/media/branch/Rayaru_ZDUCckO.jpg",
+  });
 
   const menuItems = [
     { title: "Home", logo: "HomeIcon", path: "/" },
     { title: "Resources", logo: "MenuBookIcon", path: "/resources" },
-    { title: "About", logo: "InfoIcon", path: "/kj" },
-    { title: "Features", logo: "ImportantDevicesIcon", path: "/aa" },
-    { title: "Contact", logo: "CallIcon", path: "/popup" },
+    { title: "Features", logo: "ImportantDevicesIcon", path: "/features" },
+    { title: "Contact", logo: "CallIcon", path: "/contact" },
+    { title: "About", logo: "InfoIcon", path: "/about" },
   ];
 
   return (
@@ -142,24 +149,30 @@ export default function Navbar({ children }) {
           </Hidden>
           {/* ----------------Login And SignUp Button---------------- */}
           <Hidden smDown>
-            <Button
-              color="primary"
-              size="medium"
-              variant="outlined"
-              onClick={() => history.push("/popup")}
-              className={classes.signUpButton}
-            >
-              Signup
-            </Button>
-            <Button
-              color="primary"
-              size="medium"
-              variant="contained"
-              onClick={() => history.push("/login")}
-              className={classes.loginButton}
-            >
-              Login
-            </Button>
+            {user.status ? (
+              <Account user={user}/>
+            ) : (
+              <>
+                <Button
+                  color="primary"
+                  size="medium"
+                  variant="outlined"
+                  onClick={() => history.push("/popup")}
+                  className={classes.signUpButton}
+                >
+                  Signup
+                </Button>
+                <Button
+                  color="primary"
+                  size="medium"
+                  variant="contained"
+                  onClick={() => history.push("/login")}
+                  className={classes.loginButton}
+                >
+                  Login
+                </Button>
+              </>
+            )}
           </Hidden>
         </Toolbar>
       </AppBar>

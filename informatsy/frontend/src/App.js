@@ -16,6 +16,10 @@ import ResourcePage from "./components/ResourcePage";
 import Syllabus from "./components/Syllabus";
 import Notes from "./components/Notes";
 import QuestionPapers from "./components/QuestionPapers";
+import About from "./components/layoutsComponent/About";
+import Notifications from "./components/Notifications";
+import Contact from "./components/layoutsComponent/Contact";
+import Features from "./components/layoutsComponent/Features";
 
 // Custom theme of Informatsy
 const theme = createMuiTheme({
@@ -28,7 +32,7 @@ const theme = createMuiTheme({
     secondary: {
       main: "#ff7e79",
     },
-    divider:"rgba(0,0,0,0.3)",
+    divider: "rgba(0,0,0,0.3)",
   },
   typography: {
     fontFamily: "Montserrat",
@@ -54,11 +58,18 @@ function App() {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/" component={HomePage} />
-                <Route exact path="/resources" component={ResourcePage}/>
+
+                <Route exact path="/resources" component={ResourcePage} />
                 <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Route exact path="/resources/notes" component={Notes} />
                 <Route exact path="/resources/questionPapers" component={QuestionPapers} />
-                <Redirect to='/'> </Redirect>
+
+                <Route exact path="/features" component={Features} />
+                <Route exact path="/contact" component={Contact} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/notifications" component={Notifications} />
+
+                <Redirect to="/"> </Redirect>
               </Switch>
             </Navbar>
           </Switch>

@@ -5,11 +5,6 @@ import { Box, Paper, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    height: "auto",
-    maxWidth: "350px",
-  },
   card: {
     borderRadius: "30px",
     transition: "0.3s",
@@ -63,11 +58,11 @@ export default function Syllabus() {
                   onClick={() => window.location.assign(item.documentURL)}
                 >
                   <img
-                    className={classes.root}
+                    className={classes.image}
                     src={item.branchImage}
                     alt={item.branchName}
-                    className={classes.image}
                   />
+
                   <Typography
                     variant="h6"
                     component="h5"
