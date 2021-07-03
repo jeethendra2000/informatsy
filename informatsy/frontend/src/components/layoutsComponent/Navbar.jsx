@@ -28,13 +28,6 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
-  toolBar: {
-    [theme.breakpoints.up("md")]: {
-      float: "center",
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-  },
   brandLogo: {
     display: "flex",
   },
@@ -53,27 +46,17 @@ const useStyles = makeStyles((theme) => ({
   menuList: {
     display: "flex",
     color: "#6d78fe",
-    float: "right",
-    [theme.breakpoints.up("md")]: {
-      marginLeft: "450px",
-    },
-    [theme.breakpoints.down("md")]: {
-      marginLeft: "300px",
-    },
+    position: "absolute",
+    right: "15px",
   },
 
   active: {
     backgroundColor: "#e4ebeb",
   },
 
-  loginButton: {
-    marginLeft: theme.spacing(2),
-  },
   signUpButton: {
     border: "3px solid",
     borderRadius: "10%",
-    marginLeft: theme.spacing(2),
-
     "&:hover": {
       border: "3px solid",
       backgroundColor: "#1876d2",
@@ -104,11 +87,11 @@ export default function Navbar({ children }) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  const [user, setUser] = useState({
-    status: true,
+  const user = {
+    status: false,
     name: "SRS",
     profileImage: "http://127.0.0.1:8000/media/branch/Rayaru_ZDUCckO.jpg",
-  });
+  };
 
   const menuItems = [
     { title: "Home", logo: "HomeIcon", path: "/" },
@@ -122,7 +105,7 @@ export default function Navbar({ children }) {
     <div className={classes.root}>
       {/* Header */}
       <AppBar position="fixed" className={classes.navbar}>
-        <Toolbar className={classes.toolBar}>
+        <Toolbar>
           {/* -----------------------Brand Logo----------------------- */}
           <Hidden smDown>
             <Link to="/" style={{ textDecoration: "none" }}>
@@ -154,41 +137,65 @@ export default function Navbar({ children }) {
                   <ListItemText primary={menu.title} />
                 </ListItem>
               ))}
+              {user.status ? (
+                <Account user={user} />
+              ) : (
+                <>
+                  <ListItem>
+                    <Button
+                      color="primary"
+                      size="medium"
+                      variant="outlined"
+                      onClick={() => history.push("/popup")}
+                      className={classes.signUpButton}
+                    >
+                      Signup
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      color="primary"
+                      size="medium"
+                      variant="contained"
+                      onClick={() => history.push("/popup")}
+                    >
+                      SignIn
+                    </Button>
+                  </ListItem>
+                </>
+              )}
             </List>
           </Hidden>
           {/*----------------Brand Logo on small screen---------------- */}
           <Hidden mdUp>
-            <Sidebar menuItems={menuItems} />
-            <Link to="/">
-              <Avatar src={logo} className={classes.mobileLogo} />
-            </Link>
-          </Hidden>
-          {/* ----------------Login And SignUp Button---------------- */}
-          <Hidden smDown>
-            {user.status ? (
-              <Account user={user} />
-            ) : (
-              <>
-                <Button
-                  color="primary"
-                  size="medium"
-                  variant="outlined"
-                  onClick={() => history.push("/popup")}
-                  className={classes.signUpButton}
-                >
-                  Signup
-                </Button>
-                <Button
-                  color="primary"
-                  size="medium"
-                  variant="contained"
-                  onClick={() => history.push("/login")}
-                  className={classes.loginButton}
-                >
-                  Login
-                </Button>
-              </>
-            )}
+            <div style={{ display: "flex" }}>
+              <Sidebar menuItems={menuItems} />
+              <Link to="/">
+                <Avatar src={logo} className={classes.mobileLogo} />
+              </Link>
+              <div
+                style={{
+                  display: "flex",
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                }}
+              >
+                {user.status ? (
+                  <Account user={user} />
+                ) : (
+                  <Button
+                    color="primary"
+                    size="medium"
+                    variant="outlined"
+                    onClick={() => history.push("/popup")}
+                    className={classes.signUpButton}
+                  >
+                    Sign In
+                  </Button>
+                )}
+              </div>
+            </div>
           </Hidden>
         </Toolbar>
       </AppBar>

@@ -38,7 +38,7 @@ function Account({ user }) {
         aria-label="show new notifications"
         color="primary"
         onClick={() => history.push("/notifications")}
-        style={{ marginRight: "15px" }}
+        style={{ marginRight: "10px" }}
       >
         <Badge badgeContent={17} color="error">
           <NotificationsIcon />
