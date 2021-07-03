@@ -28,6 +28,16 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
+  toolBar: {
+    [theme.breakpoints.up("md")]: {
+      float: "center",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+  },
+  brandLogo: {
+    display: "flex",
+  },
   logo: {
     marginLeft: theme.spacing(5),
   },
@@ -44,7 +54,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     color: "#6d78fe",
     float: "right",
-    marginLeft: "auto",
+    [theme.breakpoints.up("md")]: {
+      marginLeft: "450px",
+    },
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "300px",
+    },
   },
 
   active: {
@@ -107,11 +122,11 @@ export default function Navbar({ children }) {
     <div className={classes.root}>
       {/* Header */}
       <AppBar position="fixed" className={classes.navbar}>
-        <Toolbar>
+        <Toolbar className={classes.toolBar}>
           {/* -----------------------Brand Logo----------------------- */}
           <Hidden smDown>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <div style={{ display: "flex" }}>
+              <div className={classes.brandLogo}>
                 <Avatar src={logo} className={classes.logo} />
                 <Typography
                   variant="h4"
@@ -123,6 +138,9 @@ export default function Navbar({ children }) {
                 </Typography>
               </div>
             </Link>
+
+            {/* --------------Menu Bar-------------- */}
+
             <List className={classes.menuList}>
               {menuItems.map((menu) => (
                 <ListItem
@@ -137,8 +155,6 @@ export default function Navbar({ children }) {
                 </ListItem>
               ))}
             </List>
-
-            {/* --------------Menu Bar-------------- */}
           </Hidden>
           {/*----------------Brand Logo on small screen---------------- */}
           <Hidden mdUp>
@@ -150,7 +166,7 @@ export default function Navbar({ children }) {
           {/* ----------------Login And SignUp Button---------------- */}
           <Hidden smDown>
             {user.status ? (
-              <Account user={user}/>
+              <Account user={user} />
             ) : (
               <>
                 <Button
