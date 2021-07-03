@@ -9,6 +9,7 @@ import axios from "axios";
 export default function Notes() {
   const [allData, setAllData] = useState([]);
   const [data, setData] = useState([]);
+  const [defaultSortOrder, setDefaultSortOrder] = useState("");
   const [defaultSelectedCourse, setDefaultSelectedCourse] =
     useState("CSE (BE)");
   const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] =
@@ -25,9 +26,31 @@ export default function Notes() {
       )
     );
   };
-  const onFilter = (selectedCourse, selectedYearOrSem) => {
+
+  const onFilter = (selectedCourse, selectedYearOrSem, sortOrder) => {
     setDefaultSelectedCourse(selectedCourse);
     setDefaultSelectedYearOrSem(selectedYearOrSem);
+    setDefaultSortOrder(sortOrder);
+  };
+
+  const onSort = () => {
+    data.sort(function (a, b) {
+      let x = a.subjectName.toLowerCase();
+      let y = b.subjectName.toLowerCase();
+      if (x < y) return -1;
+      if (x > y) return 1;
+      return 0;
+    });
+  };
+
+  const onReverseSort = () => {
+    data.sort(function (a, b) {
+      let x = a.subjectName.toLowerCase();
+      let y = b.subjectName.toLowerCase();
+      if (x < y) return 1;
+      if (x > y) return -1;
+      return 0;
+    });
   };
 
   useEffect(() => {
@@ -47,12 +70,17 @@ export default function Notes() {
       .catch((err) => console.log(err));
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);
 
+  useEffect(() => {}, [defaultSortOrder]);
+  
   return (
     <div>
       <Box mr={4} py={3}>
         <SearchAndFilter
           onSearch={onSearch}
           onFilter={onFilter}
+          defaultSortOrder={defaultSortOrder}
+          onSort={onSort}
+          onReverseSort={onReverseSort}
           defaultSelectedCourse={defaultSelectedCourse}
           defaultSelectedYearOrSem={defaultSelectedYearOrSem}
         />

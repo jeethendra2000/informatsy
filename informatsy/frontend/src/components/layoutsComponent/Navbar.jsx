@@ -1,13 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import logo from "../../Assets/logo.png";
 import Footer from "./Footer";
-import Button from "@material-ui/core/Button";
 import Account from "./Account";
-
+import Sidebar from "./Sidebar";
+import { Link } from "react-router-dom";
+import logo from "../../Assets/logo.png";
+import { useHistory, useLocation } from "react-router";
 import {
   Avatar,
   Container,
@@ -16,10 +18,7 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
-import { useHistory, useLocation } from "react-router";
-import Sidebar from "./Sidebar";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -87,6 +86,7 @@ export default function Navbar({ children }) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
+  
   const user = {
     status: false,
     name: "SRS",

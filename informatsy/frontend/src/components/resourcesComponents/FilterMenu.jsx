@@ -48,10 +48,14 @@ const useStyles = makeStyles(() => ({
 export default function FilterMenu({
   toggle,
   onFilter,
+  defaultSortOrder,
+  onSort,
+  onReverseSort,
   defaultSelectedCourse,
   defaultSelectedYearOrSem,
 }) {
   const classes = useStyles();
+  const [sortOrder, setSortOrder] = useState(defaultSortOrder);
   const [selectedCourse, setSelectedCourse] = useState(defaultSelectedCourse);
   const [selectedYearOrSem, setSelectedYearOrSem] = useState(
     defaultSelectedYearOrSem
@@ -62,10 +66,11 @@ export default function FilterMenu({
   const clear = () => {
     setSelectedCourse("");
     setSelectedYearOrSem("");
+    setSortOrder("");
   };
   const handleApply = () => {
     toggle();
-    onFilter(selectedCourse, selectedYearOrSem);
+    onFilter(selectedCourse, selectedYearOrSem, sortOrder);
   };
 
   useEffect(() => {
@@ -81,6 +86,57 @@ export default function FilterMenu({
   return (
     <div>
       <Box bgcolor="#F8F8F8">
+        <Box py={1}>
+          <Container>
+            <Typography variant="h6">Sort by</Typography>
+          </Container>
+        </Box>
+
+        <Divider />
+
+        <Box py={2}>
+          <Container>
+            <Grid container spacing={2}>
+              <Grid item>
+                <Typography
+                  component="h6"
+                  onClick={() => {
+                    setSortOrder("ascending");
+                    onSort();
+                  }}
+                >
+                  <Chip
+                    label="Order : A to Z"
+                    className={
+                      sortOrder === "ascending"
+                        ? classes.chipSelected
+                        : classes.chip
+                    }
+                  />
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  component="h6"
+                  onClick={() => {
+                    setSortOrder("descending");
+                    onReverseSort();
+                  }}
+                >
+                  <Chip
+                    label="Order : Z to A"
+                    className={
+                      sortOrder === "descending"
+                        ? classes.chipSelected
+                        : classes.chip
+                    }
+                  />
+                </Typography>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+
         <Box py={1}>
           <Container>
             <Typography variant="h6">Courses</Typography>

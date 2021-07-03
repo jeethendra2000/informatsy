@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchAndFilter({
   onSearch,
   onFilter,
+  defaultSortOrder,
+  onSort,
+  onReverseSort,
   defaultSelectedCourse,
   defaultSelectedYearOrSem,
 }) {
@@ -113,6 +116,9 @@ export default function SearchAndFilter({
             <FilterMenu
               toggle={toggle}
               onFilter={onFilter}
+              defaultSortOrder={defaultSortOrder}
+              onSort={onSort}
+              onReverseSort={onReverseSort}
               defaultSelectedCourse={defaultSelectedCourse}
               defaultSelectedYearOrSem={defaultSelectedYearOrSem}
             />
