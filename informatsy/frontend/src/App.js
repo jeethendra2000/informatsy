@@ -14,15 +14,15 @@ import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
 import ResourcePage from "./components/ResourcePage";
 import Syllabus from "./components/Syllabus";
-<<<<<<< HEAD
+
 import Signup from "./components/Signup";
 import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { LinkedInPopUp } from "react-linkedin-login-oauth2";
 import axios from "axios";
-=======
+
 import Notes from "./components/Notes";
 import QuestionPapers from "./components/QuestionPapers";
->>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75
+
 
 // Custom theme of Informatsy
 const theme = createMuiTheme({

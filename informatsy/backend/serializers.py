@@ -19,7 +19,7 @@ class SyllabusSerializer(serializers.ModelSerializer):
         model = Syllabus
         fields = "__all__"
 
-<<<<<<< HEAD
+
 # validation for email
 
 
@@ -38,7 +38,7 @@ class alloauthSerializers(serializers.ModelSerializer):
         model = Accounts
         fields = ('id', 'userEmail', 'uniqueId', 'profileImg',
                   'first_name', 'last_name')
-=======
+
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,4 +59,4 @@ class NotesSerializer(serializers.Serializer):
         model = Notes
         fields = ['subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
 
->>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75
+

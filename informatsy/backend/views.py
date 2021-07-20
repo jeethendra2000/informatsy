@@ -45,7 +45,6 @@ class SyllabusView(APIView):
         serializer = SyllabusSerializer(query, many=True)
         return Response(serializer.data)
 
-<<<<<<< HEAD
 # ---------Signup view-----------------
 
 # ----------oauth view-------------
@@ -114,7 +113,7 @@ class SignupView(APIView):
                     return Response(SignupSerializer(dataObjects.objects.all(), many=True).data)
 
                 return Response("That email/username and password combination didn't work. Try again.", status=status.HTTP_405_METHOD_NOT_ALLOWED)
-=======
+
 class CourseView(APIView):
     serializer_class = CourseSerializer
 
@@ -140,4 +139,4 @@ class NotesView(APIView):
         query = Notes.objects.all();
         serializer = NotesSerializer(query, many=True)
         return Response(serializer.data)
->>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75
+

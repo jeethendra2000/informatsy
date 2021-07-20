@@ -44,11 +44,10 @@ export default function Contact() {
           setFullName("");
           setEmailAddress("");
           setMessage("");
-<<<<<<< HEAD
-          alert("value reset done" + res.status);
-=======
+
+ 
           alert("Submitted successfully!");
->>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75
+
         })
         .catch((err) => {
           alert("Error! Please check your Credentials");
