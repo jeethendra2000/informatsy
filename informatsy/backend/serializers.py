@@ -7,6 +7,7 @@ from . models import *
 from django import forms
 
 
+
 class ContactFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactForm
@@ -18,6 +19,7 @@ class SyllabusSerializer(serializers.ModelSerializer):
         model = Syllabus
         fields = "__all__"
 
+<<<<<<< HEAD
 # validation for email
 
 
@@ -36,3 +38,25 @@ class alloauthSerializers(serializers.ModelSerializer):
         model = Accounts
         fields = ('id', 'userEmail', 'uniqueId', 'profileImg',
                   'first_name', 'last_name')
+=======
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = "__all__"
+
+
+class YearOrSemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = YearOrSem
+        fields = "__all__"
+
+
+class NotesSerializer(serializers.Serializer):
+    course = serializers.StringRelatedField(many=True, read_only=True)
+    yearOfSem = serializers.StringRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Notes
+        fields = ['subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
+
+>>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75

@@ -44,7 +44,11 @@ export default function Contact() {
           setFullName("");
           setEmailAddress("");
           setMessage("");
+<<<<<<< HEAD
           alert("value reset done" + res.status);
+=======
+          alert("Submitted successfully!");
+>>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75
         })
         .catch((err) => {
           alert("Error! Please check your Credentials");
@@ -145,6 +149,7 @@ export default function Contact() {
                   className={fullNameError ? classes.error : classes.inputField}
                   variant="outlined"
                   fullWidth
+                  value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                 />
               </Grid>
@@ -156,6 +161,7 @@ export default function Contact() {
                   }
                   variant="outlined"
                   fullWidth
+                  value={emailAddress}
                   onChange={(e) => setEmailAddress(e.target.value)}
                 />
               </Grid>
@@ -168,6 +174,7 @@ export default function Contact() {
                   fullWidth
                   multiline
                   rows={4}
+                  value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />
               </Grid>

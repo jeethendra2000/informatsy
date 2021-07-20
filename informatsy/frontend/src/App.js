@@ -12,11 +12,17 @@ import Navbar from "./components/layoutsComponent/Navbar";
 import Login from "./components/Login";
 import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
+import ResourcePage from "./components/ResourcePage";
 import Syllabus from "./components/Syllabus";
+<<<<<<< HEAD
 import Signup from "./components/Signup";
 import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { LinkedInPopUp } from "react-linkedin-login-oauth2";
 import axios from "axios";
+=======
+import Notes from "./components/Notes";
+import QuestionPapers from "./components/QuestionPapers";
+>>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75
 
 // Custom theme of Informatsy
 const theme = createMuiTheme({
@@ -29,6 +35,7 @@ const theme = createMuiTheme({
     secondary: {
       main: "#ff7e79",
     },
+    divider:"rgba(0,0,0,0.3)",
   },
   typography: {
     fontFamily: "Montserrat",
@@ -85,8 +92,11 @@ function App() {
             <Navbar>
               <Switch>
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/resources" component={ResourcePage}/>
                 <Route exact path="/resources/syllabus" component={Syllabus} />
-                <Redirect to="/"> </Redirect>
+                <Route exact path="/resources/notes" component={Notes} />
+                <Route exact path="/resources/questionPapers" component={QuestionPapers} />
+                <Redirect to='/'> </Redirect>
               </Switch>
             </Navbar>
           </Switch>

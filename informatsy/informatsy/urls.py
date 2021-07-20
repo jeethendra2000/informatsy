@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.conf.urls import url
+# from django.conf.urls import url
 
 
 urlpatterns = [
@@ -30,5 +30,9 @@ urlpatterns = [
 
 ]
 if settings.DEBUG:
+<<<<<<< HEAD
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+=======
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+>>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75

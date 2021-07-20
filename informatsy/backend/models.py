@@ -15,6 +15,7 @@ class ContactForm(models.Model):
 
 
 class Syllabus(models.Model):
+<<<<<<< HEAD
     branchChoice = (
         ('Civil', 'Civil'),
         ('Mechanical', 'Mechanical'),
@@ -65,3 +66,39 @@ class Accounts(models.Model):
 
     def __str__(self):
         return self.userEmail
+=======
+    branchName = models.CharField(max_length=50, primary_key=True, unique=True)
+    scheme = models.CharField(max_length=4, default=2018)
+    branchImage = models.ImageField(upload_to='branch/')
+    documentURL = models.URLField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.branchName
+
+
+# Resourse section
+class Course(models.Model):
+    courseName = models.CharField(max_length=100, primary_key=True, unique=True)
+
+    def __str__(self):
+        return self.courseName
+
+
+class YearOrSem(models.Model):
+    yearOrSemName = models.CharField(max_length=50, primary_key=True, unique=True)
+
+    def __str__(self):
+        return self.yearOrSemName
+
+
+class Notes(models.Model):
+    subjectName = models.CharField(max_length=100)
+    subjectCode = models.CharField(max_length=20, blank=True, null=True)
+    yearOrSem = models.ForeignKey(YearOrSem, on_delete=models.CASCADE, related_name="yearOrSem")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="course")
+    documentURL = models.URLField(max_length=512, null=True)
+
+    def __str__(self):
+        return self.subjectName
+
+>>>>>>> 0e357f347b97e85280ca4d799cc0ed24f9719b75
