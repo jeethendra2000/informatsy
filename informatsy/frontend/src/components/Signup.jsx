@@ -19,6 +19,7 @@ import li_icon from "../Assets/linkedin_logo.webp";
 import Input from "../components/Input";
 import Loader from "../components/Loaders";
 import "../css/Login.css";
+import { useLocation } from "react-router-dom";
 // import { Snackbar } from "@material-ui/core";
 // import MuiAlert from "@material-ui/lab/Alert";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
@@ -49,6 +50,7 @@ class FormMain extends Component {
       alertContent: "",
       alertMsg: "",
       isSubmit: 1,
+      accesstoken: "",
     };
   }
   //---------------to check whether all fields are filled-------------
@@ -137,7 +139,22 @@ class FormMain extends Component {
         });
     }
   }
-  googleResponse(response) {}
+  OathAccessToken(authProvider, accesstoken) {
+    console.log(accesstoken.accessToken);
+    axios
+      .post("http://127.0.0.1:8000/api/OauthAll/", {
+        accesstoken: accesstoken,
+        authProvider: authProvider,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => {
+        this.setState({
+          alert: true,
+          alertContent: err.response.data,
+          alertMsg: "error",
+        });
+      });
+  }
 
   render() {
     console.log(this.state.ischeck);
@@ -314,8 +331,11 @@ class FormMain extends Component {
               <FacebookLogin
                 appId="527430968405690"
                 fields="name,email,picture"
-                onClick={(res) => console.log(res)}
-                callback={(res) => console.log(res)}
+                onClick={(res) => console.log("facebook login")}
+                callback={(res) =>
+                  this.OathAccessToken("facebook", res.accessToken)
+                }
+                redirectUri="http://localhost:3000/signup"
                 render={(renderProps) => (
                   <img
                     src={fb_icon}
@@ -345,9 +365,9 @@ class FormMain extends Component {
                     onClick={renderProps.onClick}
                   />
                 )}
-                onSuccess={(response) => {
-                  console.log(response);
-                }}
+                onSuccess={(response) =>
+                  this.OathAccessToken("google", response.tokenObj.access_token)
+                }
                 onFailure={(response) => {
                   console.log(response);
                 }}

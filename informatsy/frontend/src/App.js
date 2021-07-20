@@ -69,7 +69,6 @@ function App() {
       ux_mode: "popup",
       context: "use",
       state_cookie_domain: "http://localhost",
-      cancel_on_tap_outside: false,
       native_callback: (response) => {
         console.log(response);
       },

@@ -29,3 +29,10 @@ class SignupSerializer(serializers.ModelSerializer):
         fields = ('id', 'userEmail', 'password', 'uniqueId')
 
         extra_kwargs = {'password': {'write_only': True}}
+
+
+class alloauthSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Accounts
+        fields = ('id', 'userEmail', 'uniqueId', 'profileImg',
+                  'first_name', 'last_name')
