@@ -3,6 +3,13 @@ from . models import *
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField('get_username')
+    first_name = serializers.SerializerMethodField('get_first_name')
+    last_name = serializers.SerializerMethodField('get_last_name')
+    email = serializers.SerializerMethodField('get_email')
+    last_login = serializers.SerializerMethodField('get_last_login')
+    number_of_followers = serializers.SerializerMethodField('get_number_of_followers')
+
     class Meta:
         model = UserProfile
         fields = "__all__"
@@ -12,7 +19,37 @@ class UserProfileSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         photo_url = obj.fingerprint.url
         return request.build_absolute_uri(photo_url)
+    
+    def get_username(self, pk):
+            profile = UserProfile.objects.get(pk=pk)
+            user = profile.user
+            return user.username
 
+    def get_first_name(self, pk):
+            profile = UserProfile.objects.get(pk=pk)
+            user = profile.user
+            return user.first_name
+            
+    def get_last_name(self, pk):
+            profile = UserProfile.objects.get(pk=pk)
+            user = profile.user
+            return user.last_name
+
+    def get_email(self, pk):
+            profile = UserProfile.objects.get(pk=pk)
+            user = profile.user
+            return user.email
+    
+    def get_last_login(self, pk):
+            profile = UserProfile.objects.get(pk=pk)
+            user = profile.user
+            return user.last_login
+
+    def get_number_of_followers(self, pk):
+        profile = UserProfile.objects.get(pk=pk)
+        followers = profile.followers.all()
+
+        return len(followers)
 
 class ContactFormSerializer(serializers.ModelSerializer):
     class Meta:
