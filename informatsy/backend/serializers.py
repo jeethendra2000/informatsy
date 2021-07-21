@@ -13,6 +13,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         photo_url = obj.fingerprint.url
         return request.build_absolute_uri(photo_url)
 
+
 class ContactFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactForm
