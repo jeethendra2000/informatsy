@@ -2,6 +2,17 @@ from rest_framework import serializers
 from . models import *
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = "__all__"
+    
+    # to get absolute url of image
+    def get_photo_url(self, obj):
+        request = self.context.get('request')
+        photo_url = obj.fingerprint.url
+        return request.build_absolute_uri(photo_url)
+
 class ContactFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactForm

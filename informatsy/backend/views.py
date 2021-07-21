@@ -10,6 +10,16 @@ from . models import *
 from . serializers import *
 
 # Create your views here.
+class UserProfileView(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    
+    def list(self, request):
+        profile = UserProfile.objects.all()
+        serializer = UserProfileSerializer(profile, context={"request": request}, many=True)
+        return Response(serializer.data)
+
+
 class ContactFormView(APIView):
 
     serializer_class = ContactFormSerializer

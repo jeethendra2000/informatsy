@@ -86,9 +86,9 @@ export default function Navbar({ children }) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  
+
   const user = {
-    status: false,
+    status: true,
     name: "SRS",
     profileImage: "http://127.0.0.1:8000/media/branch/Rayaru_ZDUCckO.jpg",
   };
@@ -188,6 +188,7 @@ export default function Navbar({ children }) {
                     color="primary"
                     size="medium"
                     variant="outlined"
+                    style={{borderRadius:"50px"}}
                     onClick={() => history.push("/popup")}
                     className={classes.signUpButton}
                   >

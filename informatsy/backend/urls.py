@@ -9,11 +9,12 @@ router = DefaultRouter()
 # registering model Notes
 router.register('notes', NotesView, basename='notes')
 router.register('questionPapers', QuestionPapersView, basename='questionPapers')
+router.register('profile', UserProfileView, basename='profile')
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('contactForm/', ContactFormView.as_view(), name='contactForm'),
     path('syllabus/', SyllabusView.as_view(), name='syllabus'),
     path('course/', CourseView.as_view(), name='course'),
     path('yearOrSem/', YearOrSemView.as_view(), name='yearOrSem'),
-    path('', include(router.urls))
 ]
