@@ -13,10 +13,9 @@ class UserProfileView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request, pk=None, format=None):
-        id = pk
-        if id is not None:
-            profile = UserProfile.objects.get(pk=id)
+    def get(self, request, slug=None, format=None):
+        if slug is not None:
+            profile = UserProfile.objects.get(user_slug=slug)
             serializer = UserProfileSerializer(profile, context={"request": request})
             followers = profile.followers.all()
 
@@ -33,8 +32,8 @@ class UserProfileView(APIView):
         serializer = UserProfileSerializer(profiles, context={"request":request}, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def patch(self, request, pk, format=None):
-        profile = UserProfile.objects.get(pk=pk)
+    def patch(self, request, slug, format=None):
+        profile = UserProfile.objects.get(user_slug=slug)
         serializer = UserProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -46,8 +45,8 @@ class AddFollower(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request, pk, format=None):
-        profile = UserProfile.objects.get(pk=pk)
+    def post(self, request, slug, format=None):
+        profile = UserProfile.objects.get(user_slug=slug)
         profile.followers.add(request.user.id)
         return Response(status=status.HTTP_200_OK)
 
@@ -55,8 +54,8 @@ class RemoveFollower(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request, pk, format=None):
-        profile = UserProfile.objects.get(pk=pk)
+    def post(self, request, slug, format=None):
+        profile = UserProfile.objects.get(user_slug=slug)
         profile.followers.remove(request.user.id)
         return Response(status=status.HTTP_200_OK)
 

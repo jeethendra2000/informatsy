@@ -10,6 +10,7 @@ django-cors-headers = "*"
 pipfile = "*"
 pillow = "*"
 django-allauth = "*"
+django-autoslug = "*"
 
 [dev-packages]
 
