@@ -52,17 +52,13 @@ class SyllabusView(APIView):
 
 class AllOauthView(APIView):
     def oauth_db_includer(data):
-        dbData = {}
+
         dataObjects = Accounts
-        if dataObjects.objects.filter(userEmail=data["email"]):
+        if dataObjects.objects.filter(userEmail=data["userEmail"]):
             return False
         else:
-            dbData["first_name"], dbData["last_name"] = data["first_name"] or data["given_name"], data["last_name"] or data["family_name"]
-            dbData["uniqueId"] = essentialClass.UniqueidGen.uniqueIdGenerator()
-            dbData["userEmail"] = data["email"]
-            dbData["profileImg"] = data["picture"]["data"]["url"] or data["picture"]
-            oauthserilizers = alloauthSerializers(data=dbData)
-            print(dbData)
+            oauthserilizers = alloauthSerializers(data=data)
+            print(data)
             if oauthserilizers.is_valid():
                 oauthserilizers.save()
                 return True
@@ -76,7 +72,10 @@ class AllOauthView(APIView):
                 request.data["accesstoken"])
 
             if auth_status["status"]:
-                oathStatus = AllOauthView.oauth_db_includer(auth_status["res"])
+                data = auth_status['res']
+                dbData = {"first_name": data["first_name"], "last_name": data["last_name"], "uniqueId": essentialClass.UniqueidGen.uniqueIdGenerator(
+                ), "userEmail": data["email"], "profileImg": data["picture"]["data"]["url"]}
+                oathStatus = AllOauthView.oauth_db_includer(dbData)
                 return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus else Response("Your account is already created...!", status=status.HTTP_409_CONFLICT)
 
             else:
@@ -85,12 +84,19 @@ class AllOauthView(APIView):
             auth_status = authInstance.googleAuth(
                 request.data["accesstoken"])
             if auth_status["status"]:
-                oathStatus = AllOauthView.oauth_db_includer(
-                    auth_status["res"])
+                data = auth_status['res']
+                dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "uniqueId": essentialClass.UniqueidGen.uniqueIdGenerator(
+                ), "userEmail": data["email"], "profileImg": data["picture"]}
+
+                oathStatus = AllOauthView.oauth_db_includer(dbData)
                 return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus else Response("Your account is already created...!", status=status.HTTP_409_CONFLICT)
 
             else:
                 return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+        else:
+            auth_status = authInstance.linkedInAuth(
+                request.data["accesstoken"])
+            return Response("User created successfully", status=status.HTTP_200_OK)
 
 
 class SignupView(APIView):
@@ -114,6 +120,7 @@ class SignupView(APIView):
 
                 return Response("That email/username and password combination didn't work. Try again.", status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+
 class CourseView(APIView):
     serializer_class = CourseSerializer
 
@@ -125,7 +132,7 @@ class CourseView(APIView):
 
 class YearOrSemView(APIView):
     serializer_class = YearOrSemSerializer
-    
+
     def get(self, request):
         query = YearOrSem.objects.all()
         serializer = YearOrSemSerializer(query, many=True)
@@ -134,9 +141,8 @@ class YearOrSemView(APIView):
 
 class NotesView(APIView):
     serializer_class = NotesSerializer
-    
+
     def get(self, request):
-        query = Notes.objects.all();
+        query = Notes.objects.all()
         serializer = NotesSerializer(query, many=True)
         return Response(serializer.data)
-

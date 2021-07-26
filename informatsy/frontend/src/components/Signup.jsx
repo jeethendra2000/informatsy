@@ -141,6 +141,10 @@ class FormMain extends Component {
   }
   OathAccessToken(authProvider, accesstoken) {
     console.log(accesstoken.accessToken);
+    this.setState({
+      alert: false,
+      alertContent: "",
+    });
     axios
       .post("http://127.0.0.1:8000/api/OauthAll/", {
         accesstoken: accesstoken,
@@ -148,6 +152,7 @@ class FormMain extends Component {
       })
       .then((res) => console.log(res))
       .catch((err) => {
+        console.log(err.response.data);
         this.setState({
           alert: true,
           alertContent: err.response.data,
@@ -383,8 +388,9 @@ class FormMain extends Component {
               <LinkedIn
                 clientId="86xee9zpkumiiy"
                 onFailure={(res) => console.log(res)}
-                onSuccess={(res) => console.log(res)}
+                onSuccess={(res) => this.OathAccessToken("linkedIn", res.code)}
                 redirectUri="http://localhost:3000/linkedin"
+                scope="r_liteprofile r_emailaddress"
                 renderElement={({ onClick, disabled }) => (
                   <img
                     src={li_icon}
