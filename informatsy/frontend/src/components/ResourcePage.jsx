@@ -10,17 +10,17 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "auto",
-    maxWidth: "300px",
+    maxWidth: "280px",
   },
   card: {
     borderRadius: "30px",
-    transition: "0.3s",
+    transition: "0.2s",
     "&:hover": {
-      boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
+      boxShadow: "0 12px 24px 0 rgba(0,0,0,0.2)",
     },
-    [theme.breakpoints.down('md')]:{
+    [theme.breakpoints.down("md")]: {
       borderRadius: "20px",
-    }
+    },
   },
 }));
 
@@ -31,41 +31,77 @@ export default function ResourcePage() {
 
   return (
     <div>
-        <Box py={4}>
-          <Box textAlign="center" pb={{xs:1, sm:2, md:2}}>
-            <Typography variant="h4" component="h5" gutterBottom>
-              Resources
-            </Typography>
-          </Box>
-          <Box py={4} mr={2}>
-            <Grid container spacing={5}>
-              <Grid item xs={12} sm={4}>
-                <Box textAlign="center" onClick={()=>history.push(location.pathname+"/syllabus")}>
-                  <Paper className={classes.card} elevation={5}>
-                    <img className={classes.root} src={Syllabus} alt="Syllabus"/>
-                    <Typography variant="h5" component="h5" gutterBottom style={{paddingBottom:"10px"}}>Syllabus</Typography>
-                  </Paper>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Box textAlign="center" onClick={()=>history.push(location.pathname+"/notes")}>
-                  <Paper className={classes.card} elevation={5}>
-                    <img className={classes.root} src={Notes} alt="Notes"/>
-                    <Typography variant="h5" component="h5" gutterBottom style={{paddingBottom:"10px"}}>Notes</Typography>
-                  </Paper>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Box textAlign="center" onClick={()=>history.push(location.pathname+"/questionPapers")}>
-                  <Paper className={classes.card} elevation={5}>
-                    <img className={classes.root} src={QuestionPaper} alt="Question Paper"/>
-                    <Typography variant="h5" component="h5" gutterBottom style={{paddingBottom:"10px"}}>Question Papers</Typography>
-                  </Paper>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
+      <Box py={4}>
+        <Box textAlign="center" pb={{ xs: 1, sm: 2, md: 2 }}>
+          <Typography variant="h4" component="h5" gutterBottom>
+            Resources
+          </Typography>
         </Box>
+        <Box py={4} mr={2}>
+          <Grid container spacing={6}>
+            <Grid item xs={12} sm={4}>
+              <Box
+                textAlign="center"
+                onClick={() => history.push(location.pathname + "/syllabus")}
+              >
+                <Paper className={classes.card} elevation={5}>
+                  <img className={classes.root} src={Syllabus} alt="Syllabus" />
+                  <Typography
+                    variant="h5"
+                    component="h5"
+                    gutterBottom
+                    style={{ paddingBottom: "10px" }}
+                  >
+                    Syllabus
+                  </Typography>
+                </Paper>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Box
+                textAlign="center"
+                onClick={() => history.push(location.pathname + "/notes")}
+              >
+                <Paper className={classes.card} elevation={5}>
+                  <img className={classes.root} src={Notes} alt="Notes" />
+                  <Typography
+                    variant="h5"
+                    component="h5"
+                    gutterBottom
+                    style={{ paddingBottom: "10px" }}
+                  >
+                    Notes
+                  </Typography>
+                </Paper>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Box
+                textAlign="center"
+                onClick={() =>
+                  history.push(location.pathname + "/questionPapers")
+                }
+              >
+                <Paper className={classes.card} elevation={5}>
+                  <img
+                    className={classes.root}
+                    src={QuestionPaper}
+                    alt="Question Paper"
+                  />
+                  <Typography
+                    variant="h5"
+                    component="h5"
+                    gutterBottom
+                    style={{ paddingBottom: "10px" }}
+                  >
+                    Question Papers
+                  </Typography>
+                </Paper>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
     </div>
   );
 }

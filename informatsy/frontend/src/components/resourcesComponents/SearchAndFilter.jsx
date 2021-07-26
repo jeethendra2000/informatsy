@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import {Typography } from "@material-ui/core";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+
+import FilterMenu from "./FilterMenu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,53 +32,99 @@ const useStyles = makeStyles((theme) => ({
   },
   iconButton: {
     padding: 10,
-    color:"#212121"
+    color: "#212121",
   },
   divider: {
     height: 28,
     margin: 4,
   },
+  fullList: {
+    width: "auto",
+  },
 }));
 
-export default function SearchAndFilter() {
+export default function SearchAndFilter({
+  onSearch,
+  onFilter,
+  defaultSortOrder,
+  onSort,
+  onReverseSort,
+  defaultSelectedCourse,
+  defaultSelectedYearOrSem,
+}) {
   const classes = useStyles();
   const [searchData, setSearchData] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleSearchSubmit = (e) => {
-      e.preventDefault();
-      alert(searchData);
-
-      setSearchData("");
+    e.preventDefault();
+    onSearch(searchData);
+    setSearchData("");
   };
 
   return (
-    <Paper component="form" className={classes.root} elevation={4} onSubmit={handleSearchSubmit}>
-      <InputBase
-        className={classes.input}
-        placeholder="Search"
-        value={searchData}
-        onChange={(e) => setSearchData(e.target.value)}
-        inputProps={{ "aria-label": "search" }}
-      />
-      <IconButton
-        type="submit"
-        className={classes.iconButton}
-        aria-label="search"
+    <>
+      <Paper
+        component="form"
+        className={classes.root}
+        elevation={4}
+        onSubmit={handleSearchSubmit}
       >
-        <SearchIcon />
-      </IconButton>
-      <Divider className={classes.divider} orientation="vertical" />
-      <IconButton
-        className={classes.iconButton}
-        aria-label="filter"
-        disableTouchRipple
-        onClick={() => alert("hi")}
-      >
-        <FilterListIcon />
-        <Typography style={{ paddingLeft: "5px" }} variant="body1">
-          Filter
-        </Typography>
-      </IconButton>
-    </Paper>
+        <InputBase
+          className={classes.input}
+          placeholder="Search"
+          value={searchData}
+          onChange={(e) => setSearchData(e.target.value)}
+          inputProps={{ "aria-label": "search" }}
+        />
+        <IconButton
+          type="submit"
+          className={classes.iconButton}
+          aria-label="search"
+        >
+          <SearchIcon />
+        </IconButton>
+        <Divider className={classes.divider} orientation="vertical" />
+        <IconButton
+          className={classes.iconButton}
+          aria-label="filter"
+          disableTouchRipple
+          onClick={() => {
+            toggle();
+          }}
+        >
+          <FilterListIcon />
+          <Typography style={{ paddingLeft: "5px" }} variant="body1">
+            Filter
+          </Typography>
+        </IconButton>
+        <SwipeableDrawer
+          anchor={"bottom"}
+          open={isOpen}
+          onClose={toggle}
+          onOpen={toggle}
+        >
+          <div
+            className={classes.fullList}
+            role="presentation"
+            onKeyDown={toggle}
+          >
+            <FilterMenu
+              toggle={toggle}
+              onFilter={onFilter}
+              defaultSortOrder={defaultSortOrder}
+              onSort={onSort}
+              onReverseSort={onReverseSort}
+              defaultSelectedCourse={defaultSelectedCourse}
+              defaultSelectedYearOrSem={defaultSelectedYearOrSem}
+            />
+          </div>
+        </SwipeableDrawer>
+      </Paper>
+    </>
   );
 }

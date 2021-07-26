@@ -1,8 +1,16 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
+=======
+
+from rest_framework.views import APIView
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+>>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
 
 from backend import oauthall
 from backend import essentialClass
@@ -12,6 +20,7 @@ from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 
+<<<<<<< HEAD
 # Create your views here.
 
 # for social login providing views
@@ -24,6 +33,58 @@ class FacebookLogin(SocialLoginView):
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
 
+=======
+
+class UserProfileView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, slug=None, format=None):
+        if slug is not None:
+            profile = UserProfile.objects.get(user_slug=slug)
+            serializer = UserProfileSerializer(profile, context={"request": request})
+            followers = profile.followers.all()
+
+            is_following = (True if followers.filter(pk=request.user.id).exists() else False)
+
+            data = {
+                'is_following' : is_following,
+            }
+
+            data.update(serializer.data)
+            return Response(data, status=status.HTTP_200_OK)
+        
+        profiles = UserProfile.objects.all()
+        serializer = UserProfileSerializer(profiles, context={"request":request}, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def patch(self, request, slug, format=None):
+        profile = UserProfile.objects.get(user_slug=slug)
+        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddFollower(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, slug, format=None):
+        profile = UserProfile.objects.get(user_slug=slug)
+        profile.followers.add(request.user.id)
+        return Response(status=status.HTTP_200_OK)
+
+class RemoveFollower(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, slug, format=None):
+        profile = UserProfile.objects.get(user_slug=slug)
+        profile.followers.remove(request.user.id)
+        return Response(status=status.HTTP_200_OK)
+>>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
 
 class ContactFormView(APIView):
 
@@ -39,10 +100,15 @@ class ContactFormView(APIView):
 
 class SyllabusView(APIView):
     serializer_class = SyllabusSerializer
+<<<<<<< HEAD
 
     def get(self, request):
+=======
+    
+    def get(self, request, format=None):
+>>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
         query = Syllabus.objects.all()
-        serializer = SyllabusSerializer(query, many=True)
+        serializer = SyllabusSerializer(query, context={"request": request}, many=True)
         return Response(serializer.data)
 
 # ---------Signup view-----------------
@@ -139,10 +205,18 @@ class YearOrSemView(APIView):
         return Response(serializer.data)
 
 
-class NotesView(APIView):
+class NotesView(viewsets.ReadOnlyModelViewSet):
+    queryset = Notes.objects.all()
     serializer_class = NotesSerializer
 
+<<<<<<< HEAD
     def get(self, request):
         query = Notes.objects.all()
         serializer = NotesSerializer(query, many=True)
         return Response(serializer.data)
+=======
+
+class QuestionPapersView(viewsets.ReadOnlyModelViewSet):
+    queryset = QuestionPapers.objects.all()
+    serializer_class = QuestionPapersSerializer
+>>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
