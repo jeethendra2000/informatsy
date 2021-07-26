@@ -60,7 +60,7 @@ function Account({ user }) {
         <MenuItem
           onClick={() => {
             handleClose();
-            history.push("/");
+            history.push("/profile");
           }}
         >
           <Typography variant="body2">My Profile</Typography>

@@ -20,6 +20,7 @@ import About from "./components/layoutsComponent/About";
 import Notifications from "./components/Notifications";
 import Contact from "./components/layoutsComponent/Contact";
 import Features from "./components/layoutsComponent/Features";
+import MyProfile from "./components/profileComponents/MyProfile";
 
 // Custom theme of Informatsy
 const theme = createMuiTheme({
@@ -54,6 +55,7 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/popup" component={PopupAccount} />
+            <Route exact path="/profile" component={MyProfile} />
             <Navbar>
               <Switch>
                 <Route exact path="/login" component={Login} />
