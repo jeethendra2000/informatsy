@@ -15,9 +15,9 @@ function Alert(props) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: "98%",
     "& > * + *": {
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5),
     },
   },
@@ -57,11 +57,18 @@ export default function AlertBar({ content }) {
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       TransitionComponent={state.Transition}
       key={state.Transition.name}
-      style={{ height: content.height }}
+      style={{
+        height: content.height,
+        display: "flex",
+        textAlign: "center",
+        zIndex: "999",
+      }}
     >
-      <Alert onClose={handleClose} severity={content.msgStatus}>
-        {content.msgContent}
-      </Alert>
+      <div style={{ display: "inline" }}>
+        <Alert severity={content.msgStatus} style={{}}>
+          {content.msgContent}
+        </Alert>
+      </div>
     </Snackbar>
   );
 }

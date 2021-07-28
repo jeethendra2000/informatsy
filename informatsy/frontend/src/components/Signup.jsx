@@ -29,12 +29,15 @@ import Alert from "../components/AlertBar";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { LinkedIn } from "react-linkedin-login-oauth2";
+import EmailIcon from "@material-ui/icons/Email";
 import axios from "axios";
 class FormMain extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showPassword: false,
+      userName: "",
+      isUserName: false,
       showConfirmPass: false,
       Email: "",
       isEmailTrue: false,
@@ -60,13 +63,23 @@ class FormMain extends Component {
     document.getElementsByClassName(selector)[0].style.visibility = property;
   }
   // -------------------input loaders settings--------------------------
+  clearAlert = () => {
+    this.setState({ alert: false, alertContent: "", alertMsg: "" });
+  };
+  //------------setting username -----------------
+  setInputUsername = (childData) => {
+    if (childData.length > 3 && childData.length < 15) {
+      this.setState({ userName: childData, isUserName: true });
+    } else {
+      this.setState({ isUserName: false });
+    }
+  };
   setInputStateEmail = (childData) => {
     this.getLoadFunction("mv_sign_up_loader1", "visible");
     var reg =
       /^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud|gov|nic)+[.]+(com|org|net|gov|mil|biz|info|mobi|in|name|aero|jobs|museum|co)+$/;
     if (reg.test(childData)) {
-      this.setState({ Email: childData });
-      this.setState({ isEmailTrue: true });
+      this.setState({ Email: childData, isEmailTrue: true });
     } else {
       this.setState({ isEmailTrue: false });
     }
@@ -85,8 +98,7 @@ class FormMain extends Component {
       !childData.match(/\s/g) &&
       childData.length >= 6
     ) {
-      this.setState({ isPassword: true });
-      this.setState({ password: childData });
+      this.setState({ isPassword: true, password: childData });
       this.setInputStateConfirmPass(childData);
       console.log("true");
     } else {
@@ -114,8 +126,10 @@ class FormMain extends Component {
       this.state.ispassConfirm
     ) {
       const data = {
-        userEmail: this.state.Email,
+        username: this.state.userName,
+        email: this.state.Email,
         password: this.state.password,
+        confirm_password: this.state.confirmPassword,
       };
       axios
         .post("http://127.0.0.1:8000/api/signup/", data)
@@ -189,17 +203,31 @@ class FormMain extends Component {
         <div className="form_main" key={this.state.isSubmit}>
           <div
             className="forms_content1"
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
+            onBlur={this.clearAlert}
+            onClick={() => {
+              this.setState({
+                alert: true,
+                alertContent:
+                  "This means your unique name on Informatsy. Be careful you won't be able to change after registration.",
+                alertMsg: "warning",
+              });
             }}
           >
             <Input
-              name="Username or Email"
-              classname="one"
+              name="Username"
+              classname="userHandle"
               type="text"
               component={<PersonRoundedIcon style={style} />}
+              returnValue={this.setInputUsername}
+              // ref={(instance) => (this.child = instance)}
+            />
+          </div>
+          <div className="forms_content1">
+            <Input
+              name="Email"
+              classname="one"
+              type="text"
+              component={<EmailIcon style={style} />}
               returnValue={this.setInputStateEmail}
               // ref={(instance) => (this.child = instance)}
             />
@@ -223,9 +251,7 @@ class FormMain extends Component {
                 alertMsg: "info",
               });
             }}
-            onBlur={() => {
-              this.setState({ alert: false });
-            }}
+            onBlur={this.clearAlert}
           >
             <Input
               name="Password"
@@ -321,7 +347,8 @@ class FormMain extends Component {
                 this.state.isEmailTrue &&
                 this.state.isPassword &&
                 this.state.ispassConfirm &&
-                this.state.ischeck
+                this.state.ischeck &&
+                this.state.isUserName
               )
             }
           >

@@ -1,11 +1,13 @@
 @import "../css//EssentialComponent.scss";
 $rotation: rotate(320deg);
+
 .login_main {
   font-family: "Poppins", sans-serif !important;
   margin: 0px;
   padding: 0px;
   width: 100%;
-  height: 100vh;
+  height: 46em;
+  object-fit: contain;
   display: flex;
   width: inherit;
   flex-direction: column;
@@ -28,7 +30,7 @@ $rotation: rotate(320deg);
     position: relative;
     overflow: hidden;
     width: 850px;
-    height: 500px;
+    height: 80%;
     border-radius: 20px;
     background-color: white;
     display: flex;
@@ -255,7 +257,7 @@ $rotation: rotate(320deg);
   background-color: white;
   opacity: 0.9;
   padding: 1px;
-  z-index: 999;
+  z-index: 900;
   border-radius: 50%;
   top: 2%;
   left: 3%;
