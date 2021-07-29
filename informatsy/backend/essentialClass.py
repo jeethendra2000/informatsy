@@ -2,6 +2,8 @@ from . models import *
 from . serializers import *
 import string
 import random
+from rest_framework_simplejwt.tokens import RefreshToken
+from datetime import datetime, timedelta
 # --------class for generating uniqueid for all users----------
 
 
@@ -16,3 +18,10 @@ class UniqueidGen:
             UniqueidGen.uniqueIdGenerator()
         else:
             return uniqueId
+
+    def tokenForActivatingEmail(data):
+        print(data)
+        access_token = RefreshToken.for_user(data)
+        access_token.set_exp(lifetime=timedelta(days=2))
+        print(access_token)
+        return access_token

@@ -13,7 +13,7 @@ class ContactFormAdmin(admin.ModelAdmin):
 
 @admin.register(Syllabus)
 class SyllabusAdmin(admin.ModelAdmin):
-    list_display = ['branchName', 'scheme', 'branchImage', 'documentURL']
+    list_display = ['branchName', 'scheme', 'branchImage']
 
 
 @admin.register(Course)

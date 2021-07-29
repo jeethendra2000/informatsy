@@ -1,10 +1,13 @@
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
 from django.db.models import fields
 from django.http.request import validate_host
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from . models import *
 from django import forms
+from django.contrib.auth import password_validation
+import re
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -83,11 +86,32 @@ class SyllabusSerializer(serializers.ModelSerializer):
 class SignupSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Accounts
+        model = User
 
-        fields = ('id', 'userEmail', 'password', 'uniqueId')
+        fields = '__all__'
 
         extra_kwargs = {'password': {'write_only': True}}
+
+    def validate_password(self, value):
+        pattern = re.compile(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$")
+        if not re.search(pattern, value):
+            raise serializers.ValidationError("Password must be strong")
+        return value
+
+    def validate_email(self, value):
+        pattern = re.compile(
+            "^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud|gov|nic)+[.]+(com|org|net|gov|mil|biz|info|mobi|in|name|aero|jobs|museum|co)+$")
+        if not re.search(pattern, value):
+            raise serializers.ValidationError("Allowed only top domain email")
+        return value
+
+    # def validate(self, data):
+    #     password = data.get('password')
+    #     confirm_password = data.get('confirm_password')
+    #     if password != confirm_password:
+    #         raise serializers.ValidationError("Confirm password not matching")
+    #     return data
 
 
 class alloauthSerializers(serializers.ModelSerializer):

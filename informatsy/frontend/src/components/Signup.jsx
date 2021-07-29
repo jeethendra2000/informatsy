@@ -68,7 +68,7 @@ class FormMain extends Component {
   };
   //------------setting username -----------------
   setInputUsername = (childData) => {
-    if (childData.length > 3 && childData.length < 15) {
+    if (childData.length > 3 && childData.length < 25) {
       this.setState({ userName: childData, isUserName: true });
     } else {
       this.setState({ isUserName: false });

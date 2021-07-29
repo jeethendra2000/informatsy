@@ -1,39 +1,25 @@
-from django.shortcuts import render
-<<<<<<< HEAD
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
-from django.contrib.auth.hashers import make_password
-=======
-
+from django.contrib.auth.password_validation import validate_password
+from django.http import response
+from django.http.request import RAISE_ERROR
+from django.shortcuts import redirect, render
+from decouple import config
 from rest_framework.views import APIView
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
->>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
-
+from rest_framework.exceptions import *
+import jwt
+from django.conf import settings
 from backend import oauthall
 from backend import essentialClass
 from . models import *
 from . serializers import *
+from backend import mails
+import os
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 
-<<<<<<< HEAD
-# Create your views here.
-
-# for social login providing views
-
-
-class FacebookLogin(SocialLoginView):
-    adapter_class = FacebookOAuth2Adapter
-
-
-class GoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
-
-=======
 
 class UserProfileView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
@@ -42,25 +28,29 @@ class UserProfileView(APIView):
     def get(self, request, slug=None, format=None):
         if slug is not None:
             profile = UserProfile.objects.get(user_slug=slug)
-            serializer = UserProfileSerializer(profile, context={"request": request})
+            serializer = UserProfileSerializer(
+                profile, context={"request": request})
             followers = profile.followers.all()
 
-            is_following = (True if followers.filter(pk=request.user.id).exists() else False)
+            is_following = (True if followers.filter(
+                pk=request.user.id).exists() else False)
 
             data = {
-                'is_following' : is_following,
+                'is_following': is_following,
             }
 
             data.update(serializer.data)
             return Response(data, status=status.HTTP_200_OK)
-        
+
         profiles = UserProfile.objects.all()
-        serializer = UserProfileSerializer(profiles, context={"request":request}, many=True)
+        serializer = UserProfileSerializer(
+            profiles, context={"request": request}, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def patch(self, request, slug, format=None):
         profile = UserProfile.objects.get(user_slug=slug)
-        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+        serializer = UserProfileSerializer(
+            profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -76,6 +66,7 @@ class AddFollower(APIView):
         profile.followers.add(request.user.id)
         return Response(status=status.HTTP_200_OK)
 
+
 class RemoveFollower(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.AllowAny]
@@ -84,7 +75,7 @@ class RemoveFollower(APIView):
         profile = UserProfile.objects.get(user_slug=slug)
         profile.followers.remove(request.user.id)
         return Response(status=status.HTTP_200_OK)
->>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
+
 
 class ContactFormView(APIView):
 
@@ -100,15 +91,11 @@ class ContactFormView(APIView):
 
 class SyllabusView(APIView):
     serializer_class = SyllabusSerializer
-<<<<<<< HEAD
 
-    def get(self, request):
-=======
-    
     def get(self, request, format=None):
->>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
         query = Syllabus.objects.all()
-        serializer = SyllabusSerializer(query, context={"request": request}, many=True)
+        serializer = SyllabusSerializer(
+            query, context={"request": request}, many=True)
         return Response(serializer.data)
 
 # ---------Signup view-----------------
@@ -167,24 +154,32 @@ class AllOauthView(APIView):
 
 class SignupView(APIView):
     def post(self, request):
-        dataObjects = Accounts
+        dataObjects = User
         # method to generate uniqueid for users
         if request.method == "POST":
-            # to store uniqueid string
-            if dataObjects.objects.filter(userEmail=request.data["userEmail"]):
+            if dataObjects.objects.filter(email=request.data["email"]):
                 return Response("Your Email already registered...!", status=status.HTTP_409_CONFLICT)
             # if no user registered then proceed next
+            if request.data['confirm_password'] != request.data['password']:
+                return Response("Password does not match..!", status=status.HTTP_409_CONFLICT)
+
             else:
                 data = request.data
-                data["uniqueId"] = essentialClass.UniqueidGen.uniqueIdGenerator()
-
+                data["is_active"] = False
                 serializersWithUniqueid = SignupSerializer(data=data)
                 if serializersWithUniqueid.is_valid():
                     serializersWithUniqueid.save(
                         password=make_password(data["password"]))
-                    return Response(SignupSerializer(dataObjects.objects.all(), many=True).data)
-
-                return Response("That email/username and password combination didn't work. Try again.", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+                    user = dataObjects.objects.get(email=data['email'])
+                    print(user)
+                    tokenInstance = essentialClass.UniqueidGen
+                    activation_token = tokenInstance.tokenForActivatingEmail(
+                        user)
+                    mails.MailService.sendMail(
+                        data['email'], data['username'], activation_token)
+                    return Response("User created successfully")
+                print(serializersWithUniqueid.errors)
+                return Response(serializersWithUniqueid.errors.get(list(serializersWithUniqueid.errors.keys())[0])[0], status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class CourseView(APIView):
@@ -209,14 +204,30 @@ class NotesView(viewsets.ReadOnlyModelViewSet):
     queryset = Notes.objects.all()
     serializer_class = NotesSerializer
 
-<<<<<<< HEAD
-    def get(self, request):
-        query = Notes.objects.all()
-        serializer = NotesSerializer(query, many=True)
-        return Response(serializer.data)
-=======
 
 class QuestionPapersView(viewsets.ReadOnlyModelViewSet):
     queryset = QuestionPapers.objects.all()
     serializer_class = QuestionPapersSerializer
->>>>>>> 9d924708d0f79fcb5bbb39cb9b365b8c10530c41
+
+# class for activationg user via mail
+
+
+class ActivateAccount(APIView):
+    def post(self, request):
+        if request.method == "POST":
+            try:
+                payload = jwt.decode(
+                    request.data['token'], config('token_secret'), 'HS256')
+                print(payload)
+                user = User.objects.get(id=payload['user_id'])
+                if not user.is_active:
+                    user.is_active = True
+                    user.save()
+                    return Response("Activated successfully", status=status.HTTP_200_OK)
+                return Response("Your account is already activated please login", status=status.HTTP_409_CONFLICT)
+            except jwt.ExpiredSignatureError:
+                return Response("Link is expired please contact informatsy@gmail.com", status=status.HTTP_400_BAD_REQUEST)
+            except jwt.InvalidSignatureError:
+                return Response("This request not authorized by informatsy", status=status.HTTP_400_BAD_REQUEST)
+            except:
+                return Response("Something is missing you are not authenticated", status=status.HTTP_405_METHOD_NOT_ALLOWED)

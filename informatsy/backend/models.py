@@ -1,4 +1,7 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+# Create your models here.
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -76,20 +79,10 @@ class ContactForm(models.Model):
 
 class Syllabus(models.Model):
 
-    branchChoice = (
-        ('Civil', 'Civil'),
-        ('Mechanical', 'Mechanical'),
-        ('Electricals', 'Electricals'),
-        ('Computer Science', 'Computer Science')
-    )
-    branchName = models.CharField(
-        choices=branchChoice, max_length=50, primary_key=True, unique=True)
+    branchName = models.CharField(max_length=50, primary_key=True, unique=True)
     scheme = models.CharField(max_length=4, default=2018)
-    branchImage = models.ImageField(
-        upload_to='branch/', default='branch/system.png')
-
-    def __str__(self):
-        return self.branchName
+    branchImage = models.ImageField(upload_to='branch/')
+    documentURL = models.URLField(max_length=200, null=True)
 
 # -----------model for signup forms -------------------
 

@@ -11,6 +11,8 @@ pipfile = "*"
 pillow = "*"
 django-allauth = "*"
 django-autoslug = "*"
+djangorestframework-simplejwt = "*"
+pyjwt = "*"
 
 [dev-packages]
 
