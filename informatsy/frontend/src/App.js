@@ -56,6 +56,7 @@ function App() {
           <Switch>
             <Route exact path="/popup" component={PopupAccount} />
             <Route exact path="/profile" component={MyProfile} />
+            <Route exact path="/notifications" component={Notifications} />
             <Navbar>
               <Switch>
                 <Route exact path="/login" component={Login} />
@@ -69,7 +70,6 @@ function App() {
                 <Route exact path="/features" component={Features} />
                 <Route exact path="/contact" component={Contact} />
                 <Route exact path="/about" component={About} />
-                <Route exact path="/notifications" component={Notifications} />
 
                 <Redirect to="/"> </Redirect>
               </Switch>

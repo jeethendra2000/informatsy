@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import MuiPhoneNumber from "material-ui-phone-number";
 import {
   Box,
-  Button,
   Link,
   Container,
   Grid,
@@ -12,10 +13,12 @@ import {
   Typography,
   Avatar,
   Divider,
+  Button,
 } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useHistory } from "react-router";
+import Check from "@material-ui/icons/Check";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
   bg: {
@@ -33,11 +36,20 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     maxWidth: "80px",
   },
+  txtField: {
+    padding: "10px 0 5px",
+  },
 }));
 
 export default function MyProfile() {
   const classes = useStyles();
   const history = useHistory();
+
+  const handleProfileSubmit = (e) => {
+    e.preventDefault();
+    alert("submitted")
+  };
+
   return (
     <div className={classes.bg} style={{ height: "100vh" }}>
       <Grid container spacing={4}>
@@ -59,15 +71,15 @@ export default function MyProfile() {
                     className={classes.text}
                     color="primary"
                   >
-                    My Profile
+                    Edit Profile
                   </Typography>
                 </Box>
-                <Box>
-                  <MoreVertIcon
-                    onClick={() => alert("hi")}
+                {/* <Box paddingRight="20px">
+                  <Check
+                    onClick={() => alert("Saved")}
                     className={classes.text}
                   />
-                </Box>
+                </Box> */}
               </Box>
 
               <Box p={2} pt={4} pb={2}>
@@ -82,22 +94,26 @@ export default function MyProfile() {
 
                   <Grid item xs={4} sm={4} md={4} lg={4}>
                     <Container>
-                      <Typography variant="body1" color="textPrimary">
-                        10
-                      </Typography>
+                      <Box textAlign="center">
+                        <Typography variant="body1" color="textPrimary">
+                          10M
+                        </Typography>
 
-                      <Typography variant="body1" color="textSecondary">
-                        Followers
-                      </Typography>
+                        <Typography variant="body1" color="textSecondary">
+                          Followers
+                        </Typography>
+                      </Box>
                     </Container>
                   </Grid>
                   <Grid item xs={4} sm={4} md={4} lg={4}>
-                    <Typography variant="body1" color="textPrimary">
-                      1212
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                      Following
-                    </Typography>
+                    <Box textAlign="center">
+                      <Typography variant="body1" color="textPrimary">
+                        121k
+                      </Typography>
+                      <Typography variant="body1" color="textSecondary">
+                        Following
+                      </Typography>
+                    </Box>
                   </Grid>
                 </Grid>
               </Box>
@@ -107,13 +123,16 @@ export default function MyProfile() {
                   <Typography variant="body1" color="textPrimary">
                     Pranavbharadwaj
                   </Typography>
-                  <Typography variant="body2" color="textPrimary">
+                  <Typography variant="body2" color="textPrimary" gutterBottom>
                     pranavbharadwaj2001@gmail.com
                   </Typography>
-                  <Typography variant="body2" color="textSecondary">
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    gutterBottom
+                  >
                     Lorem ipsum dolor sit amet conse adipis elit. Consequuntur,
-                    Lorem ipsum dolor sit amet.
-                    Lorem ipsum dolor sit amet.
+                    Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet
                   </Typography>
                 </Container>
               </Box>
@@ -123,267 +142,249 @@ export default function MyProfile() {
 
         {/* profile details */}
         <Grid item xs={12} sm={12} md={7} lg={8}>
-          <Container>
+          <Container component="form" noValidate autoComplete="off" onSubmit={handleProfileSubmit}>
             <Typography variant="h6" color="textPrimary">
               Personal Details
             </Typography>
             <Divider />
-            <Box py={2}>
-              <Grid container spacing={1} alignItems="center">
-                <Grid item xs={4}>
-                  <Typography>First Name </Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>Pranav</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Last Name</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>Bharadwaj</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Date Of Birth</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>05/01/2001</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Gender</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>Male</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Phone</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>6363255811</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Address</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>Bm Road, Arsikere, Hassan- 573201</Typography>
-                </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <TextField
+                  id="standard-basic"
+                  className={classes.txtField}
+                  label="First Name"
+                  fullWidth
+                />
               </Grid>
-            </Box>
-            <Typography variant="h6" color="textPrimary">
+              <Grid item xs={12}>
+                <TextField
+                  id="standard-basic"
+                  className={classes.txtField}
+                  label="Last Name"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="date"
+                  label="Date Of Birth"
+                  type="date"
+                  className={classes.txtField}
+                  // defaultValue="2000-01-01"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="Gender-select"
+                  select
+                  label="Gender"
+                  fullWidth
+                  className={classes.txtField}
+                  // value={currency}
+                  // onChange={handleChange}
+                  // helperText="Please Choose your Gender"
+                >
+                  <MenuItem key="Male" value="Male">
+                    Male
+                  </MenuItem>
+                  <MenuItem key="Female" value="Female">
+                    Female
+                  </MenuItem>
+                  <MenuItem key="Others" value="Others">
+                    Others
+                  </MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <MuiPhoneNumber
+                  name="phone"
+                  label="Phone Number"
+                  data-cy="user-phone"
+                  defaultCountry={"in"}
+                  fullWidth
+                  className={classes.txtField}
+                  // value={this.state.phone}
+                  // onChange={this.handlePhoneChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="Address"
+                  label="Address"
+                  className={classes.txtField}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+
+            <Typography
+              variant="h6"
+              style={{ paddingTop: "30px" }}
+              color="textPrimary"
+            >
               Educational Details
             </Typography>
             <Divider />
             <Box py={2}>
               <Grid container spacing={1} alignItems="center">
-                <Grid item xs={4}>
-                  <Typography>USN </Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="USN"
+                    label="USN"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Course Year / Sem"
+                    label="Course Year / Sem"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={7}>
-                  <Typography>4GH18CS012</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Branch Name"
+                    label="Branch Name"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                
-                <Grid item xs={4}>
-                  <Typography>Course Year / Sem</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Course Name"
+                    label="Course Name"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>6th Sem</Typography>
-                </Grid><Grid item xs={4}>
-                  <Typography>Branch Name</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>Computer Science & Engineering</Typography>
-                </Grid><Grid item xs={4}>
-                  <Typography>Course Name</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>Bachelor of Engineering</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>College</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>Government Engineering College</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="College"
+                    label="College"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
               </Grid>
             </Box>
-            <Typography variant="h6" color="textPrimary">
+            <Typography
+              variant="h6"
+              style={{ paddingTop: "30px" }}
+              color="textPrimary"
+            >
               Social Profiles
             </Typography>
             <Divider />
             <Box py={2}>
               <Grid container spacing={1} alignItems="center">
-                <Grid item xs={4}>
-                  <Typography>Github Profile</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Github Profile"
+                    label="Github Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="LinkedIn Profile"
+                    label="LinkedIn Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      githubHandle
-                    </Link>
-                  </Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Facebook Profile"
+                    label="Facebook Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={4}>
-                  <Typography>LinkedIn Profile</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Instagram Profile"
+                    label="Instagram Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      LinkedInHandle
-                    </Link>
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Facebook Profile</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      facebookHandle
-                    </Link>
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Instagram Profile</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      instagramHandle
-                    </Link>
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Twitter Profile</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      twitterHandle
-                    </Link>
-                  </Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Twitter Profile"
+                    label="Twitter Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
               </Grid>
             </Box>
-            <Typography variant="h6" color="textPrimary">
+            <Typography
+              variant="h6"
+              style={{ paddingTop: "30px" }}
+              color="textPrimary"
+            >
               Educational Profiles
             </Typography>
             <Divider />
             <Box py={2}>
               <Grid container spacing={1} alignItems="center">
-                <Grid item xs={4}>
-                  <Typography>CodeForces Profile</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Codeforces Profile"
+                    label="Codeforces Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Codechef Profile"
+                    label="Codechef Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      codeforcesHandle
-                    </Link>
-                  </Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="Leetcode Profile"
+                    label="Leetcode Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={4}>
-                  <Typography>Codechef Profile</Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="HackerRank Profile"
+                    label="HackerRank Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      CodechefHandle
-                    </Link>
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>Leetcode Profile</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      LeetcodeHandle
-                    </Link>
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography>HackerRank Profile</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      HackerRankHandle
-                    </Link>
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={4}>
-                  <Typography>HackerEarth Profile</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                  <Typography>:</Typography>
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography>
-                    <Link href="https://www.google.com" target="_blank">
-                      HackerEarthHandle
-                    </Link>
-                  </Typography>
+                <Grid item xs={12}>
+                  <TextField
+                    id="HackerEarth Profile"
+                    label="HackerEarth Profile"
+                    className={classes.txtField}
+                    fullWidth
+                  />
                 </Grid>
               </Grid>
+            </Box>
+            <Box textAlign="center">
+              <Button
+                variant="contained"
+                type="submit"
+                style={{ backgroundColor: "green", color: "white" }}
+              >
+                Save
+              </Button>
             </Box>
           </Container>
         </Grid>
