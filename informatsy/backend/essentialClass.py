@@ -4,6 +4,8 @@ import string
 import random
 from rest_framework_simplejwt.tokens import RefreshToken
 from datetime import datetime, timedelta
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 # --------class for generating uniqueid for all users----------
 
 

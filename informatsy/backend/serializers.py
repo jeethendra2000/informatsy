@@ -106,19 +106,17 @@ class SignupSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Allowed only top domain email")
         return value
 
-    # def validate(self, data):
-    #     password = data.get('password')
-    #     confirm_password = data.get('confirm_password')
-    #     if password != confirm_password:
-    #         raise serializers.ValidationError("Confirm password not matching")
-    #     return data
 
-
-class alloauthSerializers(serializers.ModelSerializer):
+class alloauthBasic(serializers.ModelSerializer):
     class Meta:
-        model = Accounts
-        fields = ('id', 'userEmail', 'uniqueId', 'profileImg',
-                  'first_name', 'last_name')
+        model = User
+        fields = "__all__"
+
+
+class alloauthExtendProfile(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('user', 'profile_picture')
 
 
 class CourseSerializer(serializers.ModelSerializer):

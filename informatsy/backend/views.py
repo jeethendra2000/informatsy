@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework.exceptions import *
 import jwt
+from datetime import datetime, timedelta
 from django.conf import settings
 from backend import oauthall
 from backend import essentialClass
@@ -16,9 +17,10 @@ from . models import *
 from . serializers import *
 from backend import mails
 import os
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from rest_auth.registration.views import SocialLoginView
+from django.http import HttpResponse
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserProfileView(APIView):
@@ -106,14 +108,16 @@ class SyllabusView(APIView):
 class AllOauthView(APIView):
     def oauth_db_includer(data):
 
-        dataObjects = Accounts
-        if dataObjects.objects.filter(userEmail=data["userEmail"]):
+        userObjects = User
+        userProfileObj = UserProfile
+        if userObjects.objects.filter(email=data["email"]):
             return False
         else:
-            oauthserilizers = alloauthSerializers(data=data)
-            print(data)
-            if oauthserilizers.is_valid():
-                oauthserilizers.save()
+            oauthserilizersBasic = alloauthBasic(data=data)
+            oauthserilizersExtend = alloauthExtendProfile(data=data)
+            if oauthserilizersBasic.is_valid() and oauthserilizersExtend.is_valid():
+                oauthserilizersBasic.save()
+                oauthserilizersExtend.save()
                 return True
             return Response("Something went wrong try again after sometime", status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -138,8 +142,8 @@ class AllOauthView(APIView):
                 request.data["accesstoken"])
             if auth_status["status"]:
                 data = auth_status['res']
-                dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "uniqueId": essentialClass.UniqueidGen.uniqueIdGenerator(
-                ), "userEmail": data["email"], "profileImg": data["picture"]}
+                dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "password": essentialClass.UniqueidGen.uniqueIdGenerator(
+                ), "email": data["email"], "profile_picture": data["picture"], "username": data['given_name']}
 
                 oathStatus = AllOauthView.oauth_db_includer(dbData)
                 return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus else Response("Your account is already created...!", status=status.HTTP_409_CONFLICT)
@@ -209,6 +213,9 @@ class QuestionPapersView(viewsets.ReadOnlyModelViewSet):
     queryset = QuestionPapers.objects.all()
     serializer_class = QuestionPapersSerializer
 
+# custom claims for jwt auth
+
+
 # class for activationg user via mail
 
 
@@ -218,12 +225,21 @@ class ActivateAccount(APIView):
             try:
                 payload = jwt.decode(
                     request.data['token'], config('token_secret'), 'HS256')
-                print(payload)
+
                 user = User.objects.get(id=payload['user_id'])
+                print(user)
                 if not user.is_active:
                     user.is_active = True
                     user.save()
-                    return Response("Activated successfully", status=status.HTTP_200_OK)
+                    Refresh_token = RefreshToken.for_user(user)
+                    Access_token = Refresh_token.access_token
+                    response = HttpResponse("Activated successfully")
+                    print({"refresh": str(Refresh_token),
+                           "access": str(Access_token)})
+                    response.set_cookie(
+                        'refresh', Refresh_token, httponly=True)
+                    return response
+
                 return Response("Your account is already activated please login", status=status.HTTP_409_CONFLICT)
             except jwt.ExpiredSignatureError:
                 return Response("Link is expired please contact informatsy@gmail.com", status=status.HTTP_400_BAD_REQUEST)

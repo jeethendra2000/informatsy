@@ -4,6 +4,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
+import { useHistory } from "react-router";
 
 // Inspired by the former Facebook spinners.
 const useStylesFacebook = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ const useStylesFacebook = makeStyles((theme) => ({
 export default function ActivateAccount(props) {
   const [state, setState] = React.useState(false);
   const [msg, setmsg] = React.useState("");
+  const history = useHistory();
   const [headline, sethead] = React.useState(
     "Activating your account please wait....!"
   );
@@ -57,6 +59,9 @@ export default function ActivateAccount(props) {
         setmsg(err.response.data);
         setState(true);
         sethead(err.response.data);
+        setTimeout(() => {
+          history.push("/register");
+        }, 2000);
       });
   };
   useEffect(() => {
