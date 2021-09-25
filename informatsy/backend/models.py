@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from autoslug import AutoSlugField
+from gdstorage.storage import GoogleDriveStorage
+
+# Define Google Drive Storage
+gd_storage = GoogleDriveStorage()
 
 # Create your models here.
 gender_choice = (
@@ -14,7 +18,7 @@ gender_choice = (
 class UserProfile(models.Model):
     user = models.OneToOneField(User, primary_key=True, unique=True, on_delete=models.CASCADE)
     user_slug = AutoSlugField(populate_from='user', unique=True, null=True)
-    profile_picture = models.ImageField(upload_to='user_profiles', default='user_profiles/default.png', blank=True)
+    profile_picture = models.ImageField(upload_to='user_profiles', storage=gd_storage, default='user_profiles/default.png', blank=True)
 
     gender = models.CharField(max_length=20, choices=gender_choice, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
@@ -71,7 +75,7 @@ class ContactForm(models.Model):
 class Syllabus(models.Model):
     branchName = models.CharField(max_length=50, primary_key=True, unique=True)
     scheme = models.CharField(max_length=4, default=2018)
-    branchImage = models.ImageField(upload_to='branch/')
+    branchImage = models.ImageField(upload_to='branch/', storage=gd_storage)
     documentURL = models.URLField(max_length=200, null=True)
 
     def __str__(self):

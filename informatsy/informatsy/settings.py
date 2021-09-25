@@ -40,8 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'backend',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'gdstorage'
 ]
+
+#
+# Google Drive Storage Settings
+#
+
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = os.path.join(BASE_DIR, 'informatsy-1606992254138-ae579d25fc35.json')
+# GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>' # OPTIONAL
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
