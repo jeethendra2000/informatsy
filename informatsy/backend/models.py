@@ -76,7 +76,7 @@ class Syllabus(models.Model):
     branchName = models.CharField(max_length=50, primary_key=True, unique=True)
     scheme = models.CharField(max_length=4, default=2018)
     branchImage = models.ImageField(upload_to='branch/', storage=gd_storage)
-    documentURL = models.URLField(max_length=200, null=True)
+    documentURL = models.FileField(upload_to='branchSyllabus', storage=gd_storage)
 
     def __str__(self):
         return self.branchName
@@ -102,7 +102,8 @@ class Notes(models.Model):
     subjectCode = models.CharField(max_length=100, blank=True, null=True)
     yearOrSem = models.ForeignKey(YearOrSem, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    documentURL = models.URLField(max_length=512, null=True)
+    # documentURL = models.URLField(max_length=512, null=True)
+    documentURL = models.FileField(upload_to='notes', storage=gd_storage)
 
     def __str__(self):
         return self.subjectName
@@ -113,7 +114,8 @@ class QuestionPapers(models.Model):
     subjectCode = models.CharField(max_length=100, blank=True, null=True)
     yearOrSem = models.ForeignKey(YearOrSem, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    documentURL = models.URLField(max_length=512, null=True)
+    # documentURL = models.URLField(max_length=512, null=True)
+    documentURL = models.FileField(upload_to='questionPapers', storage=gd_storage)
 
     def __str__(self):
         return self.subjectName
