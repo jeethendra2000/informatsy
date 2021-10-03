@@ -11,9 +11,9 @@ export default function Notes() {
   const [data, setData] = useState([]);
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
   const [defaultSelectedCourse, setDefaultSelectedCourse] =
-    useState("CSE (BE)");
+    useState("");
   const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] =
-    useState("6th Sem");
+    useState("");
 
   const onSearch = (searchData) => {
     setData(
@@ -55,7 +55,7 @@ export default function Notes() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/notes/")
+      .get("https://informatsy.pythonanywhere.com/api/notes/")
       .then((res) => {
         const data = res.data;
         setAllData(data);

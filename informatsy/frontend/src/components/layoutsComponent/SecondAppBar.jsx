@@ -51,12 +51,12 @@ function SecondAppBar({ title, backToPage }) {
                     {title}
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <MoreVertIcon
                     onClick={() => alert("hi")}
                     className={classes.text}
                   />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
           </Grid>

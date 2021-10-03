@@ -104,3 +104,8 @@ class NotesView(viewsets.ReadOnlyModelViewSet):
 class QuestionPapersView(viewsets.ReadOnlyModelViewSet):
     queryset = QuestionPapers.objects.all()
     serializer_class = QuestionPapersSerializer
+
+
+class NotificationsView(viewsets.ReadOnlyModelViewSet):
+    queryset = Notifications.objects.all()
+    serializer_class = NotificationsSerializer

@@ -39,7 +39,7 @@ export default function Contact() {
         message: message,
       };
       axios
-        .post("http://127.0.0.1:8000/api/contactForm/", data)
+        .post("https://informatsy.pythonanywhere.com/api/contactForm/", data)
         .then((res) => {
           setFullName("");
           setEmailAddress("");
@@ -101,7 +101,7 @@ export default function Contact() {
                     component="h5"
                     color="textSecondary"
                   >
-                    +91 0123456789
+                    +91 Revealed soon
                   </Typography>
                 </Box>
               </Grid>

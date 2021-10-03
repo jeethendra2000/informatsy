@@ -29,3 +29,8 @@ class NotesAdmin(admin.ModelAdmin):
 @admin.register(QuestionPapers)
 class QuestionPapersAdmin(admin.ModelAdmin):
     list_display = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
+
+
+@admin.register(Notifications)
+class NotificationsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'notificationTitle', 'relatedTo', 'notificationDescription']

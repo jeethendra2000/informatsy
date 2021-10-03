@@ -33,7 +33,7 @@ export default function Syllabus() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/syllabus/")
+      .get("https://informatsy.pythonanywhere.com/api/syllabus/")
       .then((res) => {
         const data = res.data;
         setData(data);
@@ -44,13 +44,13 @@ export default function Syllabus() {
     <Box mr={2} pb={{ xs: 3, sm: 5, md: 6 }} width="100%">
       <Box textAlign="center" pb={4}>
         <Typography variant="h4" component="h5" gutterBottom>
-          Branches
+          Syllabus
         </Typography>
       </Box>
       <Box mr={2}>
         <Grid container spacing={5}>
           {data.map((item) => (
-            <Grid item xs={12} sm={6} key={item.branchName}>
+            <Grid item xs={12} sm={6} md={4} key={item.branchName}>
               <Box textAlign="center" px={{ xs: 2, sm: 4, md: 4 }}>
                 <Paper
                   className={classes.card}

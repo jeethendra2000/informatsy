@@ -90,3 +90,9 @@ class QuestionPapersSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionPapers
         fields = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
+
+
+class NotificationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notifications
+        fields = "__all__"

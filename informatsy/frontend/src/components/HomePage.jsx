@@ -8,7 +8,6 @@ import About from "./layoutsComponent/About";
 import Features from "./layoutsComponent/Features";
 import Contact from "./layoutsComponent/Contact";
 
-
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
     width: "100%",
@@ -93,8 +92,7 @@ export default function HomePage() {
                         <Grid item>
                           <Button
                             onClick={() => {
-                              history.push("/");
-                              alert("you clicked me!");
+                              window.location.assign("https://youtu.be/wZE9HuQzH_E");
                             }}
                             variant="contained"
                             color="secondary"
@@ -112,7 +110,7 @@ export default function HomePage() {
                             variant="text"
                             onClick={() => {
                               history.push("/");
-                              alert("you clicked me!");
+                              alert("This Feature will be released Soon!");
                             }}
                             color="primary"
                           >
@@ -138,9 +136,7 @@ export default function HomePage() {
       <Features />
 
       {/* Contact Section */}
-      <Contact/>
-
-      
+      <Contact />
     </React.Fragment>
   );
 }

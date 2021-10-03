@@ -119,3 +119,12 @@ class QuestionPapers(models.Model):
 
     def __str__(self):
         return self.subjectName
+
+
+class Notifications(models.Model):
+    notificationTitle = models.CharField(max_length=50)
+    relatedTo = models.CharField(max_length=50)
+    notificationDescription = models.TextField(max_length=512, blank=True, null=True)
+
+    def __str__(self):
+        return self.notificationTitle
