@@ -35,14 +35,14 @@ export default function Features() {
   const cardsDetails = [
     {
       title: "Useful resources",
-      desc: "List some of your unique features here so your visitors can find the information they need, easily.",
+      desc: "Informatsy provides current academic study materials and other Resources",
       image: (
         <img src={file} className={classes.imageStyle} alt={"folderIcon"} />
       ),
     },
     {
-      title: "Shared Hosting",
-      desc: "List some of your unique features here so your visitors can find the information they need, easily.",
+      title: "Explore contents",
+      desc: "You can search, filter and download the required material just by a single tap",
       image: (
         <img
           src={datacenter}
@@ -53,14 +53,14 @@ export default function Features() {
     },
     {
       title: "24/7 Support",
-      desc: "List some of your unique features here so your visitors can find the information they need, easily.",
+      desc: "We provide you necessary study materials and we are always happy to help you",
       image: (
         <img src={support} className={classes.imageStyle} alt={"folderIcon"} />
       ),
     },
     {
       title: "Easy to Access",
-      desc: "List some of your unique features here so your visitors can find the information they need, easily.",
+      desc: "You can access the resources anywhere and anytime from your devices",
       image: (
         <img src={security} className={classes.imageStyle} alt={"folderIcon"} />
       ),

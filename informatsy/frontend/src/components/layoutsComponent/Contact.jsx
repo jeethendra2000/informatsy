@@ -101,7 +101,7 @@ export default function Contact() {
                     component="h5"
                     color="textSecondary"
                   >
-                    +91 Revealed soon
+                    +91 7411241697
                   </Typography>
                 </Box>
               </Grid>

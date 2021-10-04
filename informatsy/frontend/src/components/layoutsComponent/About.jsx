@@ -63,13 +63,9 @@ export default function About() {
                     component="h6"
                     color="textSecondary"
                   >
-                    Tell your visitors a little something about your company or
-                    services here. It's the perfect way to introduce yourself
-                    online. Lorem ipsum dolor, sit amet consectetur adipisicing
-                    elit. Ratione corporis enim esse, voluptatem quam
-                    consectetur excepturi! Deserunt cum esse repudiandae,
-                    dolores unde sapiente rem! Optio aperiam id fugiat
-                    laboriosam nihil?
+                    Informatsy is a team of enthusiastic students who believe in learning, exploring and sharing the knowledge.
+                    <br />
+                    Our goal is to help the students in the process of learning by providing them the necessary resources and features which makes easier for them to track the academic activities and alerts from their college. 
                   </Typography>
                 </Box>
               </Grid>

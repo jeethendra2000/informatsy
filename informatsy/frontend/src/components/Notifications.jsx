@@ -19,7 +19,9 @@ import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   bg: {
+    // backgroundColor: "red",
     backgroundColor: "#f0f8ff",
+
   },
   layout: {
     paddingTop: "90px",
@@ -46,17 +48,21 @@ function Notifications() {
   const classes = useStyles();
   const history = useHistory();
 
-  let count = 1;
-  const [expanded, setExpanded] = useState(false);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  let count = 0;
+  const [expanded, setExpanded] = useState(-1);
+  const handleExpandClick = (index) => {
+    if(expanded===index){
+      setExpanded("");
+    }else{
+      setExpanded(index)
+    }
   };
   
   let [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-    .get("https://informatsy.pythonanywhere.com/api/notifications")
+    .get("https://informatsy.pythonanywhere.com/api/notifications/")
     .then((res) => {
       const data = res.data;
       setData(data);
@@ -65,29 +71,29 @@ function Notifications() {
   }, []);
   
   return (
-    <div className={classes.bg} style={{ height: "200vh" }}>
+    <div className={classes.bg} style={{ minHeight:"100vh", paddingBottom:"50px" }}>
       <SecondAppBar title={"Notifications"} backToPage={"/"} />
 
       <Box className={classes.layout}>
         <Container>
           <Grid container spacing={2}>
-            {data.map((item) => (
+            {data.map((item,index) => (
               <Grid item xs={12} sm={6} md={4} key={item.id}>
                 <Card className={classes.root} elevation={3}>
                   <CardHeader
                     avatar={
                       <Avatar aria-label="recipe" className={classes.avatar}>
-                        {count++}
+                        {++count}
                       </Avatar>
                     }
                     action={
                       <IconButton
                       name = {count}
                         className={clsx(classes.expand, {
-                          [classes.expandOpen]: expanded,
+                          [classes.expandOpen]: (index===expanded),
                         })}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
+                        onClick={()=>handleExpandClick(index)}
+                        aria-expanded={index===expanded}
                         aria-label="show more"
                       >
                         <ExpandMoreIcon />
@@ -96,13 +102,15 @@ function Notifications() {
                     title={item.notificationTitle}
                     subheader={item.relatedTo}
                   />
-                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  <div key = {count}>
+                  <Collapse in = {index===expanded?true:false} timeout="auto" unmountOnExit = {true}>
                     <CardContent>
                       <Typography variant="body2">
                       {item.notificationDescription}
                       </Typography>
                     </CardContent>
                   </Collapse>
+                  </div>
                 </Card>
               </Grid>
             ))}
