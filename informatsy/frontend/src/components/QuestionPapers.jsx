@@ -60,13 +60,17 @@ export default function QuestionPapers() {
       .then((res) => {
         const data = res.data;
         setAllData(data);
-        setData(
-          data.filter(
-            (dt) =>
-              dt.course === defaultSelectedCourse &&
-              dt.yearOrSem === defaultSelectedYearOrSem
-          )
-        );
+        if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
+          setData(data);
+        } else {
+          setData(
+            data.filter(
+              (dt) =>
+                dt.course === defaultSelectedCourse &&
+                dt.yearOrSem === defaultSelectedYearOrSem
+            )
+          );
+        }
       })
       .catch((err) => console.log(err));
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);
