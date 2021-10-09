@@ -284,3 +284,8 @@ class Getuserinfo(APIView):
         print(request.headers)
 
         return Response("ok")
+
+
+class NotificationsView(viewsets.ReadOnlyModelViewSet):
+    queryset = Notifications.objects.all()
+    serializer_class = NotificationsSerializer

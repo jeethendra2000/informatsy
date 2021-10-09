@@ -10,19 +10,18 @@ export default function Notes() {
   const [allData, setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
-  const [defaultSelectedCourse, setDefaultSelectedCourse] =
-    useState("CSE (BE)");
-  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] =
-    useState("6th Sem");
+  const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("");
+  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("");
 
   const onSearch = (searchData) => {
     setData(
       allData.filter(
         (d) =>
-          (d.subjectName.toLowerCase().includes(searchData.toLowerCase()) ||
-            d.subjectCode.toLowerCase().includes(searchData.toLowerCase())) &&
-          d.course === defaultSelectedCourse &&
-          d.yearOrSem === defaultSelectedYearOrSem
+          d.subjectName.toLowerCase().includes(searchData.toLowerCase()) ||
+          d.subjectCode.toLowerCase().includes(searchData.toLowerCase())
+        // &&
+        // d.course === defaultSelectedCourse &&
+        // d.yearOrSem === defaultSelectedYearOrSem
       )
     );
   };
@@ -59,13 +58,17 @@ export default function Notes() {
       .then((res) => {
         const data = res.data;
         setAllData(data);
-        setData(
-          data.filter(
-            (dt) =>
-              dt.course === defaultSelectedCourse &&
-              dt.yearOrSem === defaultSelectedYearOrSem
-          )
-        );
+        if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
+          setData(data);
+        } else {
+          setData(
+            data.filter(
+              (dt) =>
+                dt.course === defaultSelectedCourse &&
+                dt.yearOrSem === defaultSelectedYearOrSem
+            )
+          );
+        }
       })
       .catch((err) => console.log(err));
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);

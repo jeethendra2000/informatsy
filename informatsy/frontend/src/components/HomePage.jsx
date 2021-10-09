@@ -92,8 +92,9 @@ export default function HomePage() {
                         <Grid item>
                           <Button
                             onClick={() => {
-                              history.push("/");
-                              alert("you clicked me!");
+                              window.location.assign(
+                                "https://youtu.be/wZE9HuQzH_E"
+                              );
                             }}
                             variant="contained"
                             color="secondary"
@@ -111,7 +112,7 @@ export default function HomePage() {
                             variant="text"
                             onClick={() => {
                               history.push("/");
-                              alert("you clicked me!");
+                              alert("This Feature will be released Soon!");
                             }}
                             color="primary"
                           >

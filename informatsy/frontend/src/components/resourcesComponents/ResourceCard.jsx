@@ -107,7 +107,9 @@ export default function ResourceCard({
             <Grid item xs={2}>
               <Paper
                 elevation={4}
-                onClick={() => window.location.assign(documentURL)}
+                onClick={() => {
+                  window.location.assign(documentURL);
+                }}
                 className={classes.download}
               >
                 <GetAppIcon className={classes.icon} />

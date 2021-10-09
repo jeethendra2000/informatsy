@@ -102,7 +102,7 @@ export default function Contact() {
                     component="h5"
                     color="textSecondary"
                   >
-                    +91 0123456789
+                    +91 7411241697
                   </Typography>
                 </Box>
               </Grid>

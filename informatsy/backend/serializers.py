@@ -141,5 +141,15 @@ class NotesSerializer(serializers.ModelSerializer):
 class QuestionPapersSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionPapers
+<<<<<<< HEAD
         fields = ['id', 'subjectName', 'subjectCode',
                   'yearOrSem', 'course', 'documentURL']
+=======
+        fields = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
+
+
+class NotificationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notifications
+        fields = "__all__"
+>>>>>>> a535589a1cfcbc21a318c29329b05e58813d0304

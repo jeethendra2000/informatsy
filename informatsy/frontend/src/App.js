@@ -6,6 +6,10 @@ import {
   Redirect,
 } from "react-router-dom";
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import "./App.css";
 import Navbar from "./components/layoutsComponent/Navbar";
@@ -27,7 +31,11 @@ import About from "./components/layoutsComponent/About";
 import Notifications from "./components/Notifications";
 import Contact from "./components/layoutsComponent/Contact";
 import Features from "./components/layoutsComponent/Features";
+<<<<<<< HEAD
 import ActivationPage from "./components/ActivateAccount";
+=======
+import MyProfile from "./components/profileComponents/MyProfile";
+>>>>>>> a535589a1cfcbc21a318c29329b05e58813d0304
 
 // Custom theme of Informatsy
 const theme = createMuiTheme({
@@ -56,9 +64,14 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyDQVk4b0MbLQ4YnmpGbq8MPzUDXFsZ3yeY",
-    authDomain: "informatsy-1606997742068.firebase app.com",
+    authDomain: "informatsy-1606997742068.firebaseapp.com",
     projectId: "informatsy-1606997742068",
     storageBucket: "informatsy-1606997742068.appspot.com",
     messagingSenderId: "1044436937196",
@@ -110,10 +123,12 @@ function App() {
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/activateAccount" component={ActivationPage} />
             <Route exact path="/linkedin" component={LinkedInPopUp} />
+            <Route exact path="/popup" component={PopupAccount} />
+            <Route exact path="/profile" component={MyProfile} />
+            <Route exact path="/notifications" component={Notifications} />
             <Navbar>
               <Switch>
                 <Route exact path="/" component={HomePage} />
-
                 <Route exact path="/resources" component={ResourcePage} />
                 <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Route exact path="/resources/notes" component={Notes} />
@@ -122,12 +137,13 @@ function App() {
                   path="/resources/questionPapers"
                   component={QuestionPapers}
                 />
+<<<<<<< HEAD
 
+=======
+>>>>>>> a535589a1cfcbc21a318c29329b05e58813d0304
                 <Route exact path="/features" component={Features} />
                 <Route exact path="/contact" component={Contact} />
                 <Route exact path="/about" component={About} />
-                <Route exact path="/notifications" component={Notifications} />
-
                 <Redirect to="/"> </Redirect>
               </Switch>
             </Navbar>

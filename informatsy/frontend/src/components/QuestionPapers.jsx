@@ -12,9 +12,9 @@ export default function QuestionPapers() {
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
 
   const [defaultSelectedCourse, setDefaultSelectedCourse] =
-    useState("CSE (BE)");
+    useState();
   const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] =
-    useState("6th Sem");
+    useState();
 
   const onSearch = (searchData) => {
     setData(
@@ -56,17 +56,21 @@ export default function QuestionPapers() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/questionPapers/")
+      .get("https://informatsy.pythonanywhere.com/api/questionPapers/")
       .then((res) => {
         const data = res.data;
         setAllData(data);
-        setData(
-          data.filter(
-            (dt) =>
-              dt.course === defaultSelectedCourse &&
-              dt.yearOrSem === defaultSelectedYearOrSem
-          )
-        );
+        if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
+          setData(data);
+        } else {
+          setData(
+            data.filter(
+              (dt) =>
+                dt.course === defaultSelectedCourse &&
+                dt.yearOrSem === defaultSelectedYearOrSem
+            )
+          );
+        }
       })
       .catch((err) => console.log(err));
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);

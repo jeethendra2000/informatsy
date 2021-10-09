@@ -74,11 +74,11 @@ export default function FilterMenu({
   };
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/course/").then((res) => {
+    axios.get("https://informatsy.pythonanywhere.com/api/course/").then((res) => {
       const data = res.data;
       setCourses(data);
     });
-    axios.get("http://127.0.0.1:8000/api/yearOrSem/").then((res) => {
+    axios.get("https://informatsy.pythonanywhere.com/api/yearOrSem/").then((res) => {
       const data = res.data;
       setYearOrSems(data);
     });

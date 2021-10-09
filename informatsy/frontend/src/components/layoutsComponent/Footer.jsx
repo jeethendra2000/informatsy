@@ -82,7 +82,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://informatsy.in"
                         className={classes.textLink}
                       >
                         Home
@@ -92,7 +92,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://informatsy.in/notifications"
                         className={classes.textLink}
                       >
                         Notifications
@@ -102,7 +102,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://informatsy.in/classroom"
                         className={classes.textLink}
                       >
                         Classroom
@@ -112,7 +112,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://informatsy.in/resources"
                         className={classes.textLink}
                       >
                         Resources
@@ -127,7 +127,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://informatsy.in/about"
                         className={classes.textLink}
                       >
                         About
@@ -137,7 +137,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://informatsy.in/features"
                         className={classes.textLink}
                       >
                         Features
@@ -147,7 +147,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://informatsy.in/contact"
                         className={classes.textLink}
                       >
                         Contact Us
@@ -182,7 +182,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://instagram.com/informatsy_info"
                         className={classes.textLink}
                       >
                         Instagram
@@ -202,7 +202,7 @@ export default function Footer() {
                       <Typography
                         variant="body2"
                         component={Link}
-                        href="/"
+                        href="https://medium.com/@informatsy"
                         className={classes.textLink}
                       >
                         Medium
@@ -219,7 +219,7 @@ export default function Footer() {
             <hr />
           </Box>
           <Typography variant="body2">
-            Informatsy-info &reg; {currentYear}.
+            Informatsy &reg; {currentYear}.
           </Typography>
         </Box>
       </Box>

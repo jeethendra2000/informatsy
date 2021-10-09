@@ -10,7 +10,8 @@ import {
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/styles";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   avtar: {
@@ -32,6 +33,18 @@ function Account({ user }) {
     setAnchorEl(null);
   };
 
+  let [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios
+    .get("https://informatsy.pythonanywhere.com/api/notifications/")
+    .then((res) => {
+      const data = res.data;
+      setData(data);
+    })
+    .catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
       <IconButton
@@ -40,16 +53,16 @@ function Account({ user }) {
         onClick={() => history.push("/notifications")}
         style={{ marginRight: "10px" }}
       >
-        <Badge badgeContent={17} color="error">
+        <Badge badgeContent={data.length} color="error">
           <NotificationsIcon />
         </Badge>
       </IconButton>
-      <Avatar
+      {/* <Avatar
         alt={user.name}
         src={user.profileImage}
         onClick={handleClick}
         className={classes.avtar}
-      />
+      /> */}
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -60,7 +73,7 @@ function Account({ user }) {
         <MenuItem
           onClick={() => {
             handleClose();
-            history.push("/");
+            history.push("/profile");
           }}
         >
           <Typography variant="body2">My Profile</Typography>

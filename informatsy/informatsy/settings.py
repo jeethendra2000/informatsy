@@ -55,7 +55,17 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.linkedin',
     'allauth.socialaccount.providers.facebook',
 
+    'gdstorage'
 ]
+
+#
+# Google Drive Storage Settings
+#
+
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = os.path.join(
+    BASE_DIR, 'informatsy-1606992254138-ae579d25fc35.json')
+# GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>' # OPTIONAL
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,6 +124,16 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'informatsy$informatsy',
+#         'USER': 'informatsy',
+#         'PASSWORD': 'Sri_Raghavendra_Swamy',
+#         'HOST': 'informatsy.mysql.pythonanywhere-services.com',
+#     }
+# }
 
 
 # Password validation
