@@ -2,7 +2,11 @@ from django.urls import path, include
 from . views import *
 
 from rest_framework.routers import DefaultRouter
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView
+)
 # creating router object
 router = DefaultRouter()
 
@@ -27,11 +31,14 @@ urlpatterns = [
 
     path('signup/', SignupView.as_view(), name="signup"),
     path('OauthAll/', AllOauthView.as_view(), name="OauthAll"),
-
+    path('login/', Login.as_view(), name="login"),
     path('course/', CourseView.as_view(), name='course'),
     path('yearOrSem/', YearOrSemView.as_view(), name='yearOrSem'),
 
     path('notes/', NotesView.as_view({'get': 'list'}), name='notes'),
-    path('activateAccount/', ActivateAccount.as_view(), name="email activate")
-
+    path('activateAccount/', ActivateAccount.as_view(), name="email activate"),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('getuserinfo/', Getuserinfo.as_view(), name="getuserinfo"),
+    path('token/verifytoken/', TokenVerifyView.as_view(), name='token_verify'),
 ]

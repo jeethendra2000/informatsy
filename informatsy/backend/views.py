@@ -1,5 +1,10 @@
+from django.middleware import csrf
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
+from rest_framework import permissions
 from django.contrib.auth.password_validation import validate_password
 from django.http import response
+from django.http import request
 from django.http.request import RAISE_ERROR
 from django.shortcuts import redirect, render
 from decouple import config
@@ -21,10 +26,12 @@ from django.http import HttpResponse
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
+JWT_authenticator = JWTAuthentication()
 
 
 class UserProfileView(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, slug=None, format=None):
@@ -60,7 +67,7 @@ class UserProfileView(APIView):
 
 
 class AddFollower(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, slug, format=None):
@@ -70,7 +77,7 @@ class AddFollower(APIView):
 
 
 class RemoveFollower(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, slug, format=None):
@@ -157,6 +164,10 @@ class AllOauthView(APIView):
 
 
 class SignupView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.AllowAny]
+    serializers_classes = User
+
     def post(self, request):
         dataObjects = User
         # method to generate uniqueid for users
@@ -184,6 +195,19 @@ class SignupView(APIView):
                     return Response("User created successfully")
                 print(serializersWithUniqueid.errors)
                 return Response(serializersWithUniqueid.errors.get(list(serializersWithUniqueid.errors.keys())[0])[0], status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class Login(APIView):
+    serializers_class = User
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        user = authenticate(
+            email=request.data['email'], password=request.data['password'])
+        if user is not None:
+            if user.is_active:
+                return Response('ok')
 
 
 class CourseView(APIView):
@@ -220,30 +244,43 @@ class QuestionPapersView(viewsets.ReadOnlyModelViewSet):
 
 
 class ActivateAccount(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request):
-        if request.method == "POST":
-            try:
-                payload = jwt.decode(
-                    request.data['token'], config('token_secret'), 'HS256')
+        try:
+            payload = jwt.decode(
+                request.data['token'], config('token_secret'), 'HS256')
 
-                user = User.objects.get(id=payload['user_id'])
-                print(user)
-                if not user.is_active:
-                    user.is_active = True
-                    user.save()
-                    Refresh_token = RefreshToken.for_user(user)
-                    Access_token = Refresh_token.access_token
-                    response = HttpResponse("Activated successfully")
-                    print({"refresh": str(Refresh_token),
-                           "access": str(Access_token)})
-                    response.set_cookie(
-                        'refresh', Refresh_token, httponly=True)
-                    return response
+            user = User.objects.get(id=payload['user_id'])
+            userprofile = UserProfile.objects.get(user_id=payload['user_id'])
+            if not user.is_active:
+                user.is_active = True
+                user.save()
+                print(userprofile.profile_picture)
+                print(userprofile.user)
+                Refresh_token = RefreshToken.for_user(user)
+                Refresh_token['username'] = str(userprofile.user)
+                Refresh_token['profile_picture'] = str(
+                    userprofile.profile_picture)
+                Access_token = Refresh_token.access_token
+                print(Refresh_token)
+                return Response({'statusmsg': 'Activated successfully', 'tokens': {'access_token': str(Access_token), 'Refresh_token': str(Refresh_token)}})
 
-                return Response("Your account is already activated please login", status=status.HTTP_409_CONFLICT)
-            except jwt.ExpiredSignatureError:
-                return Response("Link is expired please contact informatsy@gmail.com", status=status.HTTP_400_BAD_REQUEST)
-            except jwt.InvalidSignatureError:
-                return Response("This request not authorized by informatsy", status=status.HTTP_400_BAD_REQUEST)
-            except:
-                return Response("Something is missing you are not authenticated", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            return Response("Your account is already activated please login", status=status.HTTP_409_CONFLICT)
+        except jwt.ExpiredSignatureError:
+            return Response("Link is expired please contact informatsy@gmail.com", status=status.HTTP_400_BAD_REQUEST)
+        except jwt.InvalidSignatureError:
+            return Response("This request not authorized by informatsy", status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response("Something is missing you are not authenticated", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class Getuserinfo(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        print(request.headers)
+
+        return Response("ok")

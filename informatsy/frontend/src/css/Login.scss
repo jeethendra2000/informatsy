@@ -46,18 +46,27 @@ $rotation: rotate(320deg);
       position: relative;
       left: 100%;
       top: 0px;
+      .login_logo {
+        top: -3rem;
+      }
     }
-    .top_tag > p {
-      top: -10px;
-      font-size: 15px;
-      font-weight: 500;
-      color: rgb(114, 108, 108);
-    }
-    .top_tag > h2 {
-      color: rgb(104, 96, 216);
-    }
+
     // forgot password ui
   }
+  .login_forgot_password {
+    text-decoration: none;
+    margin-left: 8rem;
+    font-size: 0.8em;
+  }
+}
+.top_tag > p {
+  top: -10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(114, 108, 108);
+}
+.top_tag > h2 {
+  color: rgb(104, 96, 216);
 }
 .login_side_bar {
   .login_side_p1 {
@@ -301,6 +310,11 @@ $rotation: rotate(320deg);
     .mv-login-heading {
       color: rgb(90, 61, 223);
     }
+    .login_forgot_password {
+      font-size: 0.8em;
+      text-decoration: none;
+      margin-left: 8rem;
+    }
   }
 }
 .mv_loader {
@@ -356,6 +370,10 @@ $rotation: rotate(320deg);
     display: flex;
     justify-content: center;
     margin-left: 2em;
+    .login_signup {
+      font-size: 13px;
+      text-decoration: none;
+    }
   }
 }
 .forms_content1 {
@@ -372,6 +390,7 @@ $rotation: rotate(320deg);
 .mv_crct_icn {
   margin-left: 0.5rem;
 }
+
 @media only screen and (max-width: 335px) {
   .mv-login-form-main {
     margin-top: -2em;

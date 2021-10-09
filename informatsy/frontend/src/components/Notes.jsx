@@ -55,7 +55,7 @@ export default function Notes() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/notes/")
+      .get(`${process.env.React_App_SERVER_API}/api/notes/`)
       .then((res) => {
         const data = res.data;
         setAllData(data);
@@ -71,7 +71,7 @@ export default function Notes() {
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);
 
   useEffect(() => {}, [defaultSortOrder]);
-  
+
   return (
     <div>
       <Box mr={4} py={3}>

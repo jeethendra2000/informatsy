@@ -22,8 +22,8 @@ class UniqueidGen:
             return uniqueId
 
     def tokenForActivatingEmail(data):
-        print(data)
+
         access_token = RefreshToken.for_user(data)
+
         access_token.set_exp(lifetime=timedelta(days=2))
-        print(access_token)
         return access_token

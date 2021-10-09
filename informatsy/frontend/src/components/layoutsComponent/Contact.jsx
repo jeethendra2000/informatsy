@@ -39,15 +39,13 @@ export default function Contact() {
         message: message,
       };
       axios
-        .post("http://127.0.0.1:8000/api/contactForm/", data)
+        .post(`${process.env.React_App_SERVER_API}/api/contactForm/`, data)
         .then((res) => {
           setFullName("");
           setEmailAddress("");
           setMessage("");
 
- 
           alert("Submitted successfully!");
-
         })
         .catch((err) => {
           alert("Error! Please check your Credentials");

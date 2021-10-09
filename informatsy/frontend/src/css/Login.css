@@ -63,14 +63,24 @@
   top: 0px;
 }
 
-.login_main .login_child .top_tag > p {
+.login_main .login_child .head_container .login_logo {
+  top: -3rem;
+}
+
+.login_main .login_forgot_password {
+  text-decoration: none;
+  margin-left: 8rem;
+  font-size: 0.8em;
+}
+
+.top_tag > p {
   top: -10px;
   font-size: 15px;
   font-weight: 500;
   color: #726c6c;
 }
 
-.login_main .login_child .top_tag > h2 {
+.top_tag > h2 {
   color: #6860d8;
 }
 
@@ -350,6 +360,12 @@
   color: #5a3ddf;
 }
 
+.mv-login-form-main .mv-login-form-parent .login_forgot_password {
+  font-size: 0.8em;
+  text-decoration: none;
+  margin-left: 8rem;
+}
+
 .mv_loader {
   visibility: hidden;
 }
@@ -436,6 +452,11 @@
       -ms-flex-pack: center;
           justify-content: center;
   margin-left: 2em;
+}
+
+.login_bottom_main .login_to_signup .login_signup {
+  font-size: 13px;
+  text-decoration: none;
 }
 
 .forms_content1 {

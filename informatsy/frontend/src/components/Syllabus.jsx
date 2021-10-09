@@ -33,7 +33,7 @@ export default function Syllabus() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/syllabus/")
+      .get(`${process.env.React_App_SERVER_API}/api/syllabus/`)
       .then((res) => {
         const data = res.data;
         setData(data);

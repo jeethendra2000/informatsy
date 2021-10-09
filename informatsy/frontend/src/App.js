@@ -19,7 +19,8 @@ import Signup from "./components/Signup";
 import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { LinkedInPopUp } from "react-linkedin-login-oauth2";
 import axios from "axios";
-
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import Notes from "./components/Notes";
 import QuestionPapers from "./components/QuestionPapers";
 import About from "./components/layoutsComponent/About";
@@ -55,6 +56,19 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQVk4b0MbLQ4YnmpGbq8MPzUDXFsZ3yeY",
+    authDomain: "informatsy-1606997742068.firebase app.com",
+    projectId: "informatsy-1606997742068",
+    storageBucket: "informatsy-1606997742068.appspot.com",
+    messagingSenderId: "1044436937196",
+    appId: "1:1044436937196:web:cc8e71b50aae842df2f8c9",
+    measurementId: "G-G6CXLGP1CN",
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
   //------------handle for google sign in-------------
   const handleGoogleSignIn = (response) => {
     console.log(response);
@@ -69,6 +83,7 @@ function App() {
     //   console.log(res);
     // })
   };
+
   //-------------for google login automatic one tap--------------
   useGoogleOneTapLogin({
     onError: (error) => console.log(error),
@@ -85,6 +100,7 @@ function App() {
       },
     },
   });
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>

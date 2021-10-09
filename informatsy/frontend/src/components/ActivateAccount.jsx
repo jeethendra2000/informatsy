@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Cookies from "js-cookie";
 import axios from "axios";
+
 import Snackbar from "@material-ui/core/Snackbar";
 import { useHistory } from "react-router";
 
 // Inspired by the former Facebook spinners.
+
 const useStylesFacebook = makeStyles((theme) => ({
   root: {
     position: "absolute",
@@ -46,21 +50,41 @@ export default function ActivateAccount(props) {
     const query = new URLSearchParams(window.location.search);
     const token = query.get("token");
     console.log(token);
+
     axios
-      .post("http://127.0.0.1:8000/api/activateAccount/", {
-        token,
-      })
+      .post(
+        `${process.env.React_App_SERVER_API}/api/activateAccount/`,
+        {
+          token: token,
+        },
+
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
+        Cookies.set("access_token", res.data.tokens["access_token"], {
+          expires: 1 / 48,
+        });
+        Cookies.set("refresh_token", res.data.tokens["Refresh_token"], {
+          expires: 15,
+        });
         setState(true);
-        setmsg(res.data);
-        sethead(res.data);
+        setmsg(res.data["statusmsg"]);
+        setTimeout(() => {
+          history.push("/");
+        }, 2000);
       })
       .catch((err) => {
+        console.log(err);
         setmsg(err.response.data);
         setState(true);
         sethead(err.response.data);
         setTimeout(() => {
-          history.push("/register");
+          history.push("/login");
         }, 2000);
       });
   };

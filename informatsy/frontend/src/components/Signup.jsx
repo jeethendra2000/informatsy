@@ -45,9 +45,7 @@ class FormMain extends Component {
       isPassword: false,
       confirmPassword: "",
       ispassConfirm: false,
-      alert: false,
-      alertContent: "",
-      alertMsg: "",
+
       ischeck: false,
       alert: false,
       alertContent: "",
@@ -132,7 +130,11 @@ class FormMain extends Component {
         confirm_password: this.state.confirmPassword,
       };
       axios
-        .post("http://127.0.0.1:8000/api/signup/", data)
+        .post(`${process.env.React_App_SERVER_API}/api/signup/`, data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
           this.setState({
             alert: true,
@@ -142,9 +144,10 @@ class FormMain extends Component {
           console.log(res);
         })
         .catch((error) => {
+          console.log(error.response.data.detail);
           this.setState({
             alert: true,
-            alertContent: error.response.data,
+            alertContent: error.response.data.detail,
             alertMsg: "error",
             isSubmit: this.state.isSubmit + 1,
             isEmailTrue: false,

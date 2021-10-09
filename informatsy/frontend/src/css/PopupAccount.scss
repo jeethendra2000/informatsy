@@ -97,7 +97,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 .btn_1 {
   @include Button(35%, #2b63e6, 2em);
