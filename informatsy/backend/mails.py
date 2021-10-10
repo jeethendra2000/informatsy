@@ -14,6 +14,7 @@ class MailService:
         print(urlToken)
         subject = 'welcome to Informatsy'
         email_from = settings.EMAIL_HOST_USER
+    
         topic = "Activate your account"
         message = f"<h4>Hi {username}</h4>,<p>Please activate your account<a href = {config('activationDomain')+str(urlToken)}> here </a>this link valid only two days</p>"
         recipient_list = [reciever]

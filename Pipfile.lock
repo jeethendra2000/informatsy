@@ -183,7 +183,6 @@
             "index": "pypi",
             "version": "==3.12.4"
         },
-<<<<<<< HEAD
         "djangorestframework-simplejwt": {
             "hashes": [
                 "sha256:1884177b14a9097a98821dca9e76d87d6345bd7a2124a96c249c7eed3677e87b",
@@ -191,7 +190,6 @@
             ],
             "index": "pypi",
             "version": "==4.7.2"
-=======
         "google-api-core": {
             "hashes": [
                 "sha256:b8ad41f72a70dd709dd13a08478936172aecf5f2d34a18ab378efa6d2d6ab575",
@@ -237,7 +235,6 @@
                 "sha256:2ad195faf9faf079723f6714926e9a9061f694d07724b846658ce08d40f522b4"
             ],
             "version": "==0.19.1"
->>>>>>> a535589a1cfcbc21a318c29329b05e58813d0304
         },
         "idna": {
             "hashes": [

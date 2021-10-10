@@ -9,7 +9,7 @@ import {
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-
+import ReactGA from "react-ga";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import "./App.css";
 import Navbar from "./components/layoutsComponent/Navbar";
@@ -23,20 +23,15 @@ import Signup from "./components/Signup";
 import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { LinkedInPopUp } from "react-linkedin-login-oauth2";
 import axios from "axios";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import Notes from "./components/Notes";
 import QuestionPapers from "./components/QuestionPapers";
 import About from "./components/layoutsComponent/About";
 import Notifications from "./components/Notifications";
 import Contact from "./components/layoutsComponent/Contact";
 import Features from "./components/layoutsComponent/Features";
-<<<<<<< HEAD
 import ActivationPage from "./components/ActivateAccount";
-=======
 import MyProfile from "./components/profileComponents/MyProfile";
->>>>>>> a535589a1cfcbc21a318c29329b05e58813d0304
-
+import RouteChangeTracker from "./RouteChangeTracker";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -82,6 +77,10 @@ function App() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+
+  //init for google analytics
+  const TRACKING_ID = "G-3CEZ1R6HBT"; // YOUR_OWN_TRACKING_ID
+  ReactGA.initialize(TRACKING_ID);
   //------------handle for google sign in-------------
   const handleGoogleSignIn = (response) => {
     console.log(response);
@@ -118,6 +117,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
+          <RouteChangeTracker />
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
@@ -137,10 +137,6 @@ function App() {
                   path="/resources/questionPapers"
                   component={QuestionPapers}
                 />
-<<<<<<< HEAD
-
-=======
->>>>>>> a535589a1cfcbc21a318c29329b05e58813d0304
                 <Route exact path="/features" component={Features} />
                 <Route exact path="/contact" component={Contact} />
                 <Route exact path="/about" component={About} />

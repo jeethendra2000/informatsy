@@ -11,10 +11,8 @@ export default function QuestionPapers() {
   const [data, setData] = useState([]);
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
 
-  const [defaultSelectedCourse, setDefaultSelectedCourse] =
-    useState();
-  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] =
-    useState();
+  const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("");
+  const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("");
 
   const onSearch = (searchData) => {
     setData(
@@ -56,7 +54,7 @@ export default function QuestionPapers() {
 
   useEffect(() => {
     axios
-      .get("https://informatsy.pythonanywhere.com/api/questionPapers/")
+      .get(`${process.env.React_App_SERVER_API}/api/questionPapers/`)
       .then((res) => {
         const data = res.data;
         setAllData(data);

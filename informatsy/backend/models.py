@@ -23,12 +23,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User, primary_key=True, unique=True, on_delete=models.CASCADE)
     user_slug = AutoSlugField(populate_from='user', unique=True, null=True)
-<<<<<<< HEAD
     profile_picture = models.ImageField(
-        upload_to='user_profiles', default='user_profiles/default.png', blank=True)
-=======
-    profile_picture = models.ImageField(upload_to='user_profiles', storage=gd_storage, default='user_profiles/default.png', blank=True)
->>>>>>> a535589a1cfcbc21a318c29329b05e58813d0304
+        upload_to='user_profiles', storage=gd_storage, default='user_profiles/default.png', blank=True)
 
     gender = models.CharField(max_length=20, choices=gender_choice, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
@@ -90,7 +86,8 @@ class Syllabus(models.Model):
     branchName = models.CharField(max_length=50, primary_key=True, unique=True)
     scheme = models.CharField(max_length=4, default=2018)
     branchImage = models.ImageField(upload_to='branch/', storage=gd_storage)
-    documentURL = models.FileField(upload_to='branchSyllabus', storage=gd_storage)
+    documentURL = models.FileField(
+        upload_to='branchSyllabus', storage=gd_storage)
 
 # -----------model for signup forms -------------------
 
@@ -164,7 +161,8 @@ class QuestionPapers(models.Model):
     yearOrSem = models.ForeignKey(YearOrSem, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     # documentURL = models.URLField(max_length=512, null=True)
-    documentURL = models.FileField(upload_to='questionPapers', storage=gd_storage)
+    documentURL = models.FileField(
+        upload_to='questionPapers', storage=gd_storage)
 
     def __str__(self):
         return self.subjectName
@@ -173,7 +171,8 @@ class QuestionPapers(models.Model):
 class Notifications(models.Model):
     notificationTitle = models.CharField(max_length=50)
     relatedTo = models.CharField(max_length=50)
-    notificationDescription = models.TextField(max_length=512, blank=True, null=True)
+    notificationDescription = models.TextField(
+        max_length=512, blank=True, null=True)
 
     def __str__(self):
         return self.notificationTitle
