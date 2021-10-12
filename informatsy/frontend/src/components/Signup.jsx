@@ -129,6 +129,11 @@ class FormMain extends Component {
         password: this.state.password,
         confirm_password: this.state.confirmPassword,
       };
+      this.setState({
+        alert: false,
+        alertContent: "",
+        alertMsg: "error",
+      });
       axios
         .post(`${process.env.React_App_SERVER_API}/api/signup/`, data, {
           headers: {
@@ -144,10 +149,10 @@ class FormMain extends Component {
           console.log(res);
         })
         .catch((error) => {
-          console.log(error.response.data.detail);
+          console.log(error.response.data);
           this.setState({
             alert: true,
-            alertContent: error.response.data.detail,
+            alertContent: error.response.data,
             alertMsg: "error",
             isSubmit: this.state.isSubmit + 1,
             isEmailTrue: false,

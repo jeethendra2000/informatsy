@@ -10,9 +10,15 @@ import {
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/styles";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
+import Cookies from "js-cookie";
+import {
+  authAxios,
+  refresh_token,
+  access_token,
+  axiosinfo,
+} from "../Authaxios";
 const useStyles = makeStyles((theme) => ({
   avtar: {
     backgroundColor: "#fc8403",
@@ -24,7 +30,18 @@ function Account({ user }) {
   const classes = useStyles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  console.log(user);
+  //----------Requesting to logout and add all tokens to backlist -------------------
+  const handleLogout = () => {
+    authAxios
+      .post("/logout/", { refresh: refresh_token })
+      .then((res) => {
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+        history.push("/");
+      })
+      .catch((err) => console.log(err));
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -37,12 +54,12 @@ function Account({ user }) {
 
   useEffect(() => {
     axios
-    .get("https://informatsy.pythonanywhere.com/api/notifications/")
-    .then((res) => {
-      const data = res.data;
-      setData(data);
-    })
-    .catch((err) => console.log(err));
+      .get("https://informatsy.pythonanywhere.com/api/notifications/")
+      .then((res) => {
+        const data = res.data;
+        setData(data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -57,12 +74,12 @@ function Account({ user }) {
           <NotificationsIcon />
         </Badge>
       </IconButton>
-      {/* <Avatar
-        alt={user.name}
-        src={user.profileImage}
+      <Avatar
+        alt={user.details.username}
+        src={user.details.profile_img}
         onClick={handleClick}
         className={classes.avtar}
-      /> */}
+      />
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -84,7 +101,9 @@ function Account({ user }) {
             history.push("/");
           }}
         >
-          <Typography variant="body2">Logout</Typography>
+          <Typography variant="body2" onClick={handleLogout}>
+            Logout
+          </Typography>
         </MenuItem>
       </Menu>
     </>

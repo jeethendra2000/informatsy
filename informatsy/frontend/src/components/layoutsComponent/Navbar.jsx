@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -7,11 +7,17 @@ import Typography from "@material-ui/core/Typography";
 import Footer from "./Footer";
 import Account from "./Account";
 import Sidebar from "./Sidebar";
+import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import { useHistory, useLocation } from "react-router";
 import Cookies from "js-cookie";
-import { authAxios, refresh_token, access_token } from "../Authaxios";
+import {
+  authAxios,
+  refresh_token,
+  access_token,
+  axiosinfo,
+} from "../Authaxios";
 
 import {
   Avatar,
@@ -90,38 +96,46 @@ export default function Navbar({ children }) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-
-  const user = {
-    status: true,
-    name: "SRS",
-    profileImage: "http://127.0.0.1:8000/media/branch/Rayaru_ZDUCckO.jpg",
-  };
+  const [user, setUser] = React.useState({
+    status: false,
+    name: "",
+    profileImage: "",
+  });
+  // const user = {
+  //   status: false,
+  //   name: "SRS",
+  //   profileImage: "http://127.0.0.1:8000/media/branch/Rayaru_ZDUCckO.jpg",
+  // };
   const expires = 1 / 48;
-  axios.defaults.headers.common["Authorization"] = "Bearer " + refresh_token;
-  axios.defaults.headers.common["Content-Type"] = "application/json";
-  authAxios
-    .post(`getuserinfo/`)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => {
-      if (err.response.status === 401) {
-        axios
-          .post(`${process.env.React_App_SERVER_API}/api/token/refresh/`, {
-            refresh: refresh_token,
-          })
-          .then((res) =>
-            Cookies.set("access_token", res.data.access, {
-              expires: expires,
+  
+  useEffect(() => {
+    authAxios
+      .post(`getuserinfo/`)
+      .then((res) => {
+        console.log(res.data);
+        setUser({ status: true, details: jwt_decode(access_token) });
+        console.log(user);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          axiosinfo
+            .post(`token/refresh/`, {
+              refresh: refresh_token,
             })
-          )
-          .catch((err) => {
-            if (err.response.status) {
-              history.push("/login");
-            }
-          });
-      }
-    });
+            .then((res) => {
+              Cookies.set("access_token", res.data.access, {
+                expires: expires,
+              });
+            })
+            .catch((err) => {
+              if (err.response.status) {
+                history.push("/login");
+              }
+            });
+        }
+      });
+  }, []);
+
   const menuItems = [
     { title: "Home", logo: "HomeIcon", path: "/" },
     { title: "Resources", logo: "MenuBookIcon", path: "/resources" },
@@ -175,7 +189,7 @@ export default function Navbar({ children }) {
                       color="primary"
                       size="medium"
                       variant="outlined"
-                      onClick={() => history.push("/popup")}
+                      onClick={() => history.push("/signup")}
                       className={classes.signUpButton}
                     >
                       Signup
@@ -186,7 +200,7 @@ export default function Navbar({ children }) {
                       color="primary"
                       size="medium"
                       variant="contained"
-                      onClick={() => history.push("/popup")}
+                      onClick={() => history.push("/login")}
                     >
                       SignIn
                     </Button>
@@ -218,7 +232,7 @@ export default function Navbar({ children }) {
                     size="medium"
                     variant="outlined"
                     style={{ borderRadius: "50px" }}
-                    onClick={() => history.push("/popup")}
+                    onClick={() => history.push("/signup")}
                     className={classes.signUpButton}
                   >
                     Sign In

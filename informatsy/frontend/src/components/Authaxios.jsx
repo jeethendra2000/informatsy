@@ -8,3 +8,6 @@ export const authAxios = axios.create({
     Authorization: `Bearer ${access_token}`,
   },
 });
+export const axiosinfo = axios.create({
+  baseURL: `${process.env.React_App_SERVER_API}/api/`,
+});
