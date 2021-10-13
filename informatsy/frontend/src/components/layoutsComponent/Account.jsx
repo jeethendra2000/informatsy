@@ -18,7 +18,7 @@ import {
   refresh_token,
   access_token,
   axiosinfo,
-} from "../Authaxios";
+} from "../../Authaxios";
 const useStyles = makeStyles((theme) => ({
   avtar: {
     backgroundColor: "#fc8403",

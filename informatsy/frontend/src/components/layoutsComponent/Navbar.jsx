@@ -17,7 +17,7 @@ import {
   refresh_token,
   access_token,
   axiosinfo,
-} from "../Authaxios";
+} from "../../Authaxios";
 
 import {
   Avatar,
@@ -107,17 +107,37 @@ export default function Navbar({ children }) {
   //   profileImage: "http://127.0.0.1:8000/media/branch/Rayaru_ZDUCckO.jpg",
   // };
   const expires = 1 / 48;
-  
+  // const querying_token = () => {
+  //   axiosinfo
+  //     .post(`token/refresh/`, {
+  //       refresh: refresh_token,
+  //     })
+  //     .then((res) => {
+  //       Cookies.set("access_token", res.data.access, {
+  //         expires: expires,
+  //       });
+  //       console.log("got request");
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status) {
+  //         history.push("/login");
+  //       }
+  //     });
+  // };
   useEffect(() => {
     authAxios
       .post(`getuserinfo/`)
       .then((res) => {
         console.log(res.data);
-        setUser({ status: true, details: jwt_decode(access_token) });
+        setUser({
+          status: true,
+          details: jwt_decode(Cookies.get("access_token")),
+        });
         console.log(user);
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        console.log(err.response);
+        if (err.response) {
           axiosinfo
             .post(`token/refresh/`, {
               refresh: refresh_token,
@@ -126,14 +146,19 @@ export default function Navbar({ children }) {
               Cookies.set("access_token", res.data.access, {
                 expires: expires,
               });
+
+              setUser({ status: true, details: jwt_decode(access_token) });
             })
             .catch((err) => {
-              if (err.response.status) {
-                history.push("/login");
-              }
+              history.push("/");
+              // if (err.response.status === 401) {
+              // }
             });
         }
       });
+    // setInterval(() => {
+    //   querying_token();
+    // }, 1750);
   }, []);
 
   const menuItems = [

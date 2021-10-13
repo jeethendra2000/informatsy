@@ -78,6 +78,13 @@ function App() {
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 
+  if ("serviceWorker" in navigator) {
+    console.log("registered");
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js");
+    });
+  }
+
   //init for google analytics
   const TRACKING_ID = "G-3CEZ1R6HBT"; // YOUR_OWN_TRACKING_ID
   ReactGA.initialize(TRACKING_ID);
