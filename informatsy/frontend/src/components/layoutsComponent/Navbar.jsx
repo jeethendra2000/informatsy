@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -7,15 +7,18 @@ import Typography from "@material-ui/core/Typography";
 import Footer from "./Footer";
 import Account from "./Account";
 import Sidebar from "./Sidebar";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import { useHistory, useLocation } from "react-router";
 import Cookies from "js-cookie";
+import { UserContext } from "../../UserContexapi";
+import { CircularProgress } from "@material-ui/core";
+
 import {
   authAxios,
-  refresh_token,
-  access_token,
+  // refresh_token,
+  // access_token,
   axiosinfo,
 } from "../../Authaxios";
 
@@ -27,7 +30,7 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
-import axios from "axios";
+// import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,17 +93,20 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "-24px",
     top: "10px",
   },
+  loaderdesk: {
+    // marginTop: "0.5rem",
+    display:"flex",
+    justifyContent:"center",
+    alignSelf:'center',alignContent:'center'
+  },
 }));
 
 export default function Navbar({ children }) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  const [user, setUser] = React.useState({
-    status: false,
-    name: "",
-    profileImage: "",
-  });
+  const [loading, setloading] = useState(true);
+  const user = React.useContext(UserContext);
   // const user = {
   //   status: false,
   //   name: "SRS",
@@ -125,40 +131,58 @@ export default function Navbar({ children }) {
   //     });
   // };
   useEffect(() => {
+    // console.log(user.user.status);
+    //-----------progress event in axios--------------
+    // onUploadProgress: progressEvent => console.log(progressEvent.loaded)
     authAxios
-      .post(`getuserinfo/`)
+      .get(`getuserinfo/`)
       .then((res) => {
         console.log(res.data);
-        setUser({
+        user.setUser({
           status: true,
-          details: jwt_decode(Cookies.get("access_token")),
+          profile_img: res.data.profile_img,
+          name: res.data.name,
         });
-        console.log(user);
+        setloading(false)
+
+        // console.log(user);
       })
       .catch((err) => {
         console.log(err.response);
         if (err.response) {
           axiosinfo
             .post(`token/refresh/`, {
-              refresh: refresh_token,
+              refresh: Cookies.get("refresh_token"),
             })
             .then((res) => {
               Cookies.set("access_token", res.data.access, {
                 expires: expires,
               });
-
-              setUser({ status: true, details: jwt_decode(access_token) });
+              authAxios
+                .get("/getuserinfo/")
+                .then((res) => {
+                  user.setUser({
+                    status: true,
+                    profile_img: res.data.profile_img,
+                    name: res.data.name,
+                  });
+                  setloading(false)
+                })
+                .catch((err) => {
+                  console.log("Can't get user info");
+                  setloading(false)
+                  user.setUser({ status: false, profile_img: "", name: "" });
+                });
             })
             .catch((err) => {
               history.push("/");
+              setloading(false)
+              user.setUser({ status: false, profile_img: "", name: "" });
               // if (err.response.status === 401) {
               // }
             });
         }
       });
-    // setInterval(() => {
-    //   querying_token();
-    // }, 1750);
   }, []);
 
   const menuItems = [
@@ -205,9 +229,15 @@ export default function Navbar({ children }) {
                   <ListItemText primary={menu.title} />
                 </ListItem>
               ))}
-              {user.status ? (
-                <Account user={user} />
-              ) : (
+              {user.user.status ? (
+                !loading ? (
+                  <Account />
+                ) : (
+                  <span className={classes.loaderdesk}>
+                    <CircularProgress thickness="3.6" size="2rem" />
+                  </span>
+                )
+              ) : !loading ? (
                 <>
                   <ListItem>
                     <Button
@@ -231,6 +261,10 @@ export default function Navbar({ children }) {
                     </Button>
                   </ListItem>
                 </>
+              ) : (
+                <span className={classes.loaderdesk}>
+                  <CircularProgress thickness="3.6" size="2rem" />
+                </span>
               )}
             </List>
           </Hidden>
@@ -249,9 +283,15 @@ export default function Navbar({ children }) {
                   right: "10px",
                 }}
               >
-                {user.status ? (
-                  <Account user={user} />
-                ) : (
+                {user.user.status ? (
+                  !loading ? (
+                    <Account />
+                  ) : (
+                    <span className={classes.loaderdesk}>
+                      <CircularProgress thickness="3" size="2rem" color = "secondary"/>
+                    </span>
+                  )
+                ) : !loading ? (
                   <Button
                     color="primary"
                     size="medium"
@@ -262,6 +302,10 @@ export default function Navbar({ children }) {
                   >
                     Sign In
                   </Button>
+                ) : (
+                  <span className={classes.loaderdesk}>
+                    <CircularProgress thickness="3" size="2rem" color = "secondary"/>
+                  </span>
                 )}
               </div>
             </div>

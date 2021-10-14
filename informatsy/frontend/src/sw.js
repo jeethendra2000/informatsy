@@ -1,6 +1,7 @@
 import { workbox } from "https://storage.googleapis.com/workbox-cdn/releases/3.6.1/workbox-sw.js";
 
 if (workbox) {
+  console.log(`workbox on this browser 😊😀`);
   workbox.setConfig({ debug: false });
   // workbox.core.setLogLevel(workbox.core.LOG_LEVELS.warn);
 

@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
+import { UserProvider } from "./UserContexapi";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<UserProvider><App /></UserProvider>, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

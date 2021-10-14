@@ -13,6 +13,8 @@ import { makeStyles } from "@material-ui/styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { UserContext } from "../../UserContexapi";
+
 import {
   authAxios,
   refresh_token,
@@ -26,10 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Account({ user }) {
+function Account() {
   const classes = useStyles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
+  const user = React.useContext(UserContext);
   console.log(user);
   //----------Requesting to logout and add all tokens to backlist -------------------
   const handleLogout = () => {
@@ -38,6 +41,7 @@ function Account({ user }) {
       .then((res) => {
         Cookies.remove("access_token");
         Cookies.remove("refresh_token");
+        user.setUser({ status: false, profile_img: "", name: "" });
         history.push("/");
       })
       .catch((err) => console.log(err));
@@ -75,8 +79,8 @@ function Account({ user }) {
         </Badge>
       </IconButton>
       <Avatar
-        alt={user.details.username}
-        src={user.details.profile_img}
+        alt={user.user.name}
+        src={user.user.profile_img}
         onClick={handleClick}
         className={classes.avtar}
       />
