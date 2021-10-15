@@ -16,8 +16,9 @@ import Input from "../components/Input";
 import "../css/Login.css";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
-import { Typography } from "@material-ui/core";
+import { StepButton, Typography } from "@material-ui/core";
 import axios from "axios";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router";
 class FormMain extends Component {
@@ -33,6 +34,7 @@ class FormMain extends Component {
       alert: false,
       alertContent: "",
       alertMsg: "",
+      buttonData: false,
     };
   }
   setUsername = (childData) => {
@@ -54,11 +56,16 @@ class FormMain extends Component {
       alert: false,
       alertContent: "",
     });
-    if (this.state.isUsername && this.state.isPass) {
+    if (
+      this.state.isUsername &&
+      this.state.isPass &&
+      (this.state.currentUsername && this.state.currentPassword) !== ""
+    ) {
       let data = {
         username: this.state.currentUsername,
         password: this.state.currentPassword,
       };
+      this.setState({ buttonData: true });
       axios
         .post(`${process.env.React_App_SERVER_API}/api/token/`, data, {
           headers: {
@@ -66,6 +73,8 @@ class FormMain extends Component {
           },
         })
         .then((res) => {
+          this.setState({ buttonData: false });
+
           Cookies.set("access_token", res.data["access"], {
             expires: 1 / 48,
           });
@@ -74,15 +83,17 @@ class FormMain extends Component {
           });
           this.setState({
             alert: true,
-            alertContent: "Successfully logged in",
+            alertContent: "Successfully logged in redirecting...!",
             alertMsg: "success",
           });
 
           setTimeout(() => {
             window.location.href = `${process.env.React_App_FRONTEND}`;
-          }, 2000);
+          }, 1000);
         })
         .catch((err) => {
+          this.setState({ buttonData: false });
+
           this.setState({
             alert: true,
             alertContent: err.response.data.detail,
@@ -146,10 +157,21 @@ class FormMain extends Component {
               variant="contained"
               color="primary"
               component={Link}
+              disabled={
+                !(
+                  this.state.isUsername &&
+                  this.state.isPass &&
+                  !this.state.buttonData
+                )
+              }
               onClick={this.handleSubmit}
               disableElevation
             >
-              Login
+              {this.state.buttonData ? (
+                <CircularProgress size="1.5rem" />
+              ) : (
+                "Login"
+              )}
             </Button>
           </div>
 
