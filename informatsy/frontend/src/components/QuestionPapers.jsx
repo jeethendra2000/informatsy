@@ -7,6 +7,7 @@ import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 
 import axios from "axios";
+import { authAxios } from "../Authaxios";
 const useStyles = makeStyles((theme) => ({
   loader: {
     height: "50vh",
@@ -23,7 +24,7 @@ export default function QuestionPapers() {
   const [allData, setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("");
   const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("");
 
@@ -66,7 +67,8 @@ export default function QuestionPapers() {
   };
 
   useEffect(() => {
-    axios
+    setLoading(true);
+    authAxios
       .get(`questionPapers/`)
       .then((res) => {
         const data = res.data;
@@ -89,7 +91,7 @@ export default function QuestionPapers() {
 
   useEffect(() => {}, [defaultSortOrder]);
 
-  return loading ? (
+  return !loading ? (
     <div>
       <Box mr={4} py={3}>
         <SearchAndFilter

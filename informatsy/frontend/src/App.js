@@ -80,12 +80,12 @@ function App() {
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    if ("serviceWorker" in navigator) {
-      console.log("registered");
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js");
-      });
-    }
+    // if ("serviceWorker" in navigator) {
+    //   console.log("registered");
+    //   window.addEventListener("load", () => {
+    //     navigator.serviceWorker.register("./sw.js");
+    //   });
+    // }
     ReactGA.initialize(TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
@@ -129,7 +129,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
-          {/* <RouteChangeTracker /> */}
+          <RouteChangeTracker />
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />

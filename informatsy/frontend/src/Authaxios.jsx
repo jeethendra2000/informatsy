@@ -4,7 +4,6 @@ export const access_token = Cookies.get("access_token");
 export const refresh_token = Cookies.get("refresh_token");
 export const authAxios = axios.create({
   baseURL: `${process.env.React_App_SERVER_API}/api/`,
-  timeout: 6000,
   headers: {
     accept: "application/json",
   },
@@ -33,10 +32,10 @@ authAxios.interceptors.response.use(
     const originalRequest = error.config;
 
     if (typeof error.response === "undefined") {
-      alert(
-        "A server/network error occurred.check your's active internet connection"
-      );
-
+      // alert(
+      //   "A server/network error occurred.check your's active internet connection"
+      // );
+      console.log("network error");
       return Promise.reject(error);
     }
 
@@ -53,7 +52,7 @@ authAxios.interceptors.response.use(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-      const refreshToken = refresh_token;
+      const refreshToken = Cookies.get("refresh_token");
 
       if (refreshToken) {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));

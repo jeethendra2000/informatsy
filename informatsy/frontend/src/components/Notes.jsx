@@ -74,9 +74,9 @@ export default function Notes() {
       .then((res) => {
         const data = res.data;
         setAllData(data);
+        setLoading(false);
         if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
           setData(data);
-          setLoading(false);
         } else {
           setData(
             data.filter(
@@ -85,14 +85,16 @@ export default function Notes() {
                 dt.yearOrSem === defaultSelectedYearOrSem
             )
           );
-          setData(false);
+          // setData(false);
         }
       })
       .catch((err) => {
-        // console.log(err.response)
+        console.log(err.response);
+        // setData(false);
+        setLoading(false);
         if (err.response) {
-          setData(false);
-          history.push("/login");
+          // setData(false);
+          // history.push("/login");
         }
       });
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);
