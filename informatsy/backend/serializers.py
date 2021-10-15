@@ -9,6 +9,9 @@ from django import forms
 from django.contrib.auth import password_validation
 import re
 
+from rest_framework_simplejwt.serializers import (
+    TokenObtainPairSerializer, TokenRefreshSerializer)
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
@@ -141,10 +144,47 @@ class NotesSerializer(serializers.ModelSerializer):
 class QuestionPapersSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionPapers
-        fields = ['id', 'subjectName', 'subjectCode', 'yearOrSem', 'course', 'documentURL']
+        fields = ['id', 'subjectName', 'subjectCode',
+                  'yearOrSem', 'course', 'documentURL']
 
 
 class NotificationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notifications
         fields = "__all__"
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        customfield = UserProfile.objects.get(user=user.id)
+        token['profile_img'] = customfield.profile_picture.url
+        # Add custom claims
+        token['name'] = user.username
+        # token['profile_img'] = user.profile_picture
+        token['id'] = user.id
+        # Add more custom fields from your custom user model, If you have a
+        # custom user model.
+        # ...
+
+        return token
+
+
+class TokenrefreshSerializer(TokenRefreshSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        customfield = UserProfile.objects.get(user=user.id)
+        token['profile_img'] = customfield.profile_picture.url
+        # Add custom claims
+        token['name'] = user.username
+        # token['profile_img'] = user.profile_picture
+        token['id'] = user.id
+        # Add more custom fields from your custom user model, If you have a
+        # custom user model.
+        # ...
+
+        return token

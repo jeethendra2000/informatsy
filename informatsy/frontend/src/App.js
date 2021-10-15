@@ -32,6 +32,7 @@ import Features from "./components/layoutsComponent/Features";
 import ActivationPage from "./components/ActivateAccount";
 import MyProfile from "./components/profileComponents/MyProfile";
 import RouteChangeTracker from "./RouteChangeTracker";
+
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -128,7 +129,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
-          <RouteChangeTracker />
+          {/* <RouteChangeTracker /> */}
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />

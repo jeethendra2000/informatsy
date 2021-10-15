@@ -25,7 +25,7 @@ class UserProfile(models.Model):
     user_slug = AutoSlugField(populate_from='user', unique=True, null=True)
     profile_picture = models.ImageField(
         upload_to='user_profiles', storage=gd_storage, default='user_profiles/default.png', blank=True)
-
+    
     gender = models.CharField(max_length=20, choices=gender_choice, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=13, blank=True, null=True)

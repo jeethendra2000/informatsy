@@ -23,6 +23,11 @@ from . serializers import *
 from backend import mails
 import os
 from django.http import HttpResponse
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+
+)
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -100,6 +105,7 @@ class ContactFormView(APIView):
 
 class SyllabusView(APIView):
     serializer_class = SyllabusSerializer
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request, format=None):
         query = Syllabus.objects.all()
@@ -164,7 +170,6 @@ class AllOauthView(APIView):
 
 
 class SignupView(APIView):
-    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.AllowAny]
     serializers_classes = User
 
@@ -193,7 +198,8 @@ class SignupView(APIView):
                     mails.MailService.sendMail(
                         data['email'], data['username'], activation_token)
                     return Response("User created successfully")
-                print(serializersWithUniqueid.errors)
+                print(serializersWithUniqueid.errors.get(
+                    list(serializersWithUniqueid.errors.keys())[0])[0])
                 return Response(serializersWithUniqueid.errors.get(list(serializersWithUniqueid.errors.keys())[0])[0], status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
@@ -229,6 +235,9 @@ class YearOrSemView(APIView):
 
 
 class NotesView(viewsets.ReadOnlyModelViewSet):
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
+
     queryset = Notes.objects.all()
     serializer_class = NotesSerializer
 
@@ -277,15 +286,45 @@ class ActivateAccount(APIView):
 
 
 class Getuserinfo(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [permissions.AllowAny]
+    # authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
-        print(request.headers)
+    def get(self, request):
+        try:
+            token = request.headers.get('Authorization').split()[1]
+            payload = jwt.decode(
+                token, config('token_secret'), 'HS256')
 
-        return Response("ok")
+            user = UserProfile.objects.get(user_id=payload['user_id'])
+            data = {"profile_img": user.profile_picture.url,
+                    "name": user.user.username}
+            print(user.profile_picture.url)
+            print(user.user.username)
+            return Response(data)
+        except:
+            return Response("Not authenticated", status=status.HTTP_401_UNAUTHORIZED)
 
 
 class NotificationsView(viewsets.ReadOnlyModelViewSet):
     queryset = Notifications.objects.all()
     serializer_class = NotificationsSerializer
+
+
+class LogoutView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        try:
+            token = RefreshToken(str(request.data['refresh']))
+            token.blacklist()
+            return Response("ok")
+        except:
+            return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+class MyTokenRefreshView(TokenRefreshView):
+    serializer_class = TokenrefreshSerializer
