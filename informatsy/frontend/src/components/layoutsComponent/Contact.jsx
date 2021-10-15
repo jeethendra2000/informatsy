@@ -39,11 +39,12 @@ export default function Contact() {
         message: message,
       };
       axios
-        .post("https://informatsy.pythonanywhere.com/api/contactForm/", data)
+        .post(`${process.env.React_App_SERVER_API}/api/contactForm/`, data)
         .then((res) => {
           setFullName("");
           setEmailAddress("");
           setMessage("");
+
           alert("Submitted successfully!");
         })
         .catch((err) => {

@@ -1,13 +1,12 @@
 import { Box, Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import header from "../Assets/header.png";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import About from "./layoutsComponent/About";
 import Features from "./layoutsComponent/Features";
 import Contact from "./layoutsComponent/Contact";
-
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
     width: "100%",
@@ -40,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePage() {
   const classes = useStyles();
   const history = useHistory();
+  const [stateOfGoogleLogin, setStateOfLoginGoogle] = useState(false);
 
   return (
     <React.Fragment>
@@ -92,7 +92,9 @@ export default function HomePage() {
                         <Grid item>
                           <Button
                             onClick={() => {
-                              window.location.assign("https://youtu.be/wZE9HuQzH_E");
+                              window.location.assign(
+                                "https://youtu.be/wZE9HuQzH_E"
+                              );
                             }}
                             variant="contained"
                             color="secondary"

@@ -33,7 +33,7 @@ export default function Syllabus() {
 
   useEffect(() => {
     axios
-      .get("https://informatsy.pythonanywhere.com/api/syllabus/")
+      .get(`${process.env.React_App_SERVER_API}/api/syllabus/`)
       .then((res) => {
         const data = res.data;
         setData(data);

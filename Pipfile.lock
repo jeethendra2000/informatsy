@@ -183,6 +183,13 @@
             "index": "pypi",
             "version": "==3.12.4"
         },
+        "djangorestframework-simplejwt": {
+            "hashes": [
+                "sha256:1884177b14a9097a98821dca9e76d87d6345bd7a2124a96c249c7eed3677e87b",
+                "sha256:2b53a093f74a60fd27c5be73f47c2e0b11e51af204b72a8b93769733a844e7bb"
+            ],
+            "index": "pypi",
+            "version": "==4.7.2"
         "google-api-core": {
             "hashes": [
                 "sha256:b8ad41f72a70dd709dd13a08478936172aecf5f2d34a18ab378efa6d2d6ab575",

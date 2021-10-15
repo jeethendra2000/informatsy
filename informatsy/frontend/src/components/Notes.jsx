@@ -3,8 +3,10 @@ import { Box, Grid } from "@material-ui/core";
 import SearchAndFilter from "./resourcesComponents/SearchAndFilter";
 import ResourceCard from "./resourcesComponents/ResourceCard";
 import NoResource from "./resourcesComponents/NoResource";
+import { useHistory, useLocation } from "react-router";
 
 import axios from "axios";
+import { authAxios } from "../Authaxios";
 
 export default function Notes() {
   const [allData, setAllData] = useState([]);
@@ -51,10 +53,10 @@ export default function Notes() {
       return 0;
     });
   };
-
+  const history = useHistory();
   useEffect(() => {
-    axios
-      .get("https://informatsy.pythonanywhere.com/api/notes/")
+    authAxios
+      .get(`notes/`)
       .then((res) => {
         const data = res.data;
         setAllData(data);
@@ -70,7 +72,12 @@ export default function Notes() {
           );
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        // console.log(err.response)
+        if (err.response) {
+          history.push("/login");
+        }
+      });
   }, [defaultSelectedCourse, defaultSelectedYearOrSem]);
 
   useEffect(() => {}, [defaultSortOrder]);

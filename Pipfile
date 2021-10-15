@@ -11,6 +11,8 @@ pipfile = "*"
 pillow = "*"
 django-allauth = "*"
 django-autoslug = "*"
+djangorestframework-simplejwt = "*"
+pyjwt = "*"
 django-googledrive-storage = "*"
 
 [dev-packages]
