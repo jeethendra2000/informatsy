@@ -4,17 +4,30 @@ import SearchAndFilter from "./resourcesComponents/SearchAndFilter";
 import ResourceCard from "./resourcesComponents/ResourceCard";
 import NoResource from "./resourcesComponents/NoResource";
 import { useHistory, useLocation } from "react-router";
+import { CircularProgress } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 import axios from "axios";
 import { authAxios } from "../Authaxios";
-
+const useStyles = makeStyles((theme) => ({
+  loader: {
+    height: "50vh",
+  },
+  loaderProgress: {
+    position: "absolute",
+    left: "50%",
+    top: "30%",
+    transform: "translate(-50%,-50%)",
+  },
+}));
 export default function Notes() {
+  const classes = useStyles();
   const [allData, setAllData] = useState([]);
   const [data, setData] = useState([]);
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
   const [defaultSelectedCourse, setDefaultSelectedCourse] = useState("");
   const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const onSearch = (searchData) => {
     setData(
       allData.filter(
@@ -55,6 +68,7 @@ export default function Notes() {
   };
   const history = useHistory();
   useEffect(() => {
+    setLoading(true);
     authAxios
       .get(`notes/`)
       .then((res) => {
@@ -62,6 +76,7 @@ export default function Notes() {
         setAllData(data);
         if (defaultSelectedCourse === "" || defaultSelectedYearOrSem === "") {
           setData(data);
+          setLoading(false);
         } else {
           setData(
             data.filter(
@@ -70,11 +85,13 @@ export default function Notes() {
                 dt.yearOrSem === defaultSelectedYearOrSem
             )
           );
+          setData(false);
         }
       })
       .catch((err) => {
         // console.log(err.response)
         if (err.response) {
+          setData(false);
           history.push("/login");
         }
       });
@@ -82,7 +99,7 @@ export default function Notes() {
 
   useEffect(() => {}, [defaultSortOrder]);
 
-  return (
+  return !loading ? (
     <div>
       <Box mr={4} py={3}>
         <SearchAndFilter
@@ -114,6 +131,12 @@ export default function Notes() {
           )}
         </Grid>
       </Box>
+    </div>
+  ) : (
+    <div className={classes.loader}>
+      <span className={classes.loaderProgress}>
+        <CircularProgress size="2rem" />
+      </span>
     </div>
   );
 }
