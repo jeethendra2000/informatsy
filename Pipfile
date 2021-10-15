@@ -15,6 +15,7 @@ djangorestframework-simplejwt = "*"
 pyjwt = "*"
 django-googledrive-storage = "*"
 python-decouple = "*"
+django-rest-auth = "*"
 
 [dev-packages]
 
