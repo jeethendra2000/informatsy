@@ -73,7 +73,7 @@ function App() {
     appId: "1:1044436937196:web:cc8e71b50aae842df2f8c9",
     measurementId: "G-G6CXLGP1CN",
   };
-  const TRACKING_ID = "G-3CEZ1R6HBT"; 
+  const TRACKING_ID = "G-3CEZ1R6HBT";
   // Initialize Firebase
 
   useEffect(() => {
@@ -86,11 +86,12 @@ function App() {
       });
     }
     ReactGA.initialize(TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   //init for google analytics
   // YOUR_OWN_TRACKING_ID
- 
+
   //------------handle for google sign in-------------
   const handleGoogleSignIn = (response) => {
     console.log(response);

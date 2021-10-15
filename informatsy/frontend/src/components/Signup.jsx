@@ -143,7 +143,7 @@ class FormMain extends Component {
         .then((res) => {
           this.setState({
             alert: true,
-            alertContent: res.statusText,
+            alertContent: "Activation link shared to your mail",
             alertMsg: "success",
           });
           console.log(res);
