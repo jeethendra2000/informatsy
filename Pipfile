@@ -12,8 +12,8 @@ pillow = "*"
 django-allauth = "*"
 django-autoslug = "*"
 djangorestframework-simplejwt = "*"
-pyjwt = "*"
 django-googledrive-storage = "*"
+pyjwt = "~=2.1.0"
 
 [dev-packages]
 

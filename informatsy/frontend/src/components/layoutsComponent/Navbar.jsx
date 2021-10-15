@@ -297,7 +297,7 @@ export default function Navbar({ children }) {
                     size="medium"
                     variant="outlined"
                     style={{ borderRadius: "50px" }}
-                    onClick={() => history.push("/signup")}
+                    onClick={() => history.push("/login")}
                     className={classes.signUpButton}
                   >
                     Sign In

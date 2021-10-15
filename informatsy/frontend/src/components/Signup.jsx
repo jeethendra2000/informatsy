@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logo from "../Assets/logo.png";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import MobileView from "../components/mobile";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import Visibility from "@material-ui/icons/Visibility";
@@ -18,6 +18,7 @@ import g_icon from "../Assets/google-img.png";
 import li_icon from "../Assets/linkedin_logo.webp";
 import Input from "../components/Input";
 import Loader from "../components/Loaders";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import "../css/Login.css";
 import { useLocation } from "react-router-dom";
 // import { Snackbar } from "@material-ui/core";
@@ -52,6 +53,7 @@ class FormMain extends Component {
       alertMsg: "",
       isSubmit: 1,
       accesstoken: "",
+      buttonData: false,
     };
   }
   //---------------to check whether all fields are filled-------------
@@ -129,10 +131,12 @@ class FormMain extends Component {
         password: this.state.password,
         confirm_password: this.state.confirmPassword,
       };
+
       this.setState({
         alert: false,
         alertContent: "",
         alertMsg: "error",
+        buttonData: true,
       });
       axios
         .post(`${process.env.React_App_SERVER_API}/api/signup/`, data, {
@@ -145,11 +149,17 @@ class FormMain extends Component {
             alert: true,
             alertContent: "Activation link shared to your mail",
             alertMsg: "success",
+            buttonData: false,
           });
+          this.setState({ buttonData: false });
           console.log(res);
+          setTimeout(() => {
+            window.location.pathname = "/";
+          }, 2000);
         })
         .catch((error) => {
           console.log(error.response.data);
+          this.setState({ buttonData: false });
           this.setState({
             alert: true,
             alertContent: error.response.data,
@@ -157,6 +167,7 @@ class FormMain extends Component {
             isSubmit: this.state.isSubmit + 1,
             isEmailTrue: false,
             isPassword: false,
+            buttonData: false,
           });
         });
     }
@@ -349,6 +360,7 @@ class FormMain extends Component {
             className="login_btn"
             variant="contained"
             color="primary"
+            disableElevation
             onClick={this.handleSubmitSignup.bind(this)}
             disabled={
               !(
@@ -356,11 +368,16 @@ class FormMain extends Component {
                 this.state.isPassword &&
                 this.state.ispassConfirm &&
                 this.state.ischeck &&
-                this.state.isUserName
+                this.state.isUserName &&
+                !this.state.buttonData
               )
             }
           >
-            Create my account
+            {this.state.buttonData ? (
+              <CircularProgress size="1.5rem" />
+            ) : (
+              "Create my account"
+            )}
           </Button>
         </div>
 
@@ -441,7 +458,7 @@ class FormMain extends Component {
           </div>
           <div className="login_to_signup">
             <span>Already have account ? </span>
-            <Typography variant="inherit" component={Link} to="/forgot">
+            <Typography variant="inherit" component={Link} to="/login">
               Sign in
             </Typography>
           </div>
@@ -545,4 +562,4 @@ export class Signup extends Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);

@@ -97,7 +97,7 @@ function Account() {
             history.push("/profile");
           }}
         >
-          <Typography variant="body2">My Profile</Typography>
+          {/* <Typography variant="body2">My Profile</Typography> */}
         </MenuItem>
         <MenuItem
           onClick={() => {

@@ -38,8 +38,9 @@ urlpatterns = [
 
     path('notes/', NotesView.as_view({'get': 'list'}), name='notes'),
     path('activateAccount/', ActivateAccount.as_view(), name="email activate"),
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', MyTokenRefreshView.as_view(), name='token_refresh'),
     path('getuserinfo/', Getuserinfo.as_view(), name="getuserinfo"),
-    path('token/verifytoken/', TokenVerifyView.as_view(), name='token_verify'),
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('logout/', LogoutView.as_view(), name="logout"),
 ]
