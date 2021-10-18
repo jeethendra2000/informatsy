@@ -110,16 +110,11 @@ class SignupSerializer(serializers.ModelSerializer):
         return value
 
 
-class alloauthBasic(serializers.ModelSerializer):
+class alloauthBasicProfile(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
 
-
-class alloauthExtendProfile(serializers.ModelSerializer):
-    class Meta:
-        model = UserProfile
-        fields = ('user', 'profile_picture')
 
 
 class CourseSerializer(serializers.ModelSerializer):

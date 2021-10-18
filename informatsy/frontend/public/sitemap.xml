@@ -1,47 +1,83 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
+<urlset xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-  <loc>https://informatsy.in/</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
+
+<loc>https://informatsy.in</loc>
+<priority>1.0</priority>
+
 </url>
 <url>
-  <loc>https://informatsy.in/resources</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
+
+<loc>https://informatsy.in/resources</loc>
+<priority>1.0</priority>
+
 </url>
 <url>
+
   <loc>https://informatsy.in/resources/syllabus</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
-</url>
-<url>
-  <loc>https://informatsy.in/resources/notes</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
-</url>
+<priority>1.0</priority>
 
+</url>
 <url>
+
+ <loc>https://informatsy.in/resources/notes</loc>
+<priority>1.0</priority>
+
+</url>
+<url>
+
   <loc>https://informatsy.in/resources/questionPapers</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
+<priority>1.0</priority>
+
 </url>
 <url>
-  <loc>https://informatsy.in/features</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
+
+<loc>https://informatsy.in/features</loc>
+<priority>1.0</priority>
+
 </url>
 <url>
-  <loc>https://informatsy.in/contact</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
+
+<loc>https://informatsy.in/contact</loc>
+<priority>1.0</priority>
+
 </url>
 <url>
-  <loc>https://informatsy.in/about</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
+
+<loc>https://informatsy.in/about</loc>
+<priority>1.0</priority>
+
 </url>
 <url>
-  <loc>https://informatsy.in/notifications</loc>
-  <lastmod>2021-10-09T12:11:46+00:00</lastmod>
+
+<loc>https://informatsy.in/notifications</loc>
+<priority>1.0</priority>
+
+</url>
+<url>
+
+ <loc>https://informatsy.in/login</loc>
+ <priority>1.0</priority>
+
+</url>
+<url>
+
+ <loc>https://informatsy.in/signup</loc>
+ <priority>1.0</priority>
+
+</url>
+<url>
+
+ <loc>https://informatsy.in/cookiePolicy</loc>
+ <priority>1.0</priority>
+
+</url>
+<url>
+
+ <loc>https://informatsy.in/privacyPolicy</loc>
+ <priority>1.0</priority>
+
 </url>
 </urlset>

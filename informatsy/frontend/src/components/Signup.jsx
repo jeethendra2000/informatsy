@@ -32,6 +32,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { LinkedIn } from "react-linkedin-login-oauth2";
 import EmailIcon from "@material-ui/icons/Email";
 import axios from "axios";
+import Cookies from "js-cookie";
 class FormMain extends Component {
   constructor(props) {
     super(props);
@@ -183,7 +184,23 @@ class FormMain extends Component {
         accesstoken: accesstoken,
         authProvider: authProvider,
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data.token.access);
+        Cookies.set("access_token", res.data.token.access, {
+          expires: 1 / 48,
+        });
+        Cookies.set("refresh_token", res.data.token.refresh, {
+          expires: 30,
+        });
+        this.setState({
+          alert: true,
+          alertContent: "Hurray! Account created redirecting...!",
+          alertMsg: "success",
+        });
+        setTimeout(() => {
+          window.location.href = `${process.env.React_App_FRONTEND}`;
+        }, 1000);
+      })
       .catch((err) => {
         console.log(err.response.data);
         this.setState({

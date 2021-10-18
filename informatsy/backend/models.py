@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 # Create your models here.
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.db.models.fields import CharField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from autoslug import AutoSlugField
@@ -24,8 +25,7 @@ class UserProfile(models.Model):
         User, primary_key=True, unique=True, on_delete=models.CASCADE)
     user_slug = AutoSlugField(populate_from='user', unique=True, null=True)
     profile_picture = models.ImageField(
-        upload_to='user_profiles', storage=gd_storage, default='user_profiles/default.png', blank=True)
-    
+        upload_to='user_profiles', storage=gd_storage, default='user_profiles/default.png', blank=True,)
     gender = models.CharField(max_length=20, choices=gender_choice, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=13, blank=True, null=True)

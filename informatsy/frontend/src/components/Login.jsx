@@ -79,7 +79,7 @@ class FormMain extends Component {
             expires: 1 / 48,
           });
           Cookies.set("refresh_token", res.data["refresh"], {
-            expires: 15,
+            expires: 30,
           });
           this.setState({
             alert: true,

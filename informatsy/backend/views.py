@@ -119,20 +119,23 @@ class SyllabusView(APIView):
 
 
 class AllOauthView(APIView):
-    def oauth_db_includer(data):
+    try:
+        def oauth_db_includer(data):
 
-        userObjects = User
-        userProfileObj = UserProfile
-        if userObjects.objects.filter(email=data["email"]):
-            return False
-        else:
-            oauthserilizersBasic = alloauthBasic(data=data)
-            oauthserilizersExtend = alloauthExtendProfile(data=data)
-            if oauthserilizersBasic.is_valid() and oauthserilizersExtend.is_valid():
-                oauthserilizersBasic.save()
-                oauthserilizersExtend.save()
-                return True
-            return Response("Something went wrong try again after sometime", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            userObjects = User
+            # userProfileObj = UserProfile
+            if userObjects.objects.filter(email=data["email"]):
+                return {"status": False}
+            else:
+                oauthserilizersBasic = alloauthBasicProfile(data=data)
+                if oauthserilizersBasic.is_valid():
+                    print("saved")
+                    user = oauthserilizersBasic.save()
+                    return {"status": True, "id": user}
+
+                return {"status": False}
+    except Exception as e:
+        print(e)
 
     def post(self, request):
         # print(request.data["accesstoken"])
@@ -143,10 +146,11 @@ class AllOauthView(APIView):
 
             if auth_status["status"]:
                 data = auth_status['res']
-                dbData = {"first_name": data["first_name"], "last_name": data["last_name"], "uniqueId": essentialClass.UniqueidGen.uniqueIdGenerator(
-                ), "userEmail": data["email"], "profileImg": data["picture"]["data"]["url"]}
+                dbData = {"first_name": data["first_name"], "last_name": data["last_name"], "uniqueId": essentialClass.UniqueidGen.uniqueIdGenerator(),
+                          "userEmail": data["email"], "profileImg": data["picture"]["data"]["url"]}
                 oathStatus = AllOauthView.oauth_db_includer(dbData)
-                return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus else Response("Your account is already created...!", status=status.HTTP_409_CONFLICT)
+                print(oathStatus['status'])
+                return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus['status'] else Response("Your account is already created please login...!", status=status.HTTP_409_CONFLICT)
 
             else:
                 return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
@@ -155,11 +159,21 @@ class AllOauthView(APIView):
                 request.data["accesstoken"])
             if auth_status["status"]:
                 data = auth_status['res']
-                dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "password": essentialClass.UniqueidGen.uniqueIdGenerator(
-                ), "email": data["email"], "profile_picture": data["picture"], "username": data['given_name']}
+                # print(data)
+                uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                    data["given_name"], data["family_name"])
+                dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "password": data['id'],
+                          "email": data["email"], "username": uniqueName, "user": uniqueName}
 
-                oathStatus = AllOauthView.oauth_db_includer(dbData)
-                return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus else Response("Your account is already created...!", status=status.HTTP_409_CONFLICT)
+                oauthStatus = AllOauthView.oauth_db_includer(dbData)
+                if oauthStatus['status']:
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        oauthStatus['id'])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+
+                return Response("Your account is already created please login...!",
+                                status=status.HTTP_409_CONFLICT)
 
             else:
                 return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
