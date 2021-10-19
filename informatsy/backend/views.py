@@ -146,11 +146,20 @@ class AllOauthView(APIView):
 
             if auth_status["status"]:
                 data = auth_status['res']
-                dbData = {"first_name": data["first_name"], "last_name": data["last_name"], "uniqueId": essentialClass.UniqueidGen.uniqueIdGenerator(),
-                          "userEmail": data["email"], "profileImg": data["picture"]["data"]["url"]}
-                oathStatus = AllOauthView.oauth_db_includer(dbData)
-                print(oathStatus['status'])
-                return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus['status'] else Response("Your account is already created please login...!", status=status.HTTP_409_CONFLICT)
+                print(data)
+                uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                    data["first_name"], data["last_name"])
+                dbData = {"first_name": data["first_name"], "last_name": data["last_name"], "user": uniqueName, "username": uniqueName,
+                          "email": data["email"], "password": data['id']}
+                oauthStatus = AllOauthView.oauth_db_includer(dbData)
+                if oauthStatus['status']:
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        oauthStatus['id'])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+
+                return Response("Your account is already created please login...!",
+                                status=status.HTTP_409_CONFLICT)
 
             else:
                 return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
@@ -169,7 +178,7 @@ class AllOauthView(APIView):
                 if oauthStatus['status']:
                     token = essentialClass.UniqueidGen.TokenGeneratorOauth(
                         oauthStatus['id'])
-                    print(token)
+                    # print(token)
                     return Response({"token": token}, status=status.HTTP_200_OK)
 
                 return Response("Your account is already created please login...!",
@@ -180,7 +189,27 @@ class AllOauthView(APIView):
         else:
             auth_status = authInstance.linkedInAuth(
                 request.data["accesstoken"])
-            return Response("User created successfully", status=status.HTTP_200_OK)
+            if auth_status['status']:
+                first_name = auth_status['profile_data']['firstName']['localized']['en_US']
+                last_name = auth_status['profile_data']['lastName']['localized']['en_US']
+                email = auth_status['email_info']['elements'][0]['handle~']['emailAddress']
+                id = auth_status['profile_data']['id']
+                print(first_name, last_name, email)
+                uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                    first_name, last_name)
+                dbData = {"first_name": first_name, "last_name": last_name, "password": id,
+                          "email": email, "username": uniqueName, "user": uniqueName}
+                oauthStatus = AllOauthView.oauth_db_includer(dbData)
+                if oauthStatus['status']:
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        oauthStatus['id'])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+
+                return Response("Your account is already created please login...!",
+                                status=status.HTTP_409_CONFLICT)
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
 
 
 class SignupView(APIView):

@@ -33,6 +33,8 @@ import { LinkedIn } from "react-linkedin-login-oauth2";
 import EmailIcon from "@material-ui/icons/Email";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { authAxios } from "../Authaxios";
+
 class FormMain extends Component {
   constructor(props) {
     super(props);
@@ -179,8 +181,9 @@ class FormMain extends Component {
       alert: false,
       alertContent: "",
     });
+
     axios
-      .post("http://127.0.0.1:8000/api/OauthAll/", {
+      .post(`${process.env.React_App_SERVER_API}/api/OauthAll/`, {
         accesstoken: accesstoken,
         authProvider: authProvider,
       })
@@ -406,9 +409,13 @@ class FormMain extends Component {
                 appId="527430968405690"
                 fields="name,email,picture"
                 onClick={(res) => console.log("facebook login")}
-                callback={(res) =>
-                  this.OathAccessToken("facebook", res.accessToken)
-                }
+                callback={(res) => {
+                  try {
+                    this.OathAccessToken("facebook", res.accessToken);
+                  } catch (e) {
+                    console.log("something went wrong");
+                  }
+                }}
                 redirectUri="http://localhost:3000/signup"
                 render={(renderProps) => (
                   <img
@@ -457,7 +464,10 @@ class FormMain extends Component {
               <LinkedIn
                 clientId="86xee9zpkumiiy"
                 onFailure={(res) => console.log(res)}
-                onSuccess={(res) => this.OathAccessToken("linkedIn", res.code)}
+                onSuccess={(res) => {
+                  console.log(res.code);
+                  this.OathAccessToken("linkedIn", res.code);
+                }}
                 redirectUri="http://localhost:3000/linkedin"
                 scope="r_liteprofile r_emailaddress"
                 renderElement={({ onClick, disabled }) => (
