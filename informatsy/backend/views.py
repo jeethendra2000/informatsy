@@ -246,17 +246,107 @@ class SignupView(APIView):
                 return Response(serializersWithUniqueid.errors.get(list(serializersWithUniqueid.errors.keys())[0])[0], status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-class Login(APIView):
+class Loginoauth(APIView):
     serializers_class = User
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        user = authenticate(
-            email=request.data['email'], password=request.data['password'])
-        if user is not None:
-            if user.is_active:
-                return Response('ok')
+        authInstance = oauthall.Alloauth()
+        if request.data["authProvider"] == "facebook":
+            auth_status = authInstance.facebookAuth(
+                request.data["accesstoken"])
+
+            if auth_status["status"]:
+                data = auth_status['res']
+                isUserexist = User.objects.filter(
+                    email=data['email']).all()
+                # user = isUserexist[0].id.values()
+                if isUserexist.exists():
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        isUserexist[0])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+                else:
+
+                    return Response("Account not registered with given credentials...!",
+                                    status=status.HTTP_409_CONFLICT)
+
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+        elif request.data["authProvider"] == "google":
+            auth_status = authInstance.googleAuth(
+                request.data["accesstoken"])
+            if auth_status["status"]:
+                data = auth_status['res']
+                isUserexist = User.objects.filter(
+                    email=data['email']).all()
+                # user = isUserexist[0].id.values()
+                if isUserexist.exists():
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        isUserexist[0])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+                else:
+
+                    return Response("Account not registered with given credentials...!",
+                                    status=status.HTTP_409_CONFLICT)
+
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+        else:
+            auth_status = authInstance.linkedInAuth(
+                request.data["accesstoken"])
+            if auth_status['status']:
+
+                email = auth_status['email_info']['elements'][0]['handle~']['emailAddress']
+                isUserexist = User.objects.filter(email=email).all()
+                # user = isUserexist[0].id.values()
+                if isUserexist.exists():
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        isUserexist[0])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+                else:
+
+                    return Response("Account not registered with given credentials...!",
+                                    status=status.HTTP_409_CONFLICT)
+
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+
+
+class Onetapgoogleauth(APIView):
+
+    def post(self, request):
+        data = request.data
+        dataObjects = User.objects.filter(email=data['email']).all()
+        if dataObjects.exists():
+            token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                dataObjects[0])
+            print(dataObjects[0].id)
+            user = UserProfile.objects.get(user_id=dataObjects[0].id)
+            data = {"profile_img": user.profile_picture.url,
+                    "name": user.user.username}
+            print(token)
+            return Response({"token": token, "data": data}, status=status.HTTP_200_OK)
+        else:
+            uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                data["given_name"], data["family_name"])
+            dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "password": data['iat'],
+                      "email": data["email"], "username": uniqueName, "user": uniqueName}
+            oauthStatus = AllOauthView.oauth_db_includer(dbData)
+            if oauthStatus['status']:
+                token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                    oauthStatus['id'])
+                print(token)
+                user = UserProfile.objects.get(user_id=oauthStatus['id'])
+                data = {"profile_img": user.profile_picture.url,
+                        "name": user.user.username}
+                return Response({"token": token, "data": data}, status=status.HTTP_200_OK)
+
+            return Response("Your account is already created please login...!",
+                            status=status.HTTP_409_CONFLICT)
 
 
 class CourseView(APIView):
@@ -341,8 +431,8 @@ class Getuserinfo(APIView):
             user = UserProfile.objects.get(user_id=payload['user_id'])
             data = {"profile_img": user.profile_picture.url,
                     "name": user.user.username}
-            print(user.profile_picture.url)
-            print(user.user.username)
+            # print(user.profile_picture.url)
+            # print(user.user.username)
             return Response(data)
         except:
             return Response("Not authenticated", status=status.HTTP_401_UNAUTHORIZED)

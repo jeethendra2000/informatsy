@@ -32,7 +32,8 @@ urlpatterns = [
 
     path('signup/', SignupView.as_view(), name="signup"),
     path('OauthAll/', AllOauthView.as_view(), name="OauthAll"),
-    path('login/', Login.as_view(), name="login"),
+    path('oauthLogin/', Loginoauth.as_view(), name="loginoauth"),
+    path('onetaplogin/', Onetapgoogleauth.as_view(), name="onetap login"),
     path('course/', CourseView.as_view(), name='course'),
     path('yearOrSem/', YearOrSemView.as_view(), name='yearOrSem'),
 

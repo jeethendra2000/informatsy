@@ -458,8 +458,7 @@ class FormMain extends Component {
             <IconButton
               aria-label="linkedIn"
               className="btn_sa"
-              component={Link}
-              to="/login"
+              
             >
               <LinkedIn
                 clientId="86xee9zpkumiiy"

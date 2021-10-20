@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,9 +18,8 @@ import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
 import ResourcePage from "./components/ResourcePage";
 import Syllabus from "./components/Syllabus";
-
+import { UserContext } from "./UserContexapi";
 import Signup from "./components/Signup";
-import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { LinkedInPopUp } from "react-linkedin-login-oauth2";
 import axios from "axios";
 import Notes from "./components/Notes";
@@ -32,6 +31,7 @@ import Features from "./components/layoutsComponent/Features";
 import ActivationPage from "./components/ActivateAccount";
 import MyProfile from "./components/profileComponents/MyProfile";
 import RouteChangeTracker from "./RouteChangeTracker";
+import Cookies from "js-cookie";
 
 // Custom theme of Informatsy
 const theme = createMuiTheme({
@@ -76,7 +76,7 @@ function App() {
   };
   const TRACKING_ID = "G-3CEZ1R6HBT";
   // Initialize Firebase
-
+ 
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
@@ -86,44 +86,19 @@ function App() {
     //     navigator.serviceWorker.register("./sw.js");
     //   });
     // }
+    
     ReactGA.initialize(TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   //init for google analytics
   // YOUR_OWN_TRACKING_ID
-
+  const user = React.useContext(UserContext);
   //------------handle for google sign in-------------
-  const handleGoogleSignIn = (response) => {
-    console.log(response);
-    // axios
-    // .post("http://127.0.0.1:8000/api/googleOAuth/", data)
-    // .then((res) => {
-    //   this.setState({
-    //     alert: true,
-    //     alertContent: res.statusText,
-    //     alertMsg: "success",
-    //   });
-    //   console.log(res);
-    // })
-  };
+  
 
   //-------------for google login automatic one tap--------------
-  useGoogleOneTapLogin({
-    onError: (error) => console.log(error),
-    onSuccess: (response) => handleGoogleSignIn(response),
 
-    googleAccountConfigs: {
-      client_id:
-        "688835578616-ck9sorb0vsutu23g1ghc6mmu6g6d8cdd.apps.googleusercontent.com",
-      ux_mode: "popup",
-      context: "use",
-      state_cookie_domain: "http://localhost",
-      native_callback: (response) => {
-        console.log(response);
-      },
-    },
-  });
 
   return (
     <div className="App">

@@ -91,14 +91,14 @@ function Account() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             handleClose();
             history.push("/profile");
           }}
         >
-          {/* <Typography variant="body2">My Profile</Typography> */}
-        </MenuItem>
+          <Typography variant="body2">My Profile</Typography>
+        </MenuItem> */}
         <MenuItem
           onClick={() => {
             handleClose();
