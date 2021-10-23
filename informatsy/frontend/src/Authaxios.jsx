@@ -80,15 +80,16 @@ authAxios.interceptors.response.use(
             .catch((err) => {
               // originalRequest._retry = true;
               console.log(err);
-              window.location.href = "/";
+              // window.location.href = "/";
+              console.log(err);
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
-          window.location.href = "/login/";
+          window.location.href = "/login";
         }
       } else {
         console.log("Refresh token not available.");
-        window.location.href = "/login/";
+        window.location.href = "/login";
       }
     }
 

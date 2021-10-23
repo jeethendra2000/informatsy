@@ -206,7 +206,7 @@ class FormMain extends Component {
           <Typography
             className="login_forgot_password"
             component={Link}
-            to="/forgot"
+            to="/accounts/forgot"
           >
             Forgot password
           </Typography>

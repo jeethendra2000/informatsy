@@ -32,7 +32,7 @@ import ActivationPage from "./components/ActivateAccount";
 import MyProfile from "./components/profileComponents/MyProfile";
 import RouteChangeTracker from "./RouteChangeTracker";
 import Cookies from "js-cookie";
-
+import ForgotPass from "./components/Forgot";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -76,7 +76,7 @@ function App() {
   };
   const TRACKING_ID = "G-3CEZ1R6HBT";
   // Initialize Firebase
- 
+
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
@@ -86,7 +86,7 @@ function App() {
     //     navigator.serviceWorker.register("./sw.js");
     //   });
     // }
-    
+
     ReactGA.initialize(TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
@@ -95,10 +95,8 @@ function App() {
   // YOUR_OWN_TRACKING_ID
   const user = React.useContext(UserContext);
   //------------handle for google sign in-------------
-  
 
   //-------------for google login automatic one tap--------------
-
 
   return (
     <div className="App">
@@ -113,12 +111,14 @@ function App() {
             <Route exact path="/popup" component={PopupAccount} />
             <Route exact path="/profile" component={MyProfile} />
             <Route exact path="/notifications" component={Notifications} />
+            <Route exact path="/accounts/forgot" component={ForgotPass} />
             <Navbar>
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/resources" component={ResourcePage} />
                 <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Route exact path="/resources/notes" component={Notes} />
+
                 <Route
                   exact
                   path="/resources/questionPapers"
@@ -127,7 +127,8 @@ function App() {
                 <Route exact path="/features" component={Features} />
                 <Route exact path="/contact" component={Contact} />
                 <Route exact path="/about" component={About} />
-                <Redirect to="/"> </Redirect>
+
+                {/* <Redirect to="/"> </Redirect> */}
               </Switch>
             </Navbar>
           </Switch>
