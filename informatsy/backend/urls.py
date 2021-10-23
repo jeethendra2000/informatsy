@@ -44,4 +44,6 @@ urlpatterns = [
     path('getuserinfo/', Getuserinfo.as_view(), name="getuserinfo"),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('logout/', LogoutView.as_view(), name="logout"),
+    path('accounts/forgotpass/', ForgotPasswordRequest.as_view(),
+         name="forgot password request")
 ]

@@ -6,6 +6,9 @@ from django.conf import settings
 from . serializers import *
 from django.core.mail import send_mail
 # creates SMTP session
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 class MailService:
@@ -21,3 +24,28 @@ class MailService:
         send_mail(subject, email_from, topic,
                   recipient_list, html_message=message)
         # terminating the sessio
+
+    def sendPasswordResetReq(data):
+        try:
+            passwordResetLink = f'{config("domain")}forgotPass/passwordReset/?token="{data["token"]}'
+            print(passwordResetLink)
+            emailto = data['email']
+            html_content = render_to_string("passwordresetrequest.html", {
+                                            'title': "Password reset request", 'name': data['name'], "passwordResetLink": passwordResetLink})
+            text_content = strip_tags(html_content)
+
+            email = EmailMultiAlternatives(
+                "Password recovery mail...!",
+                text_content,
+                "noreply@informatsy.in",
+                [emailto],
+                bcc=["noreply@informatsy.in"],
+                cc=['noreply@informatsy.in']
+
+            )
+
+            email.attach_alternative(html_content, "text/html")
+
+            email.send()
+        except Exception as e:
+            print(e)

@@ -454,6 +454,32 @@ class LogoutView(APIView):
         except:
             return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
 
+# forgot password request for users
+
+
+class ForgotPasswordRequest(APIView):
+    def post(self, request):
+        try:
+            data = request.data['data']
+            obj = re.compile(
+                "^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud|gov|nic)+[.]+(com|org|net|gov|mil|biz|info|mobi|in|name|aero|jobs|museum|co)+$")
+            if not re.search(obj, data):
+                # print("something wrong")
+                return Response("Email is not valid as per our domain", status=status.HTTP_400_BAD_REQUEST)
+            userObj = User.objects.filter(email=data).all()
+            # print(userObj[0].id)
+            Access = RefreshToken.for_user(userObj[0])
+            print(str(Access.access_token))
+            email = userObj[0].email
+            name = userObj[0].username
+            dataobj = {'email': email,
+                       'name': name, 'token': str(Access)}
+            mails.MailService.sendPasswordResetReq(dataobj)
+            return Response("ok")
+        except Exception as e:
+            print(e)
+            return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
