@@ -126,7 +126,7 @@ export default function Navbar({ children }) {
   //       Cookies.set("access_token", res.data.access, {
   //         expires: expires,
   //       });
-  //       console.log("got request");
+  //       //console.log("got request");
   //     })
   //     .catch((err) => {
   //       if (err.response.status) {
@@ -137,7 +137,7 @@ export default function Navbar({ children }) {
   // google oauth onetap login function
   const handleGoogleSignIn = (response) => {
     // console.log( response);
-    console.log("this is gone");
+    //console.log("this is gone");
 
     axios
       .post(`${process.env.React_App_SERVER_API}/api/onetaplogin/`, response)
@@ -149,7 +149,7 @@ export default function Navbar({ children }) {
         Cookies.set("refresh_token", res.data.token.refresh, {
           expires: 30,
         });
-        console.log("logged in");
+        //console.log("logged in");
         user.setUser({
           status: true,
           profile_img: res.data.data.profile_img,
@@ -157,7 +157,7 @@ export default function Navbar({ children }) {
         });
       })
       .catch((err) => {
-        console.log(err.response.data);
+        //console.log(err.response.data);
       });
   };
   useEffect(() => {
@@ -171,15 +171,15 @@ export default function Navbar({ children }) {
         setstatus(true);
         user.setUser({
           status: true,
-          profile_img: res.data.profile_img,
+          profile_img: res.data.profile_img === null ? res.data.name[0]: res.data.profile_img ,
           name: res.data.name,
         });
         setloading(false);
 
-        // console.log(user);
+        // //console.log(user);
       })
       .catch((err) => {
-        console.log(err.response);
+        //console.log(err.response);
         if (err.response) {
           axiosinfo
             .post(`token/refresh/`, {
@@ -201,7 +201,7 @@ export default function Navbar({ children }) {
                   setloading(false);
                 })
                 .catch((err) => {
-                  console.log("Can't get user info");
+                  //console.log("Can't get user info");
                   setstatus(false);
                   setloading(false);
                   user.setUser({ status: false, profile_img: "", name: "" });
@@ -231,8 +231,8 @@ export default function Navbar({ children }) {
 
       state_cookie_domain: `${process.env.React_App_FRONTEND}/`,
       native_callback: (response) => {
-        console.log("this is gone");
-        console.log(response);
+        //console.log("this is gone");
+        //console.log(response);
       },
     },
     "data-cancel_on_tap_outside": true,
