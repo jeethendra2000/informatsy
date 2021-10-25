@@ -45,5 +45,9 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('accounts/forgotpass/', ForgotPasswordRequest.as_view(),
-         name="forgot password request")
+         name="forgot password request"),
+    path('accounts/passwordValidator/', ForgotPasswordValidator.as_view(),
+         name="forgot password validator"),
+    path("accounts/password/change/",
+         ForgotPasswordResetForm.as_view(), name="password reset data")
 ]

@@ -33,6 +33,7 @@ import MyProfile from "./components/profileComponents/MyProfile";
 import RouteChangeTracker from "./RouteChangeTracker";
 import Cookies from "js-cookie";
 import ForgotPass from "./components/Forgot";
+import ResetPassword from "./components/ResetPassword";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -112,6 +113,11 @@ function App() {
             <Route exact path="/profile" component={MyProfile} />
             <Route exact path="/notifications" component={Notifications} />
             <Route exact path="/accounts/forgot" component={ForgotPass} />
+            <Route
+              exact
+              path="/accounts/resetpassword"
+              component={ResetPassword}
+            />
             <Navbar>
               <Switch>
                 <Route exact path="/" component={HomePage} />

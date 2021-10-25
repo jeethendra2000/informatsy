@@ -5,10 +5,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "./layoutsComponent/Navbar";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import { Fade } from "@material-ui/core";
 import { Button, Typography } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+
 import shadows from "@material-ui/core/styles/shadows";
 import { Link } from "react-router-dom";
 import { axiosinfo } from "../Authaxios";
@@ -37,10 +41,24 @@ const useStyles = makeStyles((theme) => ({
     shadows: "2px 2px 2px solid black",
   },
 }));
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 export default function Forgot() {
   const classes = useStyles();
   const [input, setInput] = React.useState("");
   const [inputstatus, setStatus] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [statement, setStatement] = React.useState("");
+  const [condition, setCondition] = React.useState("");
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   const changeSubmitStatus = (e) => {
     var reg =
       /^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud|gov|nic)+[.]+(com|org|net|gov|mil|biz|info|mobi|in|name|aero|jobs|museum|co)+$/;
@@ -51,11 +69,22 @@ export default function Forgot() {
     }
   };
   const handleRequest = () => {
+    setStatement("");
+    setCondition("");
+    setOpen(false);
     if (inputstatus) {
       axiosinfo
         .post("accounts/forgotpass/", { data: `${input}` })
-        .then((res) => console.log("Email sent to your account"))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          setOpen(true);
+          setCondition("success");
+          setStatement("link sent to your Email-address");
+        })
+        .catch((err) => {
+          setOpen(true);
+          setCondition("error");
+          setStatement(err.response.data);
+        });
     } else {
       alert("Please enter valid email");
     }
@@ -64,6 +93,20 @@ export default function Forgot() {
     <div className={classes.root}>
       <CssBaseline />
       <Container maxWidth="sm" align="center">
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          key={Fade}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Alert onClose={handleClose} id="alertgreen" severity={condition}>
+            {statement}
+          </Alert>
+        </Snackbar>
         <Grid
           container
           direction="column"

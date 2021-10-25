@@ -27,7 +27,7 @@ class MailService:
 
     def sendPasswordResetReq(data):
         try:
-            passwordResetLink = f'{config("domain")}forgotPass/passwordReset/?token="{data["token"]}'
+            passwordResetLink = f'{config("domain")}accounts/resetpassword?token={data["token"]}'
             print(passwordResetLink)
             emailto = data['email']
             html_content = render_to_string("passwordresetrequest.html", {

@@ -1,3 +1,4 @@
+from django.core import exceptions
 from django.middleware import csrf
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
@@ -467,18 +468,69 @@ class ForgotPasswordRequest(APIView):
                 # print("something wrong")
                 return Response("Email is not valid as per our domain", status=status.HTTP_400_BAD_REQUEST)
             userObj = User.objects.filter(email=data).all()
-            # print(userObj[0].id)
-            Access = RefreshToken.for_user(userObj[0])
-            print(str(Access.access_token))
-            email = userObj[0].email
-            name = userObj[0].username
-            dataobj = {'email': email,
-                       'name': name, 'token': str(Access)}
-            mails.MailService.sendPasswordResetReq(dataobj)
-            return Response("ok")
+            if userObj.exists():
+
+                # print(userObj[0].id)
+                Access = RefreshToken.for_user(userObj[0])
+                print(str(Access.access_token))
+                email = userObj[0].email
+                name = userObj[0].username
+                dataobj = {'email': email,
+                           'name': name, 'token': str(Access)}
+                mails.MailService.sendPasswordResetReq(dataobj)
+                return Response("ok")
+            else:
+                return Response("Email address is not yet registered", status=status.HTTP_409_CONFLICT)
         except Exception as e:
             print(e)
             return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+
+
+class ForgotPasswordResetForm(APIView):
+    def post(self, request):
+        try:
+            data = request.data
+
+            payload = jwt.decode(
+                data['token'], config('token_secret'), 'HS256')
+            user = User.objects.get(id=payload['user_id'])
+
+            if data['password'] == data['confirmPassword']:
+
+                if user.is_active:
+                    user.password = make_password(data['password'])
+                    user.save()
+                    # token = str(RefreshToken(str(data['token'])))
+                    # token.blacklist()
+                    return Response("Password reset successfully")
+                else:
+                    return Response("No active users found with email", status=status.HTTP_409_CONFLICT)
+            else:
+                return Response("Password and confirm password not matched", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        except jwt.ExpiredSignatureError:
+            return Response("Link is expired please raise a new request", status=status.HTTP_400_BAD_REQUEST)
+        except jwt.InvalidSignatureError:
+            return Response("This request not authorized by informatsy", status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(e, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class ForgotPasswordValidator(APIView):
+    def post(self, request):
+        try:
+
+            data = request.data
+            payload = jwt.decode(
+                data['token'], config('token_secret'), 'HS256')
+            if payload:
+                return Response("OK")
+            return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
+        except jwt.ExpiredSignatureError:
+            return Response("Link is expired please raise a new request", status=status.HTTP_400_BAD_REQUEST)
+        except jwt.InvalidSignatureError:
+            return Response("This request not authorized by informatsy", status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response("Something is missing you are not authenticated", status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
