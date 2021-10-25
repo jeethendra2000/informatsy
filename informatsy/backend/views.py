@@ -1,3 +1,4 @@
+from django.core import exceptions
 from django.middleware import csrf
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
@@ -119,20 +120,23 @@ class SyllabusView(APIView):
 
 
 class AllOauthView(APIView):
-    def oauth_db_includer(data):
+    try:
+        def oauth_db_includer(data):
 
-        userObjects = User
-        userProfileObj = UserProfile
-        if userObjects.objects.filter(email=data["email"]):
-            return False
-        else:
-            oauthserilizersBasic = alloauthBasic(data=data)
-            oauthserilizersExtend = alloauthExtendProfile(data=data)
-            if oauthserilizersBasic.is_valid() and oauthserilizersExtend.is_valid():
-                oauthserilizersBasic.save()
-                oauthserilizersExtend.save()
-                return True
-            return Response("Something went wrong try again after sometime", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            userObjects = User
+            # userProfileObj = UserProfile
+            if userObjects.objects.filter(email=data["email"]):
+                return {"status": False}
+            else:
+                oauthserilizersBasic = alloauthBasicProfile(data=data)
+                if oauthserilizersBasic.is_valid():
+                    print("saved")
+                    user = oauthserilizersBasic.save()
+                    return {"status": True, "id": user}
+
+                return {"status": False}
+    except Exception as e:
+        print(e)
 
     def post(self, request):
         # print(request.data["accesstoken"])
@@ -143,10 +147,20 @@ class AllOauthView(APIView):
 
             if auth_status["status"]:
                 data = auth_status['res']
-                dbData = {"first_name": data["first_name"], "last_name": data["last_name"], "uniqueId": essentialClass.UniqueidGen.uniqueIdGenerator(
-                ), "userEmail": data["email"], "profileImg": data["picture"]["data"]["url"]}
-                oathStatus = AllOauthView.oauth_db_includer(dbData)
-                return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus else Response("Your account is already created...!", status=status.HTTP_409_CONFLICT)
+                print(data)
+                uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                    data["first_name"], data["last_name"])
+                dbData = {"first_name": data["first_name"], "last_name": data["last_name"], "user": uniqueName, "username": uniqueName,
+                          "email": data["email"], "password": data['id']}
+                oauthStatus = AllOauthView.oauth_db_includer(dbData)
+                if oauthStatus['status']:
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        oauthStatus['id'])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+
+                return Response("Your account is already created please login...!",
+                                status=status.HTTP_409_CONFLICT)
 
             else:
                 return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
@@ -155,18 +169,48 @@ class AllOauthView(APIView):
                 request.data["accesstoken"])
             if auth_status["status"]:
                 data = auth_status['res']
-                dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "password": essentialClass.UniqueidGen.uniqueIdGenerator(
-                ), "email": data["email"], "profile_picture": data["picture"], "username": data['given_name']}
+                # print(data)
+                uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                    data["given_name"], data["family_name"])
+                dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "password": data['id'],
+                          "email": data["email"], "username": uniqueName, "user": uniqueName}
 
-                oathStatus = AllOauthView.oauth_db_includer(dbData)
-                return Response("User created successfully", status=status.HTTP_200_OK) if oathStatus else Response("Your account is already created...!", status=status.HTTP_409_CONFLICT)
+                oauthStatus = AllOauthView.oauth_db_includer(dbData)
+                if oauthStatus['status']:
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        oauthStatus['id'])
+                    # print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+
+                return Response("Your account is already created please login...!",
+                                status=status.HTTP_409_CONFLICT)
 
             else:
                 return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
         else:
             auth_status = authInstance.linkedInAuth(
                 request.data["accesstoken"])
-            return Response("User created successfully", status=status.HTTP_200_OK)
+            if auth_status['status']:
+                first_name = auth_status['profile_data']['firstName']['localized']['en_US']
+                last_name = auth_status['profile_data']['lastName']['localized']['en_US']
+                email = auth_status['email_info']['elements'][0]['handle~']['emailAddress']
+                id = auth_status['profile_data']['id']
+                print(first_name, last_name, email)
+                uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                    first_name, last_name)
+                dbData = {"first_name": first_name, "last_name": last_name, "password": id,
+                          "email": email, "username": uniqueName, "user": uniqueName}
+                oauthStatus = AllOauthView.oauth_db_includer(dbData)
+                if oauthStatus['status']:
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        oauthStatus['id'])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+
+                return Response("Your account is already created please login...!",
+                                status=status.HTTP_409_CONFLICT)
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
 
 
 class SignupView(APIView):
@@ -203,17 +247,107 @@ class SignupView(APIView):
                 return Response(serializersWithUniqueid.errors.get(list(serializersWithUniqueid.errors.keys())[0])[0], status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-class Login(APIView):
+class Loginoauth(APIView):
     serializers_class = User
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        user = authenticate(
-            email=request.data['email'], password=request.data['password'])
-        if user is not None:
-            if user.is_active:
-                return Response('ok')
+        authInstance = oauthall.Alloauth()
+        if request.data["authProvider"] == "facebook":
+            auth_status = authInstance.facebookAuth(
+                request.data["accesstoken"])
+
+            if auth_status["status"]:
+                data = auth_status['res']
+                isUserexist = User.objects.filter(
+                    email=data['email']).all()
+                # user = isUserexist[0].id.values()
+                if isUserexist.exists():
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        isUserexist[0])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+                else:
+
+                    return Response("Account not registered with given credentials...!",
+                                    status=status.HTTP_409_CONFLICT)
+
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+        elif request.data["authProvider"] == "google":
+            auth_status = authInstance.googleAuth(
+                request.data["accesstoken"])
+            if auth_status["status"]:
+                data = auth_status['res']
+                isUserexist = User.objects.filter(
+                    email=data['email']).all()
+                # user = isUserexist[0].id.values()
+                if isUserexist.exists():
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        isUserexist[0])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+                else:
+
+                    return Response("Account not registered with given credentials...!",
+                                    status=status.HTTP_409_CONFLICT)
+
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+        else:
+            auth_status = authInstance.linkedInAuth(
+                request.data["accesstoken"])
+            if auth_status['status']:
+
+                email = auth_status['email_info']['elements'][0]['handle~']['emailAddress']
+                isUserexist = User.objects.filter(email=email).all()
+                # user = isUserexist[0].id.values()
+                if isUserexist.exists():
+                    token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                        isUserexist[0])
+                    print(token)
+                    return Response({"token": token}, status=status.HTTP_200_OK)
+                else:
+
+                    return Response("Account not registered with given credentials...!",
+                                    status=status.HTTP_409_CONFLICT)
+
+            else:
+                return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+
+
+class Onetapgoogleauth(APIView):
+
+    def post(self, request):
+        data = request.data
+        dataObjects = User.objects.filter(email=data['email']).all()
+        if dataObjects.exists():
+            token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                dataObjects[0])
+            print(dataObjects[0].id)
+            user = UserProfile.objects.get(user_id=dataObjects[0].id)
+            data = {"profile_img": user.profile_picture.url,
+                    "name": user.user.username}
+            print(token)
+            return Response({"token": token, "data": data}, status=status.HTTP_200_OK)
+        else:
+            uniqueName = essentialClass.UniqueidGen.Uniquenamegenerator(
+                data["given_name"], data["family_name"])
+            dbData = {"first_name": data["given_name"], "last_name": data["family_name"], "password": data['iat'],
+                      "email": data["email"], "username": uniqueName, "user": uniqueName}
+            oauthStatus = AllOauthView.oauth_db_includer(dbData)
+            if oauthStatus['status']:
+                token = essentialClass.UniqueidGen.TokenGeneratorOauth(
+                    oauthStatus['id'])
+                print(token)
+                user = UserProfile.objects.get(user_id=oauthStatus['id'])
+                data = {"profile_img": user.profile_picture.url,
+                        "name": user.user.username}
+                return Response({"token": token, "data": data}, status=status.HTTP_200_OK)
+
+            return Response("Your account is already created please login...!",
+                            status=status.HTTP_409_CONFLICT)
 
 
 class CourseView(APIView):
@@ -298,8 +432,8 @@ class Getuserinfo(APIView):
             user = UserProfile.objects.get(user_id=payload['user_id'])
             data = {"profile_img": user.profile_picture.url,
                     "name": user.user.username}
-            print(user.profile_picture.url)
-            print(user.user.username)
+            # print(user.profile_picture.url)
+            # print(user.user.username)
             return Response(data)
         except:
             return Response("Not authenticated", status=status.HTTP_401_UNAUTHORIZED)
@@ -320,6 +454,83 @@ class LogoutView(APIView):
             return Response("ok")
         except:
             return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+
+# forgot password request for users
+
+
+class ForgotPasswordRequest(APIView):
+    def post(self, request):
+        try:
+            data = request.data['data']
+            obj = re.compile(
+                "^[A-Z,a-z,0-9,?./""-]+@(gmail|outlook|yahoo|icloud|gov|nic)+[.]+(com|org|net|gov|mil|biz|info|mobi|in|name|aero|jobs|museum|co)+$")
+            if not re.search(obj, data):
+                # print("something wrong")
+                return Response("Email is not valid as per our domain", status=status.HTTP_400_BAD_REQUEST)
+            userObj = User.objects.filter(email=data).all()
+            if userObj.exists():
+
+                # print(userObj[0].id)
+                Access = RefreshToken.for_user(userObj[0])
+                print(str(Access.access_token))
+                email = userObj[0].email
+                name = userObj[0].username
+                dataobj = {'email': email,
+                           'name': name, 'token': str(Access)}
+                mails.MailService.sendPasswordResetReq(dataobj)
+                return Response("ok")
+            else:
+                return Response("Email address is not yet registered", status=status.HTTP_409_CONFLICT)
+        except Exception as e:
+            print(e)
+            return Response("Something went wrong", status=status.HTTP_409_CONFLICT)
+
+
+class ForgotPasswordResetForm(APIView):
+    def post(self, request):
+        try:
+            data = request.data
+
+            payload = jwt.decode(
+                data['token'], config('token_secret'), 'HS256')
+            user = User.objects.get(id=payload['user_id'])
+
+            if data['password'] == data['confirmPassword']:
+
+                if user.is_active:
+                    user.password = make_password(data['password'])
+                    user.save()
+                    # token = str(RefreshToken(str(data['token'])))
+                    # token.blacklist()
+                    return Response("Password reset successfully")
+                else:
+                    return Response("No active users found with email", status=status.HTTP_409_CONFLICT)
+            else:
+                return Response("Password and confirm password not matched", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        except jwt.ExpiredSignatureError:
+            return Response("Link is expired please raise a new request", status=status.HTTP_400_BAD_REQUEST)
+        except jwt.InvalidSignatureError:
+            return Response("This request not authorized by informatsy", status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(e, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class ForgotPasswordValidator(APIView):
+    def post(self, request):
+        try:
+
+            data = request.data
+            payload = jwt.decode(
+                data['token'], config('token_secret'), 'HS256')
+            if payload:
+                return Response("OK")
+            return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
+        except jwt.ExpiredSignatureError:
+            return Response("Link is expired please raise a new request", status=status.HTTP_400_BAD_REQUEST)
+        except jwt.InvalidSignatureError:
+            return Response("This request not authorized by informatsy", status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response("Something is missing you are not authenticated", status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class MyTokenObtainPairView(TokenObtainPairView):

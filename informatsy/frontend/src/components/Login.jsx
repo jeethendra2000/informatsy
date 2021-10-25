@@ -17,6 +17,9 @@ import "../css/Login.css";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import { StepButton, Typography } from "@material-ui/core";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { LinkedIn } from "react-linkedin-login-oauth2";
 import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Cookies from "js-cookie";
@@ -79,7 +82,7 @@ class FormMain extends Component {
             expires: 1 / 48,
           });
           Cookies.set("refresh_token", res.data["refresh"], {
-            expires: 15,
+            expires: 30,
           });
           this.setState({
             alert: true,
@@ -106,10 +109,55 @@ class FormMain extends Component {
       });
     }
   };
+  // function for the oauth of login
+  OathAccessToken(authProvider, accesstoken) {
+    console.log(accesstoken.accessToken);
+    this.setState({
+      alert: false,
+      alertContent: "",
+    });
+
+    axios
+      .post(`${process.env.React_App_SERVER_API}/api/oauthLogin/`, {
+        accesstoken: accesstoken,
+        authProvider: authProvider,
+      })
+      .then((res) => {
+        console.log(res.data.token.access);
+        Cookies.set("access_token", res.data.token.access, {
+          expires: 1 / 48,
+        });
+        Cookies.set("refresh_token", res.data.token.refresh, {
+          expires: 30,
+        });
+        this.setState({
+          alert: true,
+          alertContent: "Welocome to informatsy! redirecting...!",
+          alertMsg: "success",
+        });
+        setTimeout(() => {
+          window.location.href = `${process.env.React_App_FRONTEND}`;
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        this.setState({
+          alert: true,
+          alertContent: err.response.data,
+          alertMsg: "error",
+        });
+      });
+  }
+
   render() {
     const img_size = 30;
     const style = { color: "grey", lineHeight: "55px" };
-
+    const extendedStyles = {
+      color: "grey",
+      position: "absolute",
+      left: "75%",
+      top: "0",
+    };
     return (
       <>
         <Alert
@@ -134,20 +182,31 @@ class FormMain extends Component {
                 returnValue={this.setUsername}
               />
             </div>
-            <div className="forms_content2">
+            <div className="forms_content2" style={{ position: "relative" }}>
               <Input
                 name="Password"
                 classname="two"
-                type="password"
+                type={this.state.showPassword ? "text" : "password"}
                 component={<LockOpenRoundedIcon style={style} />}
                 returnValue={this.setPassword}
               />
+              <IconButton
+                aria-label="lock"
+                style={extendedStyles}
+                onClick={() => {
+                  this.setState({
+                    showPassword: !this.state.showPassword,
+                  });
+                }}
+              >
+                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
             </div>
           </div>
           <Typography
             className="login_forgot_password"
             component={Link}
-            to="/forgot"
+            to="/accounts/forgot"
           >
             Forgot password
           </Typography>
@@ -178,43 +237,74 @@ class FormMain extends Component {
           <div className="login_bottom_main">
             <p>or via social media</p>
             <div className="social_acc">
-              <IconButton
-                aria-label="facebook"
-                className="btn_sa"
-                component={Link}
-                to="/login"
-              >
-                <img
-                  src={fb_icon}
-                  alt="facebook"
-                  width={img_size}
-                  height={img_size}
+              <IconButton aria-label="facebook" className="btn_sa">
+                <FacebookLogin
+                  appId="527430968405690"
+                  fields="name,email,picture"
+                  onClick={(res) => console.log("facebook login")}
+                  callback={(res) => {
+                    try {
+                      this.OathAccessToken("facebook", res.accessToken);
+                    } catch (e) {
+                      console.log("something went wrong");
+                    }
+                  }}
+                  redirectUri="http://localhost:3000/signup"
+                  render={(renderProps) => (
+                    <img
+                      src={fb_icon}
+                      alt="facebook"
+                      width={img_size}
+                      height={img_size}
+                      onClick={renderProps.onClick}
+                    />
+                  )}
                 />
               </IconButton>
-              <IconButton
-                className="btn_sa"
-                aria-label="google"
-                component={Link}
-                to="/login"
-              >
-                <img
-                  src={g_icon}
-                  alt="google"
-                  width={img_size}
-                  height={img_size}
+              <IconButton className="btn_sa" aria-label="google">
+                <GoogleLogin
+                  clientId="688835578616-ck9sorb0vsutu23g1ghc6mmu6g6d8cdd.apps.googleusercontent.com"
+                  render={(renderProps) => (
+                    <img
+                      src={g_icon}
+                      alt="google"
+                      width={img_size}
+                      height={img_size}
+                      onClick={renderProps.onClick}
+                    />
+                  )}
+                  onSuccess={(response) =>
+                    this.OathAccessToken(
+                      "google",
+                      response.tokenObj.access_token
+                    )
+                  }
+                  onFailure={(response) => {
+                    console.log(response);
+                  }}
+                  cookiePolicy={"single_host_origin"}
                 />
               </IconButton>
-              <IconButton
-                aria-label="linkedIn"
-                className="btn_sa"
-                component={Link}
-                to="/login"
-              >
-                <img
-                  src={li_icon}
-                  alt="linkedIn"
-                  width={img_size + 3}
-                  height={img_size + 3}
+              <IconButton aria-label="linkedIn" className="btn_sa">
+                <LinkedIn
+                  clientId="86xee9zpkumiiy"
+                  onFailure={(res) => console.log(res)}
+                  onSuccess={(res) => {
+                    console.log(res.code);
+                    this.OathAccessToken("linkedIn", res.code);
+                  }}
+                  redirectUri="http://localhost:3000/linkedin"
+                  scope="r_liteprofile r_emailaddress"
+                  renderElement={({ onClick, disabled }) => (
+                    <img
+                      src={li_icon}
+                      alt="linkedIn"
+                      width={img_size + 3}
+                      height={img_size + 3}
+                      onClick={onClick}
+                      disabled={disabled}
+                    />
+                  )}
                 />
               </IconButton>
             </div>

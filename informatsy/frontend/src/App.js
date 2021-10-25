@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,9 +18,8 @@ import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
 import ResourcePage from "./components/ResourcePage";
 import Syllabus from "./components/Syllabus";
-
+import { UserContext } from "./UserContexapi";
 import Signup from "./components/Signup";
-import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { LinkedInPopUp } from "react-linkedin-login-oauth2";
 import axios from "axios";
 import Notes from "./components/Notes";
@@ -32,7 +31,9 @@ import Features from "./components/layoutsComponent/Features";
 import ActivationPage from "./components/ActivateAccount";
 import MyProfile from "./components/profileComponents/MyProfile";
 import RouteChangeTracker from "./RouteChangeTracker";
-
+import Cookies from "js-cookie";
+import ForgotPass from "./components/Forgot";
+import ResetPassword from "./components/ResetPassword";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -80,56 +81,29 @@ function App() {
   useEffect(() => {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    if ("serviceWorker" in navigator) {
-      console.log("registered");
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js");
-      });
-    }
+    // if ("serviceWorker" in navigator) {
+    //   console.log("registered");
+    //   window.addEventListener("load", () => {
+    //     navigator.serviceWorker.register("./sw.js");
+    //   });
+    // }
+
     ReactGA.initialize(TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   //init for google analytics
   // YOUR_OWN_TRACKING_ID
-
+  const user = React.useContext(UserContext);
   //------------handle for google sign in-------------
-  const handleGoogleSignIn = (response) => {
-    console.log(response);
-    // axios
-    // .post("http://127.0.0.1:8000/api/googleOAuth/", data)
-    // .then((res) => {
-    //   this.setState({
-    //     alert: true,
-    //     alertContent: res.statusText,
-    //     alertMsg: "success",
-    //   });
-    //   console.log(res);
-    // })
-  };
 
   //-------------for google login automatic one tap--------------
-  useGoogleOneTapLogin({
-    onError: (error) => console.log(error),
-    onSuccess: (response) => handleGoogleSignIn(response),
-
-    googleAccountConfigs: {
-      client_id:
-        "688835578616-ck9sorb0vsutu23g1ghc6mmu6g6d8cdd.apps.googleusercontent.com",
-      ux_mode: "popup",
-      context: "use",
-      state_cookie_domain: "http://localhost",
-      native_callback: (response) => {
-        console.log(response);
-      },
-    },
-  });
 
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
-          {/* <RouteChangeTracker /> */}
+          <RouteChangeTracker />
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
@@ -138,12 +112,19 @@ function App() {
             <Route exact path="/popup" component={PopupAccount} />
             <Route exact path="/profile" component={MyProfile} />
             <Route exact path="/notifications" component={Notifications} />
+            <Route exact path="/accounts/forgot" component={ForgotPass} />
+            <Route
+              exact
+              path="/accounts/resetpassword"
+              component={ResetPassword}
+            />
             <Navbar>
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/resources" component={ResourcePage} />
                 <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Route exact path="/resources/notes" component={Notes} />
+
                 <Route
                   exact
                   path="/resources/questionPapers"
@@ -152,7 +133,8 @@ function App() {
                 <Route exact path="/features" component={Features} />
                 <Route exact path="/contact" component={Contact} />
                 <Route exact path="/about" component={About} />
-                <Redirect to="/"> </Redirect>
+
+                {/* <Redirect to="/"> </Redirect> */}
               </Switch>
             </Navbar>
           </Switch>

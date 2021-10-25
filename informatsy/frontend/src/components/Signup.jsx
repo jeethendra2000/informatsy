@@ -32,6 +32,9 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { LinkedIn } from "react-linkedin-login-oauth2";
 import EmailIcon from "@material-ui/icons/Email";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { authAxios } from "../Authaxios";
+
 class FormMain extends Component {
   constructor(props) {
     super(props);
@@ -178,12 +181,29 @@ class FormMain extends Component {
       alert: false,
       alertContent: "",
     });
+
     axios
-      .post("http://127.0.0.1:8000/api/OauthAll/", {
+      .post(`${process.env.React_App_SERVER_API}/api/OauthAll/`, {
         accesstoken: accesstoken,
         authProvider: authProvider,
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data.token.access);
+        Cookies.set("access_token", res.data.token.access, {
+          expires: 1 / 48,
+        });
+        Cookies.set("refresh_token", res.data.token.refresh, {
+          expires: 30,
+        });
+        this.setState({
+          alert: true,
+          alertContent: "Hurray! Account created redirecting...!",
+          alertMsg: "success",
+        });
+        setTimeout(() => {
+          window.location.href = `${process.env.React_App_FRONTEND}`;
+        }, 1000);
+      })
       .catch((err) => {
         console.log(err.response.data);
         this.setState({
@@ -389,9 +409,13 @@ class FormMain extends Component {
                 appId="527430968405690"
                 fields="name,email,picture"
                 onClick={(res) => console.log("facebook login")}
-                callback={(res) =>
-                  this.OathAccessToken("facebook", res.accessToken)
-                }
+                callback={(res) => {
+                  try {
+                    this.OathAccessToken("facebook", res.accessToken);
+                  } catch (e) {
+                    console.log("something went wrong");
+                  }
+                }}
                 redirectUri="http://localhost:3000/signup"
                 render={(renderProps) => (
                   <img
@@ -434,13 +458,15 @@ class FormMain extends Component {
             <IconButton
               aria-label="linkedIn"
               className="btn_sa"
-              component={Link}
-              to="/login"
+              
             >
               <LinkedIn
                 clientId="86xee9zpkumiiy"
                 onFailure={(res) => console.log(res)}
-                onSuccess={(res) => this.OathAccessToken("linkedIn", res.code)}
+                onSuccess={(res) => {
+                  console.log(res.code);
+                  this.OathAccessToken("linkedIn", res.code);
+                }}
                 redirectUri="http://localhost:3000/linkedin"
                 scope="r_liteprofile r_emailaddress"
                 renderElement={({ onClick, disabled }) => (

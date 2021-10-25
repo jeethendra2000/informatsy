@@ -1,10 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 export const access_token = Cookies.get("access_token");
+// import { UserContext } from "./UserContexapi"
+
 export const refresh_token = Cookies.get("refresh_token");
 export const authAxios = axios.create({
   baseURL: `${process.env.React_App_SERVER_API}/api/`,
-  timeout: 6000,
   headers: {
     accept: "application/json",
   },
@@ -33,10 +34,10 @@ authAxios.interceptors.response.use(
     const originalRequest = error.config;
 
     if (typeof error.response === "undefined") {
-      alert(
-        "A server/network error occurred.check your's active internet connection"
-      );
-
+      // alert(
+      //   "A server/network error occurred.check your's active internet connection"
+      // );
+      console.log("network error");
       return Promise.reject(error);
     }
 
@@ -53,7 +54,7 @@ authAxios.interceptors.response.use(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-      const refreshToken = refresh_token;
+      const refreshToken = Cookies.get("refresh_token");
 
       if (refreshToken) {
         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
@@ -79,15 +80,16 @@ authAxios.interceptors.response.use(
             .catch((err) => {
               // originalRequest._retry = true;
               console.log(err);
-              window.location.href = "/";
+              // window.location.href = "/";
+              console.log(err);
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
-          window.location.href = "/login/";
+          window.location.href = "/login";
         }
       } else {
         console.log("Refresh token not available.");
-        window.location.href = "/login/";
+        window.location.href = "/login";
       }
     }
 

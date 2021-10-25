@@ -6,6 +6,8 @@ import Chip from "@material-ui/core/Chip";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import axios from "axios";
+import { authAxios } from "../../Authaxios";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   chip: {
@@ -43,6 +45,15 @@ const useStyles = makeStyles(() => ({
       boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
     },
   },
+  loader: {
+    height: "50vh",
+  },
+  loaderProgress: {
+    position: "absolute",
+    left: "50%",
+    top: "30%",
+    transform: "translate(-50%,-50%)",
+  },
 }));
 
 export default function FilterMenu({
@@ -61,6 +72,7 @@ export default function FilterMenu({
     defaultSelectedYearOrSem
   );
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [yearOrSems, setYearOrSems] = useState([]);
 
   const clear = () => {
@@ -74,16 +86,18 @@ export default function FilterMenu({
   };
 
   useEffect(() => {
-    axios.get("https://informatsy.pythonanywhere.com/api/course/").then((res) => {
+    authAxios.get(`course/`).then((res) => {
       const data = res.data;
       setCourses(data);
+      setLoading(false);
     });
-    axios.get("https://informatsy.pythonanywhere.com/api/yearOrSem/").then((res) => {
+    authAxios.get(`yearOrSem/`).then((res) => {
       const data = res.data;
       setYearOrSems(data);
+      setLoading(false);
     });
   }, []);
-  return (
+  return !loading ? (
     <div>
       <Box bgcolor="#F8F8F8">
         <Box py={1}>
@@ -232,6 +246,12 @@ export default function FilterMenu({
           </Container>
         </Box>
       </Box>
+    </div>
+  ) : (
+    <div className={classes.loader}>
+      <span className={classes.loaderProgress}>
+        <CircularProgress size="2rem" />
+      </span>
     </div>
   );
 }

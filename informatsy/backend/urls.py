@@ -32,7 +32,8 @@ urlpatterns = [
 
     path('signup/', SignupView.as_view(), name="signup"),
     path('OauthAll/', AllOauthView.as_view(), name="OauthAll"),
-    path('login/', Login.as_view(), name="login"),
+    path('oauthLogin/', Loginoauth.as_view(), name="loginoauth"),
+    path('onetaplogin/', Onetapgoogleauth.as_view(), name="onetap login"),
     path('course/', CourseView.as_view(), name='course'),
     path('yearOrSem/', YearOrSemView.as_view(), name='yearOrSem'),
 
@@ -43,4 +44,10 @@ urlpatterns = [
     path('getuserinfo/', Getuserinfo.as_view(), name="getuserinfo"),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('logout/', LogoutView.as_view(), name="logout"),
+    path('accounts/forgotpass/', ForgotPasswordRequest.as_view(),
+         name="forgot password request"),
+    path('accounts/passwordValidator/', ForgotPasswordValidator.as_view(),
+         name="forgot password validator"),
+    path("accounts/password/change/",
+         ForgotPasswordResetForm.as_view(), name="password reset data")
 ]

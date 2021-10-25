@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Footer from "./Footer";
 import Account from "./Account";
 import Sidebar from "./Sidebar";
+import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 // import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
@@ -30,6 +31,7 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
+import axios from "axios";
 // import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -95,9 +97,10 @@ const useStyles = makeStyles((theme) => ({
   },
   loaderdesk: {
     // marginTop: "0.5rem",
-    display:"flex",
-    justifyContent:"center",
-    alignSelf:'center',alignContent:'center'
+    display: "flex",
+    justifyContent: "center",
+    alignSelf: "center",
+    alignContent: "center",
   },
 }));
 
@@ -106,6 +109,7 @@ export default function Navbar({ children }) {
   const history = useHistory();
   const location = useLocation();
   const [loading, setloading] = useState(true);
+  const [onetapstatus, setstatus] = useState(false);
   const user = React.useContext(UserContext);
   // const user = {
   //   status: false,
@@ -130,6 +134,32 @@ export default function Navbar({ children }) {
   //       }
   //     });
   // };
+  // google oauth onetap login function
+  const handleGoogleSignIn = (response) => {
+    // console.log( response);
+    console.log("this is gone");
+
+    axios
+      .post(`${process.env.React_App_SERVER_API}/api/onetaplogin/`, response)
+      .then((res) => {
+        console.log(res.data.token.access);
+        Cookies.set("access_token", res.data.token.access, {
+          expires: 1 / 48,
+        });
+        Cookies.set("refresh_token", res.data.token.refresh, {
+          expires: 30,
+        });
+        console.log("logged in");
+        user.setUser({
+          status: true,
+          profile_img: res.data.data.profile_img,
+          name: res.data.data.name,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
   useEffect(() => {
     // console.log(user.user.status);
     //-----------progress event in axios--------------
@@ -137,13 +167,14 @@ export default function Navbar({ children }) {
     authAxios
       .get(`getuserinfo/`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        setstatus(true);
         user.setUser({
           status: true,
           profile_img: res.data.profile_img,
           name: res.data.name,
         });
-        setloading(false)
+        setloading(false);
 
         // console.log(user);
       })
@@ -155,6 +186,7 @@ export default function Navbar({ children }) {
               refresh: Cookies.get("refresh_token"),
             })
             .then((res) => {
+              setstatus(true);
               Cookies.set("access_token", res.data.access, {
                 expires: expires,
               });
@@ -166,17 +198,18 @@ export default function Navbar({ children }) {
                     profile_img: res.data.profile_img,
                     name: res.data.name,
                   });
-                  setloading(false)
+                  setloading(false);
                 })
                 .catch((err) => {
                   console.log("Can't get user info");
-                  setloading(false)
+                  setstatus(false);
+                  setloading(false);
                   user.setUser({ status: false, profile_img: "", name: "" });
                 });
             })
             .catch((err) => {
               history.push("/");
-              setloading(false)
+              setloading(false);
               user.setUser({ status: false, profile_img: "", name: "" });
               // if (err.response.status === 401) {
               // }
@@ -184,6 +217,26 @@ export default function Navbar({ children }) {
         }
       });
   }, []);
+
+  useGoogleOneTapLogin({
+    onError: (error) => console.log(error),
+    onSuccess: (response) => handleGoogleSignIn(response),
+
+    disabled: onetapstatus,
+    googleAccountConfigs: {
+      client_id:
+        "688835578616-ck9sorb0vsutu23g1ghc6mmu6g6d8cdd.apps.googleusercontent.com",
+      ux_mode: "popup",
+      context: "use",
+
+      state_cookie_domain: `${process.env.React_App_FRONTEND}/`,
+      native_callback: (response) => {
+        console.log("this is gone");
+        console.log(response);
+      },
+    },
+    "data-cancel_on_tap_outside": true,
+  });
 
   const menuItems = [
     { title: "Home", logo: "HomeIcon", path: "/" },
@@ -288,7 +341,11 @@ export default function Navbar({ children }) {
                     <Account />
                   ) : (
                     <span className={classes.loaderdesk}>
-                      <CircularProgress thickness="3" size="2rem" color = "secondary"/>
+                      <CircularProgress
+                        thickness="3"
+                        size="2rem"
+                        color="secondary"
+                      />
                     </span>
                   )
                 ) : !loading ? (
@@ -304,7 +361,11 @@ export default function Navbar({ children }) {
                   </Button>
                 ) : (
                   <span className={classes.loaderdesk}>
-                    <CircularProgress thickness="3" size="2rem" color = "secondary"/>
+                    <CircularProgress
+                      thickness="3"
+                      size="2rem"
+                      color="secondary"
+                    />
                   </span>
                 )}
               </div>

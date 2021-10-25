@@ -1,3 +1,4 @@
+import json
 import requests
 from requests.api import head
 from decouple import config
@@ -25,12 +26,20 @@ class Alloauth:
 
     def linkedInAuth(self, code):
         accessToken_url = f"https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&client_id={config('linkedIn_client_id')}&client_secret={config('linkedIn_client_secret')}&code={code}&redirect_uri={config('linkedIn_redirect_uri')}"
-        accesstoken = requests.get(accessToken_url)
-        print(accesstoken.json())
+        accesstoken = requests.get(accessToken_url).json()
+        print(accesstoken)
         try:
+            data = {}
             if accesstoken["access_token"] != "":
                 response_info = requests.get(
-                    "https://api.linkedin.com/v2/me?oauth2_access_token="+accesstoken["access_token"])
-                print(response_info.json())
-        except:
-            print("something wrong")
+                    "https://api.linkedin.com/v2/me?projection=(id,firstName,lastName)&oauth2_access_token="+accesstoken["access_token"]).json()
+                print(response_info)
+                emailAddress = requests.get(
+                    "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token="+accesstoken['access_token']).json()
+            data = {"status": True, "profile_data": response_info,
+                    "email_info": emailAddress}
+            print(emailAddress)
+            return data
+        except Exception as e:
+            return {"status": False}
+            print("something went wrong")
