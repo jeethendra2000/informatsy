@@ -12,6 +12,8 @@ import Alert from "../components/AlertBar";
 import fb_icon from "../Assets/fb-img.png";
 import g_icon from "../Assets/google-img.png";
 import li_icon from "../Assets/linkedin_logo.webp";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
 import Input from "../components/Input";
 import "../css/Login.css";
 import PersonRoundedIcon from "@material-ui/icons/PersonRounded";
@@ -21,7 +23,6 @@ import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { LinkedIn } from "react-linkedin-login-oauth2";
 import axios from "axios";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router";
 class FormMain extends Component {
@@ -36,6 +37,7 @@ class FormMain extends Component {
       isSubmit: false,
       alert: false,
       alertContent: "",
+      loading: false,
       alertMsg: "",
       buttonData: false,
     };
@@ -115,6 +117,7 @@ class FormMain extends Component {
     this.setState({
       alert: false,
       alertContent: "",
+      loading: true,
     });
 
     axios
@@ -131,6 +134,7 @@ class FormMain extends Component {
           expires: 30,
         });
         this.setState({
+          loading: false,
           alert: true,
           alertContent: "Welocome to informatsy! redirecting...!",
           alertMsg: "success",
@@ -142,6 +146,7 @@ class FormMain extends Component {
       .catch((err) => {
         console.log(err.response.data);
         this.setState({
+          loading: false,
           alert: true,
           alertContent: err.response.data,
           alertMsg: "error",
@@ -167,6 +172,12 @@ class FormMain extends Component {
             msgContent: this.state.alertContent,
           }}
         />
+        <Backdrop
+          open={this.state.loading}
+          style={{ zIndex: "999", color: "#fff" }}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <div className="login_child">
           <div className="top_tag">
             <h2>Welcome!</h2>
