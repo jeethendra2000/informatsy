@@ -19,6 +19,7 @@ import li_icon from "../Assets/linkedin_logo.webp";
 import Input from "../components/Input";
 import Loader from "../components/Loaders";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
 import "../css/Login.css";
 import { useLocation } from "react-router-dom";
 // import { Snackbar } from "@material-ui/core";
@@ -49,7 +50,7 @@ class FormMain extends Component {
       isPassword: false,
       confirmPassword: "",
       ispassConfirm: false,
-
+      loading: false,
       ischeck: false,
       alert: false,
       alertContent: "",
@@ -180,6 +181,7 @@ class FormMain extends Component {
     this.setState({
       alert: false,
       alertContent: "",
+      loading: true,
     });
 
     axios
@@ -189,6 +191,7 @@ class FormMain extends Component {
       })
       .then((res) => {
         console.log(res.data.token.access);
+
         Cookies.set("access_token", res.data.token.access, {
           expires: 1 / 48,
         });
@@ -199,6 +202,7 @@ class FormMain extends Component {
           alert: true,
           alertContent: "Hurray! Account created redirecting...!",
           alertMsg: "success",
+          loading: false,
         });
         setTimeout(() => {
           window.location.href = `${process.env.React_App_FRONTEND}`;
@@ -210,6 +214,7 @@ class FormMain extends Component {
           alert: true,
           alertContent: err.response.data,
           alertMsg: "error",
+          loading: false,
         });
       });
   }
@@ -231,6 +236,12 @@ class FormMain extends Component {
 
     return (
       <>
+        <Backdrop
+          open={this.state.loading}
+          style={{ zIndex: "999", color: "#fff" }}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         {/* two showing alert  we also specify height where we can be placed that alert*/}
         <Alert
           content={{
@@ -455,11 +466,7 @@ class FormMain extends Component {
                 cookiePolicy={"single_host_origin"}
               />
             </IconButton>
-            <IconButton
-              aria-label="linkedIn"
-              className="btn_sa"
-              
-            >
+            <IconButton aria-label="linkedIn" className="btn_sa">
               <LinkedIn
                 clientId="86xee9zpkumiiy"
                 onFailure={(res) => console.log(res)}

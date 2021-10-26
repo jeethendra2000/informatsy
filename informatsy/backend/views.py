@@ -400,8 +400,8 @@ class ActivateAccount(APIView):
             if not user.is_active:
                 user.is_active = True
                 user.save()
-                print(userprofile.profile_picture)
-                print(userprofile.user)
+                # print(userprofile.profile_picture)
+                # print(userprofile.user)
                 Refresh_token = RefreshToken.for_user(user)
                 Refresh_token['username'] = str(userprofile.user)
                 Refresh_token['profile_picture'] = str(
