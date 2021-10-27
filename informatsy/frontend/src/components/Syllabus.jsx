@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Box, Paper, Grid, Typography } from "@material-ui/core";
-
+import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
+import { authAxios } from "../Authaxios";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -25,22 +26,34 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: "160px",
     },
   },
+  loader: {
+    height: "50vh",
+  },
+  loaderProgress: {
+    position: "absolute",
+    left: "50%",
+    top: "30%",
+    transform: "translate(-50%,-50%)",
+  },
 }));
 
 export default function Syllabus() {
   const classes = useStyles();
   let [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("https://informatsy.pythonanywhere.com/api/syllabus/")
+    setLoading(true);
+    authAxios
+      .get(`${process.env.React_App_SERVER_API}/api/syllabus/`)
       .then((res) => {
         const data = res.data;
         setData(data);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   }, []);
-  return (
+  return !loading ? (
     <Box mr={2} pb={{ xs: 3, sm: 5, md: 6 }} width="100%">
       <Box textAlign="center" pb={4}>
         <Typography variant="h4" component="h5" gutterBottom>
@@ -80,5 +93,11 @@ export default function Syllabus() {
         </Grid>
       </Box>
     </Box>
+  ) : (
+    <div className={classes.loader}>
+      <span className={classes.loaderProgress}>
+        <CircularProgress size="2rem" />
+      </span>
+    </div>
   );
 }

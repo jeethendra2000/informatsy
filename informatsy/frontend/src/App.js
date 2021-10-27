@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,7 +9,7 @@ import {
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-
+import ReactGA from "react-ga";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import "./App.css";
 import Navbar from "./components/layoutsComponent/Navbar";
@@ -18,14 +18,22 @@ import PopupAccount from "./components/PopupAccount";
 import HomePage from "./components/HomePage";
 import ResourcePage from "./components/ResourcePage";
 import Syllabus from "./components/Syllabus";
+import { UserContext } from "./UserContexapi";
+import Signup from "./components/Signup";
+import { LinkedInPopUp } from "react-linkedin-login-oauth2";
+import axios from "axios";
 import Notes from "./components/Notes";
 import QuestionPapers from "./components/QuestionPapers";
 import About from "./components/layoutsComponent/About";
 import Notifications from "./components/Notifications";
 import Contact from "./components/layoutsComponent/Contact";
 import Features from "./components/layoutsComponent/Features";
+import ActivationPage from "./components/ActivateAccount";
 import MyProfile from "./components/profileComponents/MyProfile";
-
+import RouteChangeTracker from "./RouteChangeTracker";
+import Cookies from "js-cookie";
+import ForgotPass from "./components/Forgot";
+import ResetPassword from "./components/ResetPassword";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -67,26 +75,56 @@ function App() {
     appId: "1:1044436937196:web:cc8e71b50aae842df2f8c9",
     measurementId: "G-G6CXLGP1CN",
   };
-
+  const TRACKING_ID = "G-3CEZ1R6HBT";
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  
+
+  useEffect(() => {
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    // if ("serviceWorker" in navigator) {
+    //   console.log("registered");
+    //   window.addEventListener("load", () => {
+    //     navigator.serviceWorker.register("./sw.js");
+    //   });
+    // }
+
+    ReactGA.initialize(TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
+  //init for google analytics
+  // YOUR_OWN_TRACKING_ID
+  const user = React.useContext(UserContext);
+  //------------handle for google sign in-------------
+
+  //-------------for google login automatic one tap--------------
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
+          <RouteChangeTracker />
           <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/activateAccount" component={ActivationPage} />
+            <Route exact path="/linkedin" component={LinkedInPopUp} />
             <Route exact path="/popup" component={PopupAccount} />
             <Route exact path="/profile" component={MyProfile} />
             <Route exact path="/notifications" component={Notifications} />
+            <Route exact path="/accounts/forgot" component={ForgotPass} />
+            <Route
+              exact
+              path="/accounts/resetpassword"
+              component={ResetPassword}
+            />
             <Navbar>
               <Switch>
-                <Route exact path="/login" component={Login} />
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/resources" component={ResourcePage} />
                 <Route exact path="/resources/syllabus" component={Syllabus} />
                 <Route exact path="/resources/notes" component={Notes} />
+
                 <Route
                   exact
                   path="/resources/questionPapers"
@@ -95,7 +133,8 @@ function App() {
                 <Route exact path="/features" component={Features} />
                 <Route exact path="/contact" component={Contact} />
                 <Route exact path="/about" component={About} />
-                <Redirect to="/"> </Redirect>
+
+                {/* <Redirect to="/"> </Redirect> */}
               </Switch>
             </Navbar>
           </Switch>

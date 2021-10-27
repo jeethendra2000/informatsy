@@ -1,0 +1,66 @@
+/*---------Custom buttons---------------*/
+@mixin Button($width, $color, $borderRadius) {
+  border-radius: $borderRadius !important;
+  width: $width !important;
+  background-color: $color !important ;
+  font-weight: 600;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
+}
+/*------------input fields customisation-------------*/
+@mixin Input($color, $width, $height, $borderRadius, $hoverwidth) {
+  .input_main:hover {
+    width: $hoverwidth;
+    transition: 0.2s ease-in-out;
+  }
+  .input_main {
+    background-color: $color;
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    transition: 0.1s ease-in-out;
+    width: $width;
+    border: 2px solid #f0f0f0;
+    border-radius: $borderRadius;
+    // grid-template-columns: 15% 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .input_lb {
+      padding: 0px;
+      display: flex;
+      flex: 85%;
+      input {
+        height: $height;
+        transition: 0.3s ease-in-outp;
+        width: 15em;
+        background-color: inherit;
+        border: none;
+        outline: none;
+      }
+      input[type="text"],
+      input[type="password"] {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: rgb(131, 121, 121);
+      }
+      .lab {
+        position: absolute;
+        left: 17%;
+        top: 20%;
+
+        font-size: 14px;
+        font-weight: 600;
+        color: grey;
+        padding: 0px 2px;
+        background-color: inherit;
+        z-index: 999;
+      }
+    }
+    .icon {
+      color: grey !important;
+      line-height: 55px !important;
+      padding: "2px 5px";
+    }
+  }
+}

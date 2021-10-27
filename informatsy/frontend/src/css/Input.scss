@@ -1,0 +1,7 @@
+@import "./EssentialComponent.scss";
+.input_component_main {
+  @include Input(#f0f0f0, 15em, 1em, 50px, 17em);
+}
+// @media only screen and (max-width: 600px) {
+//   @include Input(#f0f0f0, 15em, 1em, 50px, 17em);
+// }
