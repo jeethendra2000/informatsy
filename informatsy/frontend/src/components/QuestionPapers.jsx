@@ -12,9 +12,9 @@ export default function QuestionPapers() {
   const [defaultSortOrder, setDefaultSortOrder] = useState("");
 
   const [defaultSelectedCourse, setDefaultSelectedCourse] =
-    useState();
+    useState("");
   const [defaultSelectedYearOrSem, setDefaultSelectedYearOrSem] =
-    useState();
+    useState("");
 
   const onSearch = (searchData) => {
     setData(
