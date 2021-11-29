@@ -83,6 +83,11 @@ class SyllabusSerializer(serializers.ModelSerializer):
         return request.build_absolute_uri(photo_url)
 
 
+class AboutUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutUs
+        fields = ("profileImage", "fullName", "work", "bio")
+
 # validation for email
 
 

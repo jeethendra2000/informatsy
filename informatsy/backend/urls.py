@@ -15,6 +15,7 @@ router.register('notes', NotesView, basename='notes')
 router.register('questionPapers', QuestionPapersView,
                 basename='questionPapers')
 router.register('notifications', NotificationsView, basename='notifications')
+router.register(r'aboutUs', AboutUsViewSet, basename='aboutUs')
 
 urlpatterns = [
     path('profiles/', UserProfileView.as_view(), name="profiles"),

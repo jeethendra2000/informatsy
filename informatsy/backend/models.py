@@ -176,3 +176,13 @@ class Notifications(models.Model):
 
     def __str__(self):
         return self.notificationTitle
+
+# to store team members details in About page
+class AboutUs(models.Model):
+    profileImage = models.ImageField(upload_to="team")
+    fullName = models.CharField(max_length=100)
+    work = models.CharField(max_length=30)
+    bio = models.TextField(max_length=100)
+
+    def __str__(self):
+        return self.fullName

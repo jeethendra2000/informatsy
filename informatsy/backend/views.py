@@ -114,6 +114,14 @@ class SyllabusView(APIView):
             query, context={"request": request}, many=True)
         return Response(serializer.data)
 
+
+class AboutUsViewSet(viewsets.ReadOnlyModelViewSet):
+    # define queryset
+    queryset = AboutUs.objects.all()
+     
+    # specify serializer to be used
+    serializer_class = AboutUsSerializer
+
 # ---------Signup view-----------------
 
 # ----------oauth view-------------

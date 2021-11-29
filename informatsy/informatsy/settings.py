@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=cxj2d*0(%@8lxu088f(vlcxs5e1-dhl8@j3jd#y2eb^+ttm$l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -117,22 +117,22 @@ WSGI_APPLICATION = 'informatsy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'informatsy$informatsy',
-        'USER': 'informatsy',
-        'PASSWORD': 'Sri_Raghavendra_Swamy',
-        'HOST': 'informatsy.mysql.pythonanywhere-services.com',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'informatsy$informatsy',
+#         'USER': 'informatsy',
+#         'PASSWORD': 'Sri_Raghavendra_Swamy',
+#         'HOST': 'informatsy.mysql.pythonanywhere-services.com',
+#     }
+# }
 
 
 # Password validation
