@@ -25,10 +25,10 @@ import axios from "axios";
 import Notes from "./components/Notes";
 import QuestionPapers from "./components/QuestionPapers";
 import About from "./components/layoutsComponent/About";
-import IccHome from "./components//ICC/IccHome";
+import IccHome from "./components/ICC/IccHome";
 import AboutUs from "./components/ICC/AboutUs";
 import Notifications from "./components/Notifications";
-import Contact from "./components/layoutsComponent/Contact";
+import Explore from "./components/exploreComponent/ExploreHome";
 import Features from "./components/layoutsComponent/Features";
 import ActivationPage from "./components/ActivateAccount";
 import MyProfile from "./components/profileComponents/MyProfile";
@@ -107,39 +107,39 @@ function App() {
         <Router>
           <RouteChangeTracker />
           <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/activateAccount" component={ActivationPage} />
-            <Route exact path="/linkedin" component={LinkedInPopUp} />
-            <Route exact path="/popup" component={PopupAccount} />
-            <Route exact path="/profile" component={MyProfile} />
-            <Route exact path="/notifications" component={Notifications} />
-            <Route exact path="/accounts/forgot" component={ForgotPass} />
+            <Route exact path="/login" component={Login} /> 
+            <Route exact path="/signup" component={Signup} /> 
+            <Route exact path="/activateAccount" component={ActivationPage} /> 
+            <Route exact path="/linkedin" component={LinkedInPopUp} /> 
+            <Route exact path="/popup" component={PopupAccount} /> 
+            <Route exact path="/profile" component={MyProfile} /> 
+            <Route exact path="/notifications" component={Notifications} /> 
+            <Route exact path="/accounts/forgot" component={ForgotPass} /> 
             <Route
               exact
               path="/accounts/resetpassword"
               component={ResetPassword}
-            />
+            /> 
             <Navbar>
               <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route exact path="/resources" component={ResourcePage} />
-                <Route exact path="/resources/syllabus" component={Syllabus} />
-                <Route exact path="/resources/notes" component={Notes} />
+                <Route exact path="/" component={HomePage} /> 
+                <Route exact path="/resources" component={ResourcePage} /> 
+                <Route exact path="/resources/syllabus" component={Syllabus} /> 
+                <Route exact path="/resources/notes" component={Notes} /> 
                 <Route
                   exact
                   path="/resources/questionPapers"
                   component={QuestionPapers}
-                />
-                <Route exact path="/ICC" component={IccHome} />
-                <Route exact path="/contact" component={Contact} />
-                <Route exact path="/about" component={AboutUs} />
-                {/* <Redirect to="/"> </Redirect> */}
-              </Switch>
-            </Navbar>
-          </Switch>
-        </Router>
-      </ThemeProvider>
+                /> 
+                <Route exact path="/ICC" component={IccHome} /> 
+                <Route exact path="/explore" component={Explore} /> 
+                <Route exact path="/about" component={AboutUs} /> 
+                {/* <Redirect to="/"> </Redirect> */} 
+              </Switch> 
+            </Navbar> 
+          </Switch> 
+        </Router> 
+      </ThemeProvider> 
     </div>
   );
 }

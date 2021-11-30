@@ -24,6 +24,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import ImportantDevicesIcon from "@material-ui/icons/ImportantDevices";
 import CallIcon from "@material-ui/icons/Call";
 import EmailIcon from "@material-ui/icons/Email";
+import ExploreIcon from '@material-ui/icons/Explore';
 
 // selecting icons to sidebar
 const selectIcon = (logoTitle) => {
@@ -36,8 +37,8 @@ const selectIcon = (logoTitle) => {
       return <InfoIcon />;
     case "ImportantDevicesIcon":
       return <ImportantDevicesIcon />;
-    case "CallIcon":
-      return <CallIcon />;
+    case "ExploreIcon":
+      return <ExploreIcon />;
     default:
       return <EmailIcon />;
   }

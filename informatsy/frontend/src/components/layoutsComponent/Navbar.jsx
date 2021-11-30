@@ -15,7 +15,7 @@ import { useHistory, useLocation } from "react-router";
 import Cookies from "js-cookie";
 import { UserContext } from "../../UserContexapi";
 import { CircularProgress } from "@material-ui/core";
-
+import ExploreIcon from '@material-ui/icons/Explore';
 import {
   authAxios,
   // refresh_token,
@@ -242,7 +242,7 @@ export default function Navbar({ children }) {
     { title: "Home", logo: "HomeIcon", path: "/" },
     { title: "Resources", logo: "MenuBookIcon", path: "/resources" },
     { title: "ICC", logo: "ImportantDevicesIcon", path: "/ICC" },
-    { title: "Contact", logo: "CallIcon", path: "/contact" },
+    { title: "Explore", logo: "ExploreIcon", path: "/explore" },
     { title: "About", logo: "InfoIcon", path: "/about" },
   ];
 
