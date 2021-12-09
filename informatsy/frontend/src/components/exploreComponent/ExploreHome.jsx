@@ -28,7 +28,7 @@ export default function ExploreHome() {
         <Card
           className={classes.root}
           elevation={4}
-          onClick={() => history.push("/attendance")}
+          onClick={() => history.push("explore/attendance")}
         >
           <CardActionArea>
             <CardMedia

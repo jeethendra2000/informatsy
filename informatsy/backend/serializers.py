@@ -88,6 +88,37 @@ class AboutUsSerializer(serializers.ModelSerializer):
         model = AboutUs
         fields = ("profileImage", "fullName", "work", "bio")
 
+
+class CollegeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = College
+        fields = '__all__'
+
+
+class ClubSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Club
+        fields = '__all__'
+
+
+class SessionRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SessionRecord
+        fields = '__all__'
+
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = '__all__'
+
+
+class IccContestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IccContest
+        fields = '__all__'
+
+
 # validation for email
 
 

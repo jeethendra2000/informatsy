@@ -17,6 +17,13 @@ router.register('questionPapers', QuestionPapersView,
 router.register('notifications', NotificationsView, basename='notifications')
 router.register(r'aboutUs', AboutUsViewSet, basename='aboutUs')
 
+router.register(r'college', CollegeViewSet, basename='college')
+router.register(r'club', ClubViewSet, basename='club')
+router.register(r'SessionRecord', SessionRecordViewSet, basename='sessionRecord')
+router.register(r'attendance', AttendanceViewSet, basename='attendance')
+router.register(r'IccContest', IccContestViewSet, basename='IccContest')
+
+
 urlpatterns = [
     path('profiles/', UserProfileView.as_view(), name="profiles"),
     path('profile/<slug:slug>/', UserProfileView.as_view(), name="profile_detail"),

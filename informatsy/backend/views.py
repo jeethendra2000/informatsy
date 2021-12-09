@@ -122,6 +122,37 @@ class AboutUsViewSet(viewsets.ReadOnlyModelViewSet):
     # specify serializer to be used
     serializer_class = AboutUsSerializer
 
+
+class CollegeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = College.objects.all()
+
+    serializer_class = CollegeSerializer
+
+
+class ClubViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Club.objects.all()
+
+    serializer_class = ClubSerializer
+
+
+class SessionRecordViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = SessionRecord.objects.all()
+
+    serializer_class = SessionRecordSerializer
+
+
+class AttendanceViewSet(viewsets.ModelViewSet):
+    queryset = Attendance.objects.all()
+
+    serializer_class = AttendanceSerializer
+
+
+class IccContestViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = IccContest.objects.all()
+
+    serializer_class = IccContestSerializer
+
+
 # ---------Signup view-----------------
 
 # ----------oauth view-------------

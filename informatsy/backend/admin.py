@@ -72,4 +72,37 @@ class NotificationsAdmin(admin.ModelAdmin):
 @admin.register(AboutUs)
 class AboutUsAdmin(admin.ModelAdmin):
     list_display = ['id', 'fullName', 'work', 'bio']
-    search_field = ('fullName', 'work')
+    search_fields = ('fullName', 'work')
+
+
+@admin.register(College)
+class CollegeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'college_name', 'college_code', 'college_address']
+    search_fields = ('college_name', 'college_code', 'college_address')
+
+
+@admin.register(Club)
+class ClubAdmin(admin.ModelAdmin):
+    list_display = ['id', 'club_name','club_logo', 'college', 'about_club']
+    search_fields = ('club_name', 'college')
+    list_filter = ['college']
+
+
+@admin.register(IccContest)
+class IccContestAdmin(admin.ModelAdmin):
+    list_display = ['id', 'contest_name', 'contest_time', 'contest_link']
+    search_fileds = ['contest_name']
+
+
+@admin.register(SessionRecord)
+class SessionRecordAdmin(admin.ModelAdmin):
+    list_display = ['id', 'session_name', 'session_image', 'club_name', 'session_speaker', 'session_topic', 'session_time', 'session_material']
+    search_fields = ['session_name','club_name', 'session_speaker', 'session_topic']
+    list_filter = ('club_name', 'session_speaker', 'session_topic')
+
+
+@admin.register(Attendance)
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'usn', 'club_session','feedback']
+    search_fields = ['id', 'name', 'usn', 'club_session']
+    list_filter = ('name', 'usn', 'club_session')

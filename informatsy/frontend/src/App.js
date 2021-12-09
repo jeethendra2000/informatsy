@@ -36,6 +36,7 @@ import RouteChangeTracker from "./RouteChangeTracker";
 import Cookies from "js-cookie";
 import ForgotPass from "./components/Forgot";
 import ResetPassword from "./components/ResetPassword";
+import Attendance from "./components/exploreComponent/Attendance";
 // Custom theme of Informatsy
 const theme = createMuiTheme({
   palette: {
@@ -133,6 +134,7 @@ function App() {
                 /> 
                 <Route exact path="/ICC" component={IccHome} /> 
                 <Route exact path="/explore" component={Explore} /> 
+                <Route exact path="/explore/attendance" component={Attendance} /> 
                 <Route exact path="/about" component={AboutUs} /> 
                 {/* <Redirect to="/"> </Redirect> */} 
               </Switch> 

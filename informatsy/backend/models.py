@@ -186,3 +186,54 @@ class AboutUs(models.Model):
 
     def __str__(self):
         return self.fullName
+
+
+class College(models.Model):
+    college_name = models.CharField(max_length=100)
+    college_code = models.CharField(max_length=100)
+    college_address = models.TextField(max_length=120)
+
+    def __str__(self):
+        return self.college_name
+
+class Club(models.Model):
+    club_name = models.CharField(max_length=100)
+    club_logo = models.ImageField(upload_to="clubLogo")
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    about_club = models.TextField(max_length=256)
+
+    def __str__(self):
+        return self.club_name
+
+
+class SessionRecord(models.Model):
+    session_name = models.CharField(max_length=100)
+    session_image = models.ImageField(upload_to='sessions')
+    club_name = models.ForeignKey(Club, on_delete=models.CASCADE)
+    session_speaker = models.CharField(max_length=100)
+    session_topic = models.TextField(max_length=100)
+    session_time = models.DateTimeField(auto_now_add=True)
+    session_material = models.FileField(upload_to='sessionMaterial', blank=True)
+    
+    def __str__(self):
+        return self.session_name
+
+
+class Attendance(models.Model):
+    name = models.CharField(max_length=100)
+    usn = models.CharField(max_length=15)
+    club_session = models.ForeignKey(Club, on_delete=models.CASCADE)
+    feedback = models.TextField(max_length=256)
+    attendance_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class IccContest(models.Model):
+    contest_name = models.CharField(max_length=100)
+    contest_time = models.DateTimeField()
+    contest_link = models.URLField(max_length=120)
+
+    def __str__(self):
+        return self.contest_name
