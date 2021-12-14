@@ -10,31 +10,70 @@ import { red } from "@material-ui/core/colors";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import Icon from "@material-ui/core/Icon";
 
+// import Informatsy from "../../Assets/logo.png";
+// import CodeForces from "../../Assets/codeforces.jpg";
+// import TopCoder from "../../Assets/topcoder.jpg";
+// import AtCoder from "../../Assets/atcoder.png";
+// import CodeChef from "../../Assets/codechef.jpg";
+// import CsAcademy from "../../Assets/csacademy.png";
+// import HackerRank from "../../Assets/hackerrank.png";
+// import HackerEarth from "../../Assets/hackeearth.png";
+// import KickStart from "../../Assets/google-img.png";
+// import LeetCode from "../../Assets/leetcode.jpg";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
-    borderRadius:"10px"
+    borderRadius: "10px",
   },
 }));
 
-export default function ContestCard() {
+
+export default function ContestCard({ name, site, start_time, url }) {
   const classes = useStyles();
+  const dat = new Date(start_time).toUTCString();
   return (
     <div>
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <Avatar alt="Informatsy" src="logo.png">
-              R
+            <Avatar
+              alt={site}
+              src={
+                require(site === "Informatsy"
+                  ? "../../Assets/logo.png"
+                  : site === "CodeForces"
+                  ? "../../Assets/codeforces.jpg"
+                  : site === "TopCoder"
+                  ? "../../Assets/topcoder.jpg"
+                  : site === "AtCoder"
+                  ? "../../Assets/atcoder.png"
+                  : site === "CodeChef"
+                  ? "../../Assets/codechef.jpg"
+                  : site === "CsAcademy"
+                  ? "../../Assets/csacademy.png"
+                  : site === "HackerRank"
+                  ? "../../Assets/hackerrank.png"
+                  : site === "HackerEarth"
+                  ? "../../Assets/hackeearth.png"
+                  : site === "LeetCode"
+                  ? "../../Assets/leetcode.jpg"
+                  : "../../Assets/google-img.png").default
+              }
+            >
+              {site[0]}
             </Avatar>
           }
           action={
-            <IconButton aria-label="compete" onClick={() => alert('contest link')}>
+            <IconButton
+              aria-label="compete"
+              onClick={() => window.location.assign(url)}
+            >
               <ArrowForwardIosIcon />
             </IconButton>
           }
-          title="ICC Day - 1 Contest"
-          subheader="September 14, 2016"
+          title={name}
+          subheader={dat}
         />
       </Card>
     </div>

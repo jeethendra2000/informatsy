@@ -55,10 +55,10 @@ export default function ExploreHome() {
         >
           <CardActionArea>
             <CardMedia
-              component="Confession"
+              component="img"
               alt="Confession"
               height="200"
-              image="confess.png"
+              image="confess.jpg"
               title="Confession"
             />
             <CardContent>
@@ -73,19 +73,19 @@ export default function ExploreHome() {
         <Card
           className={classes.root}
           elevation={4}
-          onClick={() => history.push("/attendance")}
+          onClick={() => history.push("/sessionRecord")}
         >
           <CardActionArea>
             <CardMedia
               component="img"
-              alt="Contemplative Reptile"
+              alt="Sessions Record"
               height="200"
-              image="attendance.png"
-              title="Contemplative Reptile"
+              image="session.jpg"
+              title="Sessions record"
             />
             <CardContent>
               <Typography variant="h5" component="h2" style={{textAlign:"center"}}>
-                Attendance
+                Session Record
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -102,12 +102,12 @@ export default function ExploreHome() {
               component="img"
               alt="Contemplative Reptile"
               height="200"
-              image="attendance.png"
+              image="record.png"
               title="Contemplative Reptile"
             />
             <CardContent>
               <Typography variant="h5" component="h2" style={{textAlign:"center"}}>
-                Attendance
+                Record
               </Typography>
             </CardContent>
           </CardActionArea>

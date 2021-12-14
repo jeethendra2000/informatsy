@@ -26,7 +26,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('backend.urls')),
 ]
-if settings.DEBUG:
 
+admin.site.site_header = "Informatsy Administration"
+admin.site.site_title = "Informatsy Admin Portal"
+admin.site.index_title = "Informatsy Admin"
+
+if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
