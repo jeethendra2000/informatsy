@@ -91,6 +91,14 @@ The application features robust authentication, cloud storage integration, and a
 - 🏆 **ICC Contests** - Coding contest details and competition updates
 - 📊 **Attendance Tracking** - Session records and attendance management
 
+### Authentication & User Management
+- 🔐 **Firebase Authentication** - Secure user authentication system
+- 📝 **User Registration** - Easy signup process for new students
+- 🔑 **Login System** - Secure login with email/password
+- 👤 **User Profiles** - Personalized user accounts and preferences
+- 🔒 **Password Recovery** - Secure password reset functionality
+- 📧 **Email Verification** - Account verification via email
+
 ### Technical Features
 - 🔧 **RESTful API** - Well-structured Django REST Framework backend
 - ⚛️ **React Frontend** - Modern, responsive user interface
