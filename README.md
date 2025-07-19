@@ -14,35 +14,36 @@ This comprehensive academic platform is designed to support students to track ac
 ## 📸 Screenshots
 
 ### Homepage
-![Homepage](screenshots/homepage.png)
+![Homepage](screenshots/Homepage.png)
 *Welcome page showing the main features and navigation*
 
 ### User Authentication
-![Login Page](screenshots/login.png)
-*Firebase-powered login page for secure user authentication*
-
-![Signup Page](screenshots/signup.png)
+![Signup Page](screenshots/Signup.png)
 *User registration form with email verification*
 
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
-*Main dashboard showing available resources and notifications*
+![Login Page](screenshots/Login.png)
+*Firebase-powered login page for secure user authentication*
+
+### Attendance
+![Attendance](screenshots/Attendance.png)
+*Mark the Attendance for the session attended in class/clubs*
 
 ### Study Materials
-![Study Materials](screenshots/study-materials.png)
+![Study Materials](screenshots/Resources.png)
 *Browse and download notes, question papers by semester*
 
-### Notifications
+<!-- ### Notifications
 ![Notifications](screenshots/notifications.png)
-*Real-time college announcements and updates*
+*Real-time college announcements and updates* -->
 
-### Mobile View
+<!-- ### Mobile View
 ![Mobile View](screenshots/mobile-view.png)
-*Responsive design working perfectly on mobile devices*
+*Responsive design working perfectly on mobile devices* -->
 
 ### API Interface
-![API Interface](screenshots/api-interface.png)
+![API Interface](screenshots/API.png)
 *Django REST Framework browsable API interface*
+
 ## 📋 Table of Contents
 
 - [Overview](#overview)
