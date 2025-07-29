@@ -10,6 +10,7 @@ This comprehensive academic platform is designed to support students to track ac
 
 ## 🌐 Live Demo
 - **Frontend**: [https://informatsy-1606997742068.web.app](https://informatsy-1606997742068.web.app)
+- **Django Admin Backend**: [https://informatsy.pythonanywhere.com/admin/](https://informatsy.pythonanywhere.com/admin/)
 - **API Backend**: [https://informatsy.pythonanywhere.com/api/](https://informatsy.pythonanywhere.com/api/)
 ## 📸 Screenshots
 
