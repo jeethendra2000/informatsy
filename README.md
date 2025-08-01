@@ -211,11 +211,20 @@ cd informatsy
 pip install pipenv
 
 # Create virtual environment and install dependencies
-pipenv shell
-pipenv install
+python -m pip install --upgrade pip
+python -m venv venv
 
-# Alternative: Install from Pipfile
-pipenv install --dev
+# Activate the virtual environment
+# Windows:
+venv\Scripts\activate
+
+# macOS/Linux:
+source venv/bin/activate
+
+# Install Django and other dependencies
+pip install -r requirements.txt
+
+
 ```
 
 #### Database Setup
