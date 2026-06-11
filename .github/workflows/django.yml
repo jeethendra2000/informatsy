@@ -26,6 +26,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools==65.5.0 wheel
         pip install --no-build-isolation -r requirements.txt
+    - name: Check env vars
+      run: |
+        echo "Email_pass exists? ${{ secrets.Email_pass != '' }}"
     - name: Run Tests
       run: |
         cd informatsy
