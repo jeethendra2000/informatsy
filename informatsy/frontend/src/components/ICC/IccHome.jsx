@@ -28,7 +28,7 @@ export default function IccHome() {
 
   const fetchData = () => {
     setLoading(true);
-    const website1 = "http://127.0.0.1:8000/api/IccContest/";
+    const website1 = "https://informatsy.pythonanywhere.com/api/IccContest/";
     const website2 = "https://kontests.net/api/v1/all";
 
     const getWeb1 = axios.get(website1);
@@ -41,14 +41,14 @@ export default function IccHome() {
         // setData2(alldata[1].data);
         
         // filtered website data
-        setData2(
-          alldata[1].data.filter(
-            (e) =>
-              e.site === "CodeChef" ||
-              e.site === "CodeForces" ||
-              e.site === "LeetCode" ||
-              e.site === "Kick Start"
-          )
+        // setData2(
+        //   alldata[1].data.filter(
+        //     (e) =>
+        //       e.site === "CodeChef" ||
+        //       e.site === "CodeForces" ||
+        //       e.site === "LeetCode" ||
+        //       e.site === "Kick Start"
+        //   )
         );
         setLoading(false);
       })
