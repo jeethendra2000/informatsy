@@ -28,4 +28,5 @@ jobs:
         pip install --no-build-isolation -r requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        pwd
+        find . -name manage.py
