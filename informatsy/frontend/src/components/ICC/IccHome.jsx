@@ -28,8 +28,8 @@ export default function IccHome() {
 
   const fetchData = () => {
     setLoading(true);
-    const website1 = "http://127.0.0.1:8000/api/IccContest/";
-    const website2 = "https://kontests.net/api/v1/all";
+    const website1 = "https://informatsy.pythonanywhere.com/api/IccContest/";
+    const website2 = "https://informatsy.pythonanywhere.com/api/IccContest/";
 
     const getWeb1 = axios.get(website1);
     const getWeb2 = axios.get(website2);
@@ -37,21 +37,12 @@ export default function IccHome() {
     axios.all([getWeb1, getWeb2]).then(
       axios.spread((...alldata) => {
         setData1(alldata[0].data);
+
         // all data
         // setData2(alldata[1].data);
-        
-        // filtered website data
-        setData2(
-          alldata[1].data.filter(
-            (e) =>
-              e.site === "CodeChef" ||
-              e.site === "CodeForces" ||
-              e.site === "LeetCode" ||
-              e.site === "Kick Start"
-          )
-        );
+
         setLoading(false);
-      })
+      }),
     );
   };
   useEffect(() => {
@@ -89,7 +80,7 @@ export default function IccHome() {
             <Grid item xs={12} sm={6} md={4}>
               <ContestCard
                 name={e.name}
-                site={e.site}
+                site={"Informatsy"}
                 start_time={e.start_time}
                 url={e.url}
               />
