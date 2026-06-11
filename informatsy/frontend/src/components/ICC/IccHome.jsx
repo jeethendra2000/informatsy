@@ -29,7 +29,7 @@ export default function IccHome() {
   const fetchData = () => {
     setLoading(true);
     const website1 = "https://informatsy.pythonanywhere.com/api/IccContest/";
-    const website2 = "https://kontests.net/api/v1/all";
+    const website2 = "https://informatsy.pythonanywhere.com/api/IccContest/";
 
     const getWeb1 = axios.get(website1);
     const getWeb2 = axios.get(website2);
